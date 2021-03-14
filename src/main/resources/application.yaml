@@ -16,3 +16,4 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQL94Dialect
 jwt:
   secret: yW5t5wKaayfiU3J5PIkobDACPSuWiHx1MdM1g0MdFE9AcI8Hc2b5hlLCJvDiawkeYycLOCHdYUXnnnKJ
+  token-lifetime: 86400000 #часы * минуты * секунды * миллисекунды

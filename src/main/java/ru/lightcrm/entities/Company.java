@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
@@ -39,12 +39,13 @@ public class Company {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "companies")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<Comment> comments;
-
-    @OneToMany(mappedBy = "companies")
-    private List<Profile> manager;
+    //TODO ожидается появление нужных сущностей
+//    @OneToMany(mappedBy = "companies")
+//    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+//    private List<Comment> comments;
+//
+//    @OneToMany(mappedBy = "companies")
+//    private List<Profile> manager;
 
 
 }

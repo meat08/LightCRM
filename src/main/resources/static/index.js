@@ -11,6 +11,10 @@
         $routeProvider
             .when('/', {
                 templateUrl: 'main/main.html'
+            })
+            .when('/auth', {
+                templateUrl: 'auth/auth.html',
+                controller: 'authController'
             });
     }
 

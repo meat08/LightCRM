@@ -35,4 +35,8 @@ public class Contact {
     @Column(name = "description")
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
+
 }

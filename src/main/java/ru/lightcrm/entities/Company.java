@@ -29,8 +29,7 @@ public class Company {
     @Column(name = "billNumber")
     private Long billNumber;
 
-    @OneToMany(mappedBy = "companies")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @OneToMany(mappedBy = "company")
     private List<Contact> contacts;
 
     @Column(name = "phoneNumber")

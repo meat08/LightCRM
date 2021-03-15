@@ -1,0 +1,23 @@
+package ru.lightcrm.controllers.interfaces;
+
+import io.swagger.annotations.*;
+import ru.lightcrm.entities.dtos.ProfileDto;
+
+import java.util.List;
+
+@Api(value = "/api/v1/profiles", tags = "Контроллер для работы с профилями", produces = "application/json")
+public interface ProfileController {
+
+    @ApiOperation(value = "Возвращает профиль по указанному id", httpMethod = "GET", produces = "application/json", response = ProfileDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = ProfileDto.class),
+            @ApiResponse(code = 400, message = "Указан некорректны id"),
+            @ApiResponse(code = 404, message = "Профиль с указанным id не найден")
+    })
+    ProfileDto getById(@ApiParam(value = "Уникальный идентификатор профиля", name = "id", required = true, example = "1") Long id);
+
+    @ApiOperation(value = "Возвращает список всех профилей", httpMethod = "GET", produces = "application/json", response = ProfileDto.class, responseContainer = "List")
+    @ApiResponses(value = @ApiResponse(code = 200, message = "OK", response = ProfileDto.class, responseContainer = "List"))
+    List<ProfileDto> getAll();
+
+}

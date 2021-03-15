@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
@@ -26,8 +26,8 @@ public class User {
     private Boolean enabled;
 
     @ManyToMany
-    @JoinTable(name = "users_roles",
+    @JoinTable(name = "users_priorities",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<Role> roles;
+            inverseJoinColumns = @JoinColumn(name = "priority_id"))
+    private List<Priority> priorities;
 }

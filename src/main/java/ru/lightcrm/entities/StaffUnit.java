@@ -20,8 +20,8 @@ public class StaffUnit {
     private String name;
 
     @ManyToMany
-    @JoinTable(name = "staffunits_roles",
-            joinColumns = @JoinColumn(name = "staffunit_id"),
+    @JoinTable(name = "staff_units_roles",
+            joinColumns = @JoinColumn(name = "staff_unit_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
 }

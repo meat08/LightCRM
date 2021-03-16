@@ -54,8 +54,9 @@ public class TaskDTO {
         this.id = task.getId();
         this.title = task.getTitle();
         this.description = task.getDescription();
-        this.producerId = task.getProducer().getId();
-        this.responsibleId = task.getResponsible().getId();
+        //TODO сущность профиль
+//        this.producerId = task.getProducer().getId();
+//        this.responsibleId = task.getResponsible().getId();
         this.startDate = task.getStartDate();
         this.endDate = task.getEndDate();
         this.deadline = task.getDeadline();

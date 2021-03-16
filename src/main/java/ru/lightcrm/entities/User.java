@@ -5,10 +5,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
-@NoArgsConstructor
 @Table(name = "users")
 public class User {
     @Id
@@ -23,11 +23,15 @@ public class User {
     private String password;
 
     @Column(name = "enabled")
-    private Boolean enabled;
+    private boolean enabled;
 
     @ManyToMany
     @JoinTable(name = "users_priorities",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "priority_id"))
-    private List<Priority> priorities;
+    private Set<Priority> priorities;
+
+    public boolean isEnabled() {
+        return enabled;
+    }
 }

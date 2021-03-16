@@ -3,12 +3,15 @@ package ru.lightcrm.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.lightcrm.entities.Company;
+import ru.lightcrm.entities.dtos.CompanyDTO;
 import ru.lightcrm.repositories.CompaniesRepository;
+import ru.lightcrm.services.interfaces.CompaniesService;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
-public class CompaniesService {
+public class CompaniesServiceImpl implements CompaniesService {
     private CompaniesRepository companiesRepository;
 
     @Autowired
@@ -16,19 +19,19 @@ public class CompaniesService {
         this.companiesRepository = companiesRepository;
     }
 
-    public Company findByName(String name) {
+    public CompanyDTO findByName(String name) {
         return companiesRepository.findOneByName(name);
     }
 
-    public Company findByInn(Long inn) {
+    public CompanyDTO findByInn(Long inn) {
         return companiesRepository.findOneByInn(inn);
     }
 
-    public Company findById(Long id) {
+    public CompanyDTO findById(Long id) {
         return companiesRepository.findOneById(id);
     }
 
-    public List<Company> findAll() {
-        return companiesRepository.findAll();
+    public Set<CompanyDTO> findAllDTO() {
+        return companiesRepository.findAllBy();
     }
 }

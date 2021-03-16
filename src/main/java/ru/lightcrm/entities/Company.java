@@ -6,6 +6,7 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -21,22 +22,26 @@ public class Company {
     private String name;
 
     @Column(name = "type")
-    private Boolean type;
+    private boolean type;
 
     @Column(name = "inn")
     private Long inn;
 
-    @Column(name = "billNumber")
+    @Column(name = "bill_number")
     private Long billNumber;
 
     @OneToMany(mappedBy = "company")
-    private List<Contact> contacts;
+    private Set<Contact> contacts;
 
-    @Column(name = "phoneNumber")
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     @Column(name = "email")
     private String email;
+
+    public boolean isType() {
+        return type;
+    }
 
     //TODO ожидается появление нужных сущностей
 //    @OneToMany(mappedBy = "companies")

@@ -5,11 +5,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Data
-@NoArgsConstructor
-@Table(name = "staffunits")
+@Table(name = "staff_units")
 public class StaffUnit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +23,5 @@ public class StaffUnit {
     @JoinTable(name = "staff_units_roles",
             joinColumns = @JoinColumn(name = "staff_unit_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<Role> roles;
+    private Set<Role> roles;
 }

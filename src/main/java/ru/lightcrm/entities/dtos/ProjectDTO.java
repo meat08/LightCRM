@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.lightcrm.entities.Project;
 
 
 @Data
@@ -23,13 +24,13 @@ public class ProjectDTO {
     private String description;
 
     @ApiModelProperty(notes = "Идентификатор руководителя проекта.", required = true, position = 3)
-    private Long manager_id;
+    private Long managerId;
 
-    // TODO ожидание сущности Профиль
-//    public ProjectDTO(Project project) {
-//        this.id = project.getId();
-//        this.name = project.getName();
-//        this.description = project.getDescription();
-//        this.manager_id = project.getManager().getID();
-//    }
+
+    public ProjectDTO(Project project) {
+        this.id = project.getId();
+        this.name = project.getName();
+        this.description = project.getDescription();
+        this.managerId = project.getManager().getId();
+    }
 }

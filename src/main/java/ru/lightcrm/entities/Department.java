@@ -40,5 +40,5 @@ public class Department {
             joinColumns = @JoinColumn(name = "department_id"),
             inverseJoinColumns = @JoinColumn(name = "profile_id"))
     @ApiModelProperty(notes = "Список сотрудников работающих в отделе.", required = true, position = 4)
-    private List<Profile> employees;
+    private List<Profile> employees_in_dep; // переименуйте
 }

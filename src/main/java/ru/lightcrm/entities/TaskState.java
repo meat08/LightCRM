@@ -21,7 +21,7 @@ public class TaskState {
     @ApiModelProperty(notes = "Уникальный идентификатор статуса.", example = "1", required = true, position = 0)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name_task_state")
     @ApiModelProperty(notes = "Наименование статуса.", example = "Завершена.", required = true, position = 1)
-    private String name;
+    private String nameTaskState;
 }

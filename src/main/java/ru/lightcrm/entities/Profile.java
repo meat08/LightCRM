@@ -74,7 +74,7 @@ public class Profile {
     private Company company;
 
 
-    @OneToOne(mappedBy = "leader")
+    @OneToOne(mappedBy = "leader") //
     @ApiModelProperty(notes = "Отдел, возглавляемый сотрудником.", position = 13)
     private Department managedDepartment;
 

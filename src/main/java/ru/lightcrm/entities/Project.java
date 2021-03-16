@@ -41,7 +41,7 @@ public class Project {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "profile_id"))
     @ApiModelProperty(notes = "Список сотрудников имеющих доступ к проекту.", required = false, position = 4)
-    private List<Profile> profiles;
+    private List<Profile> profiles; // Список сотрудников имеющих доступ к проекту.
 
     @OneToMany(mappedBy = "project")
     private List<Task> tasks;

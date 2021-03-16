@@ -8,7 +8,9 @@ import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.Role;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
@@ -22,7 +24,7 @@ public class ProfileDto {
     private String sex;
     private String phone;
     private String email;
-    private LocalDate birthday;
+    private LocalDate birthday; // OffsetDateTime
     private LocalDate employentDate;
     private LocalDate dismissalDate;
     // User
@@ -32,14 +34,14 @@ public class ProfileDto {
     // StaffUnit
     private Long staffUnitId;
     private String staffUnitName;
-    private List<String> roles;
+    private Set<String> roles; //?
     // Company
     private Long companyId;
     private String companyName;
     // Department
     private Long managedDepartmentId;
     private String managedDepartmentName;
-    private List<String> departmentNames;
+    private Set<String> departmentNames;//?
 
     // TODO Сущность Comment
 //    private List<CommentDto> comments;

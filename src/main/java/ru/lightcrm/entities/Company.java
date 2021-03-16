@@ -6,6 +6,7 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -21,7 +22,7 @@ public class Company {
     private String name;
 
     @Column(name = "type")
-    private Boolean type;
+    private boolean type;
 
     @Column(name = "inn")
     private Long inn;
@@ -30,7 +31,7 @@ public class Company {
     private Long billNumber;
 
     @OneToMany(mappedBy = "company")
-    private List<Contact> contacts;
+    private Set<Contact> contacts;
 
     @Column(name = "phoneNumber")
     private String phoneNumber;

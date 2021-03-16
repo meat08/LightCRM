@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@ApiModel(description = "Объкт ответа на успешную авторизацию авторизацию")
+@ApiModel(description = "Объект ответа на успешную авторизацию авторизацию")
 public class JwtResponse {
 
   @ApiModelProperty(

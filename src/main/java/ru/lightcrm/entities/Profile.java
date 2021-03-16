@@ -73,10 +73,10 @@ public class Profile {
     @ApiModelProperty(notes = "Компания, курируемая сотрудником.", position = 12)
     private Company company;
 
-    //TODO нет поля
-//    @OneToOne(mappedBy = "leader")
-//    @ApiModelProperty(notes = "Отдел, возглавляемый сотрудником.", position = 13)
-//    private Department managedDepartment;
+
+    @OneToOne(mappedBy = "leader")
+    @ApiModelProperty(notes = "Отдел, возглавляемый сотрудником.", position = 13)
+    private Department managedDepartment;
 
     @ManyToMany
     @JoinTable(name = "profiles_departments",

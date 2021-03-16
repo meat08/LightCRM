@@ -32,16 +32,15 @@ public class Task {
     @ApiModelProperty(notes = "Описание задачи.", example = "Соответствующим службам выполнить документальное оформление отпуска.", required = true, position = 2)
     private String description;
 
-    // TODO ожидание сущности Профиль
-//    @ManyToOne
-//    @JoinColumn(name = "producer_id")
-//    @ApiModelProperty(notes = "Постановщик задачи.", required = true, position = 3)
-//    private Profile producer;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "responsible_id")
-//    @ApiModelProperty(notes = "Ответственный за выполнение (исполнитель) задачи.", required = true, position = 4)
-//    private Profile responsible;
+    @ManyToOne
+    @JoinColumn(name = "producer_id")
+    @ApiModelProperty(notes = "Постановщик задачи.", required = true, position = 3)
+    private Profile producer;
+
+    @ManyToOne
+    @JoinColumn(name = "responsible_id")
+    @ApiModelProperty(notes = "Ответственный за выполнение (исполнитель) задачи.", required = true, position = 4)
+    private Profile responsible;
 
     @CreationTimestamp
     @Column(name = "start_date")

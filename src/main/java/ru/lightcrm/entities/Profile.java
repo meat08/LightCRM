@@ -73,9 +73,10 @@ public class Profile {
     @ApiModelProperty(notes = "Компания, курируемая сотрудником.", position = 12)
     private Company company;
 
-    @OneToOne(mappedBy = "leader")
-    @ApiModelProperty(notes = "Отдел, возглавляемый сотрудником.", position = 13)
-    private Department managedDepartment;
+    //TODO нет поля
+//    @OneToOne(mappedBy = "leader")
+//    @ApiModelProperty(notes = "Отдел, возглавляемый сотрудником.", position = 13)
+//    private Department managedDepartment;
 
     @ManyToMany
     @JoinTable(name = "profiles_departments",
@@ -85,8 +86,8 @@ public class Profile {
     private List<Department> departments;
 
     // TODO Сущность Comment
-    @OneToMany(mappedBy = "author")
-    @ApiModelProperty(notes = "Комментарии, оставленные сотрудником.", position = 15)
-    private List<Comment> comments;
+//    @OneToMany(mappedBy = "author")
+//    @ApiModelProperty(notes = "Комментарии, оставленные сотрудником.", position = 15)
+//    private List<Comment> comments;
 
 }

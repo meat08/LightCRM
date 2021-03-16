@@ -42,7 +42,7 @@ public class ProfileDto {
     private List<String> departmentNames;
 
     // TODO Сущность Comment
-    private List<CommentDto> comments;
+//    private List<CommentDto> comments;
 
     public ProfileDto(Profile profile) {
         this.id = profile.getId();
@@ -67,11 +67,12 @@ public class ProfileDto {
         this.companyId = profile.getCompany().getId();
         this.companyName = profile.getCompany().getName();
         // Department
-        this.managedDepartmentId = profile.getManagedDepartment().getId();
-        this.managedDepartmentName = profile.getManagedDepartment().getName();
+        //TODO нет поля
+//        this.managedDepartmentId = profile.getManagedDepartment().getId();
+//        this.managedDepartmentName = profile.getManagedDepartment().getName();
         this.departmentNames = profile.getDepartments().stream().map(Department::getName).collect(Collectors.toList());
 
         // TODO Сущность Comment
-        this.comments = profile.getComments().stream().map(CommentDto::new).collect(Collectors.toList());
+//        this.comments = profile.getComments().stream().map(CommentDto::new).collect(Collectors.toList());
     }
 }

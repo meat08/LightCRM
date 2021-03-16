@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "departments")
@@ -29,16 +30,15 @@ public class Department {
     @ApiModelProperty(notes = "Описание деятельности отдела.", example = "Техническая поддержка сотрудников компании.", required = true, position = 2)
     private String description;
 
-    // TODO ожидание сущности Профиль
-//    @OneToOne
-//    @JoinColumn(name = "leader_id")
-//    @ApiModelProperty(notes = "Руководитель отдела.", required = true, position = 3)
-//    private Profile leader;
-//
-//    @ManyToMany
-//    @JoinTable(name = "profiles_projects",
-//            joinColumns = @JoinColumn(name = "department_id"),
-//            inverseJoinColumns = @JoinColumn(name = "profile_id"))
-//    @ApiModelProperty(notes = "Список сотрудников работающих в отделе.", required = true, position = 4)
-//    private List<Profile> employees;
+    @OneToOne
+    @JoinColumn(name = "leader_id")
+    @ApiModelProperty(notes = "Руководитель отдела.", required = true, position = 3)
+    private Profile leader;
+
+    @ManyToMany
+    @JoinTable(name = "profiles_projects",
+            joinColumns = @JoinColumn(name = "department_id"),
+            inverseJoinColumns = @JoinColumn(name = "profile_id"))
+    @ApiModelProperty(notes = "Список сотрудников работающих в отделе.", required = true, position = 4)
+    private List<Profile> employees;
 }

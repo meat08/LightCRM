@@ -23,13 +23,13 @@ public class DepartmentDTO {
     private String description;
 
     @ApiModelProperty(notes = "Идентификатор руководителя отдела.", required = true, position = 3)
-    private Long leader_id;
+    private Long leaderId;
 
-//     TODO ожидание сущности Профиль
-//    public DepartmentDTO(Department department) {
-//        this.id = department.getId();
-//        this.name = department.getName();
-//        this.description = department.getDescription();
-//        this.leader_id = department.getLeader().getID();
-//    }
+
+    public DepartmentDTO(Department department) {
+        this.id = department.getId();
+        this.name = department.getName();
+        this.description = department.getDescription();
+        this.leaderId = department.getLeader().getId();
+    }
 }

@@ -67,9 +67,8 @@ public class ProfileDto {
         this.companyId = profile.getCompany().getId();
         this.companyName = profile.getCompany().getName();
         // Department
-        //TODO нет поля
-//        this.managedDepartmentId = profile.getManagedDepartment().getId();
-//        this.managedDepartmentName = profile.getManagedDepartment().getName();
+        this.managedDepartmentId = profile.getManagedDepartment().getId();
+        this.managedDepartmentName = profile.getManagedDepartment().getName();
         this.departmentNames = profile.getDepartments().stream().map(Department::getName).collect(Collectors.toList());
 
         // TODO Сущность Comment

@@ -7,20 +7,21 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.lightcrm.entities.Priority;
+import ru.lightcrm.entities.Profile;
+import ru.lightcrm.entities.Role;
 import ru.lightcrm.entities.User;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
+import ru.lightcrm.repositories.ProfileRepository;
 import ru.lightcrm.repositories.UsersRepository;
 import ru.lightcrm.services.interfaces.UserService;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UsersRepository usersRepository;
+    private final ProfileRepository profileRepository;
 
     @Override
     public Optional<User> getByUsername(String username) {
@@ -42,7 +43,7 @@ public class UserServiceImpl implements UserService {
         return getGrantedAuthorities(getPriorities(user));
     }
 
-    private Collection<? extends GrantedAuthority> getGrantedAuthorities(List<String> priorities) {
+    private Collection<? extends GrantedAuthority> getGrantedAuthorities(Set<String> priorities) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (String priority : priorities) {
             authorities.add(new SimpleGrantedAuthority(priority));
@@ -50,11 +51,15 @@ public class UserServiceImpl implements UserService {
         return authorities;
     }
 
-    private List<String> getPriorities(User user) {
-        List<String> priorities = new ArrayList<>();
-        List<Priority> collection = user.getPriorities();
-        //TODO доделать получение priority через профиль -> штатную единицу -> роли
-//        Collection<Role> roles =
+    private Set<String> getPriorities(User user) {
+        Set<String> priorities = new HashSet<>();
+        Set<Priority> collection = user.getPriorities();
+        Profile profile = profileRepository.findByLogin(user.getLogin())
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Профиль пользователя '%s' не найден", user.getLogin())));
+        Collection<Role> roles = profile.getStaffUnit().getRoles();
+        for (Role role : roles) {
+            collection.addAll(role.getPriorities());
+        }
         for (Priority priority : collection) {
             priorities.add(priority.getName());
         }

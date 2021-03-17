@@ -67,7 +67,6 @@ CREATE TABLE comments (
     author_id           BIGINT REFERENCES profiles(id),
     created_date        TIMESTAMP,
     text                VARCHAR(255),
-    company_id          BIGINT REFERENCES companies(id)
 );
 
 CREATE TABLE projects (

@@ -13,9 +13,7 @@ import ru.lightcrm.entities.User;
 import ru.lightcrm.repositories.UsersRepository;
 import ru.lightcrm.services.interfaces.UserService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -55,7 +53,7 @@ public class UserServiceTest {
         priority.setId(1L);
         priority.setName("TEST");
         priority.setRoles(null);
-        List<Priority> priorities = new ArrayList<>(1);
+        Set<Priority> priorities = new HashSet<>(1);
         priorities.add(priority);
         user.setId(1L);
         user.setLogin("user");

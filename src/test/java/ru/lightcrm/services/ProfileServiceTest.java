@@ -36,7 +36,7 @@ public class ProfileServiceTest {
         User testUser = new User();
         testUser.setId(1L);
         testUser.setLogin("TEST_USER");
-        testUser.setPriorities(Collections.emptyList());
+        testUser.setPriorities(Collections.emptySet());
         StaffUnit testStaff = new StaffUnit();
         testStaff.setId(1L);
         testStaff.setName("TEST_STAFF");

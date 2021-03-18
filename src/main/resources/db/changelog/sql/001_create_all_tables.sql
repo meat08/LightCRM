@@ -66,7 +66,7 @@ CREATE TABLE comments (
     id                  BIGSERIAL PRIMARY KEY,
     author_id           BIGINT REFERENCES profiles(id),
     created_date        TIMESTAMP,
-    text                VARCHAR(255),
+    text                VARCHAR(255)
 );
 
 CREATE TABLE projects (

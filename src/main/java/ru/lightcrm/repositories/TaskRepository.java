@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    Optional<Task> findOneByName(String name);
+    Optional<Task> findOneByTitle(String title);
 
     @Query("SELECT t FROM Task t WHERE t.producer.id = ?1")
     List<Task> findByProducerId(Long id);

@@ -84,7 +84,7 @@ public class Profile {
 //    @ApiModelProperty(notes = "Комментарии, оставленные сотрудником.", position = 15)
 //    private List<Comment> comments;
 
-    @OneToMany(mappedBy = "profile")
+    @OneToMany(mappedBy = "manager")
     @ApiModelProperty(notes = "Компании, возглавляемые сотрудником.", position = 15)
     private List<Company> companies;
 

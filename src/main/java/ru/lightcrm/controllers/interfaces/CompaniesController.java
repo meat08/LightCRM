@@ -15,6 +15,6 @@ public interface CompaniesController {
             notes = "Запрос списка компаний",
             httpMethod = "GET"
     )
-    Set<CompanyDTO> getCompanyContent();
+    List<CompanyDTO> getCompanyContent();
 
 }

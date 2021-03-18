@@ -10,6 +10,7 @@ import ru.lightcrm.entities.Priority;
 import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.Role;
 import ru.lightcrm.entities.User;
+import ru.lightcrm.entities.dtos.UserDTO;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.repositories.ProfileRepository;
 import ru.lightcrm.repositories.UsersRepository;
@@ -24,8 +25,9 @@ public class UserServiceImpl implements UserService {
     private final ProfileRepository profileRepository;
 
     @Override
-    public Optional<User> getByUsername(String username) {
-        return usersRepository.findByLogin(username);
+    public UserDTO getByUsername(String username) {
+        return new UserDTO(usersRepository.findByLogin(username)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Пользователь '%s' не найден", username))));
     }
 
     @Override
@@ -35,11 +37,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = getByUsername(username).orElseThrow(() -> new ResourceNotFoundException(String.format("Пользователь '%s' не найден", username)));
+        UserDTO user = getByUsername(username);
         return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), getAuthorities(user));
     }
 
-    private Collection<? extends GrantedAuthority> getAuthorities(User user) {
+    private Collection<? extends GrantedAuthority> getAuthorities(UserDTO user) {
         return getGrantedAuthorities(getPriorities(user));
     }
 
@@ -51,7 +53,7 @@ public class UserServiceImpl implements UserService {
         return authorities;
     }
 
-    private Set<String> getPriorities(User user) {
+    private Set<String> getPriorities(UserDTO user) {
         Set<String> priorities = new HashSet<>();
         Set<Priority> collection = user.getPriorities();
         Profile profile = profileRepository.findByLogin(user.getLogin())

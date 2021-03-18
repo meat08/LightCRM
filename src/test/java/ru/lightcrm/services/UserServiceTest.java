@@ -31,7 +31,7 @@ public class UserServiceTest {
 
         User user = userService.getByUsername("user").orElse(null);
         Assertions.assertNotNull(user);
-        Assertions.assertTrue(user.getEnabled());
+        Assertions.assertTrue(user.isEnabled());
         Assertions.assertEquals(1, user.getPriorities().size());
         Assertions.assertEquals("100", user.getPassword());
     }

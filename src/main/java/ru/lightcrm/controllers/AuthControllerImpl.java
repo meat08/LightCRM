@@ -33,7 +33,7 @@ public class AuthControllerImpl implements AuthController {
     String username = jwtRequest.getUsername();
     try {
       User user = userService.getByUsername(username).get();
-      if (!user.getEnabled()) {
+      if (!user.isEnabled()) {
         log.warn("User with login: {} deleted", username);
         return new ResponseEntity<>(
             new LightCrmError(HttpStatus.UNAUTHORIZED.value(), "Account deleted"),

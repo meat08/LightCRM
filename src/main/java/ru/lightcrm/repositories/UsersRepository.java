@@ -1,12 +1,11 @@
 package ru.lightcrm.repositories;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.lightcrm.entities.User;
+
 import java.util.Optional;
 
-@Repository
-public interface UsersRepository extends CrudRepository<User, Long> {
-    Optional<User> findByLogin(String login);
 
+public interface UsersRepository extends JpaRepository<User, Long> {
+    Optional<User> findByLogin(String login);
 }

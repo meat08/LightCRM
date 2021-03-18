@@ -56,7 +56,7 @@ public class ProfileServiceTest {
         testProfile.setSex("M");
         testProfile.setUser(testUser);
         testProfile.setStaffUnit(testStaff);
-        testProfile.setCompany(testCompany);
+     //   testProfile.setCompany(testCompany);
         testProfile.setManagedDepartment(testDepartment);
         testProfile.setDepartments(Collections.singletonList(testDepartment));
         testProfileList = List.of(testProfile);

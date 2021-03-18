@@ -1,5 +1,6 @@
 package ru.lightcrm.entities;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
@@ -46,5 +47,9 @@ public class Company {
 //    @OneToMany(mappedBy = "companies")
 //    private List<Profile> manager;
 
+    @ManyToOne
+    @JoinColumn(name = "manager_id")
+    @ApiModelProperty(notes = "Компания, курируемая сотрудником.", position = 1)
+    private Profile manager;
 
 }

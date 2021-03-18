@@ -46,13 +46,13 @@ public class Profile {
     @ApiModelProperty(notes = "Электронная почта сотрудника.", example = "ivan@mail.com", position = 6)
     private String email;
 
-    @Column(name = "birthday")
+    @Column(name = "birthdate")
     @ApiModelProperty(notes = "Дата рождения сотрудника.", example = "1990-12-25", position = 7)
-    private LocalDate birthday;
+    private LocalDate birthdate;
 
-    @Column(name = "employent_date")
+    @Column(name = "employment_date")
     @ApiModelProperty(notes = "Дата найма сотрудника.", example = "2000-12-25", position = 8)
-    private LocalDate employentDate;
+    private LocalDate employmentDate;
 
     @Column(name = "dismissal_date")
     @ApiModelProperty(notes = "Дата увольнения сотрудника.", example = "2000-12-25", position = 9)
@@ -67,12 +67,6 @@ public class Profile {
     @JoinColumn(name = "staff_unit_id")
     @ApiModelProperty(notes = "Описание должности сотрудника.", required = true, position = 11)
     private StaffUnit staffUnit;
-
-    @ManyToOne
-    @JoinColumn(name = "manager_id")
-    @ApiModelProperty(notes = "Компания, курируемая сотрудником.", position = 12)
-    private Company company;
-
 
     @OneToOne(mappedBy = "leader")
     @ApiModelProperty(notes = "Отдел, возглавляемый сотрудником.", position = 13)
@@ -89,5 +83,9 @@ public class Profile {
 //    @OneToMany(mappedBy = "author")
 //    @ApiModelProperty(notes = "Комментарии, оставленные сотрудником.", position = 15)
 //    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "profile")
+    @ApiModelProperty(notes = "Компании, возглавляемые сотрудником.", position = 15)
+    private List<Company> companies;
 
 }

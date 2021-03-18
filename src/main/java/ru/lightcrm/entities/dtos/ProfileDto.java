@@ -2,10 +2,7 @@ package ru.lightcrm.entities.dtos;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.lightcrm.entities.Department;
-import ru.lightcrm.entities.Priority;
-import ru.lightcrm.entities.Profile;
-import ru.lightcrm.entities.Role;
+import ru.lightcrm.entities.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,8 +19,8 @@ public class ProfileDto {
     private String sex;
     private String phone;
     private String email;
-    private LocalDate birthday;
-    private LocalDate employentDate;
+    private LocalDate birthdate;
+    private LocalDate employmentDate;
     private LocalDate dismissalDate;
     // User
     private Long userId;
@@ -33,9 +30,8 @@ public class ProfileDto {
     private Long staffUnitId;
     private String staffUnitName;
     private List<String> roles;
-    // Company
-    private Long companyId;
-    private String companyName;
+    // Companies
+    private List<CompanyDTO> companies;
     // Department
     private Long managedDepartmentId;
     private String managedDepartmentName;
@@ -52,8 +48,8 @@ public class ProfileDto {
         this.sex = profile.getSex();
         this.phone = profile.getPhone();
         this.email = profile.getEmail();
-        this.birthday = profile.getBirthday();
-        this.employentDate = profile.getEmployentDate();
+        this.birthdate = profile.getBirthdate();
+        this.employmentDate = profile.getEmploymentDate();
         this.dismissalDate = profile.getDismissalDate();
         // User
         this.userId = profile.getUser().getId();
@@ -63,9 +59,8 @@ public class ProfileDto {
         this.staffUnitId = profile.getStaffUnit().getId();
         this.staffUnitName = profile.getStaffUnit().getName();
         this.roles = profile.getStaffUnit().getRoles().stream().map(Role::getName).collect(Collectors.toList());
-        // Company
-        this.companyId = profile.getCompany().getId();
-        this.companyName = profile.getCompany().getName();
+        // Companies
+        this.companies = profile.getCompanies().stream().map(CompanyDTO::new).collect(Collectors.toList());
         // Department
         this.managedDepartmentId = profile.getManagedDepartment().getId();
         this.managedDepartmentName = profile.getManagedDepartment().getName();

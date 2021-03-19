@@ -15,6 +15,10 @@
             .when('/auth', {
                 templateUrl: 'auth/auth.html',
                 controller: 'authController'
+            })
+            .when('/tasks', {
+                templateUrl: 'tasks/tasks.html',
+                controller: 'taskController'
             });
     }
 

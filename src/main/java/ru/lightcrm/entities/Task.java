@@ -62,7 +62,7 @@ public class Task {
 
     @UpdateTimestamp
     @Column(name = "update_date")
-    @ApiModelProperty(notes = " Дата последнего обновления задачи.", required = true, position = 9)
+    @ApiModelProperty(notes = "Дата последнего обновления задачи.", required = true, position = 9)
     private LocalDateTime lastUpdateDate;
 
     @Column(name = "allow_change_deadline")

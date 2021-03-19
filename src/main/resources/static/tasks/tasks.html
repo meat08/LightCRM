@@ -1,0 +1,35 @@
+<h3>Задачи</h3>
+<table class="table table-hover" cellpadding="0" cellspacing="0">
+    <thead>
+    <tr>
+        <td>ID</td>
+        <td>Наименование задачи</td>
+        <td>Описание задачи</td>
+        <td>Постановщик задачи</td>
+        <td>Ответственный</td>
+        <td>Дата постановки задачи</td>
+        <td>Дата окончания задачи</td>
+        <td>Дата планируемого окончания задачи</td>
+        <td>Статус состояния задачи</td>
+        <td>Дата последнего обновления</td>
+        <td>Возможен ли сдвиг дедлайна</td>
+        <td>Проект задачи</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="t in allTasks">
+        <td>{{t.id}}</td>
+        <td>{{t.title}}</td>
+        <td>{{t.description}}</td>
+        <td>{{t.producer_id}}</td>
+        <td>{{t.responsible_id}}</td>
+        <td>{{t.start_date}}</td>
+        <td>{{t.end_date}}</td>
+        <td>{{t.deadline}}</td>
+        <td>{{t.task_state_id}}</td>
+        <td>{{t.update_date}}</td>
+        <td>{{t.allow_change_deadline}}</td>
+        <td>{{t.project_id}}</td>
+    </tr>
+    </tbody>
+</table>

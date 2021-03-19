@@ -97,14 +97,6 @@ CREATE TABLE tasks (
     expired                 BOOLEAN DEFAULT FALSE
 );
 
-CREATE TABLE tasks_comments (
-    task_id             BIGINT NOT NULL,
-    comment_id          BIGINT NOT NULL,
-    PRIMARY KEY (task_id, comment_id),
-    FOREIGN KEY (task_id) REFERENCES tasks(id),
-    FOREIGN KEY (comment_id) REFERENCES comments(id)
-);
-
 CREATE TABLE tasks_coexecutors (
     task_id             BIGINT NOT NULL,
     profile_id          BIGINT NOT NULL,

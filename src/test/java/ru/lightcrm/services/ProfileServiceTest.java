@@ -13,6 +13,7 @@ import ru.lightcrm.entities.dtos.ProfileDto;
 import ru.lightcrm.repositories.ProfileRepository;
 import ru.lightcrm.services.interfaces.ProfileService;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +45,8 @@ public class ProfileServiceTest {
         Company testCompany = new Company();
         testCompany.setId(1L);
         testCompany.setName("TEST_COMPANY");
+        List<Company> companies = new ArrayList<>(1);
+        companies.add(testCompany);
         Department testDepartment = new Department();
         testDepartment.setId(1L);
         testDepartment.setName("TEST_DEPARTMENT");
@@ -56,7 +59,7 @@ public class ProfileServiceTest {
         testProfile.setSex("M");
         testProfile.setUser(testUser);
         testProfile.setStaffUnit(testStaff);
-        testProfile.setCompany(testCompany);
+        testProfile.setCompanies(companies);
         testProfile.setManagedDepartment(testDepartment);
         testProfile.setDepartments(Collections.singletonList(testDepartment));
         testProfileList = List.of(testProfile);

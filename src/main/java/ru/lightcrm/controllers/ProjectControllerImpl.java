@@ -17,8 +17,7 @@ public class ProjectControllerImpl implements ProjectController {
 
     @Override
     public List<ProjectDTO> getAllProjects() {
-        List<ProjectDTO> projects =  projectService.findAll();
-        return projects;
+        return projectService.findAll();
     }
 
     @Override

@@ -77,35 +77,8 @@ public class ProjectControllerTest {
                 .andExpect(jsonPath("$.managerId", is(testProjectDto.getManagerId().intValue())));
     }
 
-    @Test
-    @WithMockUser(username = "Bob", authorities = "ADMIN")
-    public void getProjectOneByNameTest() throws Exception{
-        given(projectService.findOneByName("Проект тестирования")).willReturn(testProjectDto);
-
-        mvc.perform(get("/api/v1/projects/by_name?name=Проект тестирования")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is(testProjectDto.getName())))
-                .andExpect(jsonPath("$.description", is(testProjectDto.getDescription())))
-                .andExpect(jsonPath("$.managerId", is(testProjectDto.getManagerId().intValue())));
-    }
-
-    @Test
-    @WithMockUser(username = "Bob", authorities = "ADMIN")
-    public void getProjectsByManagerIdTest() throws Exception{
-        given(projectService.findByManagerId(1l)).willReturn(testListProjectDto);
-
-        mvc.perform(get("/api/v1/projects/by_manager?id=1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].name", is(testProjectDto.getName())))
-                .andExpect(jsonPath("$[0].description", is(testProjectDto.getDescription())))
-                .andExpect(jsonPath("$[0].managerId", is(testProjectDto.getManagerId().intValue())));
-    }
-
     //TODO
     //добавить тесты на изменение
+    //после реализации функционала в сервисе
 
 }

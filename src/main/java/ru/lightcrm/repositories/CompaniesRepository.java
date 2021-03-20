@@ -1,11 +1,13 @@
 package ru.lightcrm.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import ru.lightcrm.entities.Company;
+import java.util.List;
+import java.util.Optional;
 
-@Repository
+
 public interface CompaniesRepository extends JpaRepository<Company, Long> {
-    Company findOneByName(String name);
-    Company findOneByInn(Long inn);
-    Company findOneById(Long id);
+    Optional<Company> findOneByName(String name);
+    Optional<Company> findOneByInn(Long inn);
+    Optional<Company> findOneById(Long id);
+    List<Company> findAll();
 }

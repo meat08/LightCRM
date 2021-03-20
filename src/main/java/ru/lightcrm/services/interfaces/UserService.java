@@ -2,12 +2,10 @@ package ru.lightcrm.services.interfaces;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.lightcrm.entities.User;
-
-import java.util.Optional;
+import ru.lightcrm.entities.dtos.UserDTO;
 
 public interface UserService extends UserDetailsService {
-    //TODO изменить на DTO
-    Optional<User> getByUsername(String username);
+    UserDTO getByUsername(String username);
     void saveUser(User user);
 
 }

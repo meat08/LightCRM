@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Data
@@ -20,6 +21,6 @@ public class Priority {
     private String name;
 
     @ManyToMany(mappedBy = "priorities")
-    private Collection<Role> roles;
+    private Set<Role> roles;
 
 }

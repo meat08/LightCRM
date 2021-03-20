@@ -40,7 +40,7 @@ public class ProfileServiceTest {
         StaffUnit testStaff = new StaffUnit();
         testStaff.setId(1L);
         testStaff.setName("TEST_STAFF");
-        testStaff.setRoles(Collections.emptyList());
+        testStaff.setRoles(Collections.EMPTY_SET);
         Company testCompany = new Company();
         testCompany.setId(1L);
         testCompany.setName("TEST_COMPANY");

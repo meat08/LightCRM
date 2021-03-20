@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import ru.lightcrm.entities.Task;
 
 import java.time.LocalDateTime;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -50,6 +52,18 @@ public class TaskDTO {
     @ApiModelProperty(notes = "Проект к которому относится задача.", required = true, position = 11)
     private Long projectId;
 
+    @ApiModelProperty(notes = "Просрочена ли задача", required = true, position = 12)
+    private boolean expired;
+
+    @ApiModelProperty(notes = "Список соисполнителей задачи", required = true, position = 13)
+    private Set<ProfileDto> coExecutors;
+
+    @ApiModelProperty(notes = "Список наблюдателей задачи", required = true, position = 14)
+    private Set<ProfileDto> spectators;
+
+    @ApiModelProperty(notes = "Список комментариев к заданию", required = true, position = 15)
+    private Set<CommentDto> comments;
+
     public TaskDTO(Task task) {
         this.id = task.getId();
         this.title = task.getTitle();
@@ -63,5 +77,9 @@ public class TaskDTO {
         this.lastUpdateDate = task.getLastUpdateDate();
         this.allowChangeDeadline = task.isAllowChangeDeadline();
         this.projectId = task.getProject().getId();
+        this.expired = task.isExpired();
+        this.coExecutors = task.getCoExecutors().stream().map(ProfileDto::new).collect(Collectors.toSet());
+        this.spectators = task.getSpectators().stream().map(ProfileDto::new).collect(Collectors.toSet());
+        this.comments = task.getComments().stream().map(CommentDto::new).collect(Collectors.toSet());
     }
 }

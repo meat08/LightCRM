@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Data
@@ -21,6 +22,6 @@ public class Role {
     @JoinTable(name = "roles_priorities",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "priority_id"))
-    private Collection<Priority> priorities;
+    private Set<Priority> priorities;
 }
 

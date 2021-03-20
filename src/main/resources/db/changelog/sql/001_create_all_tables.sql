@@ -44,6 +44,7 @@ CREATE TABLE departments_profiles (
 
 CREATE TABLE companies (
     id                  BIGSERIAL PRIMARY KEY,
+    name                VARCHAR(50),
     type                BOOLEAN,
     inn                 BIGINT,
     bill_number         BIGINT,
@@ -92,7 +93,40 @@ CREATE TABLE tasks (
     deadline                DATE,
     task_state_id           BIGINT REFERENCES task_states(id),
     allow_change_deadline   BOOLEAN,
-    project_id              BIGINT REFERENCES projects(id)
+    project_id              BIGINT REFERENCES projects(id),
+    expired                 BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE tasks_coexecutors (
+    task_id             BIGINT NOT NULL,
+    profile_id          BIGINT NOT NULL,
+    PRIMARY KEY (task_id, profile_id),
+    FOREIGN KEY (task_id) REFERENCES tasks(id),
+    FOREIGN KEY (profile_id) REFERENCES profiles(id)
+);
+
+CREATE TABLE tasks_spectators (
+    task_id             BIGINT NOT NULL,
+    profile_id          BIGINT NOT NULL,
+    PRIMARY KEY (task_id, profile_id),
+    FOREIGN KEY (task_id) REFERENCES tasks(id),
+    FOREIGN KEY (profile_id) REFERENCES profiles(id)
+);
+
+CREATE TABLE companies_comments (
+    company_id          BIGINT NOT NULL,
+    comment_id          BIGINT NOT NULL,
+    PRIMARY KEY (company_id, comment_id),
+    FOREIGN KEY (company_id) REFERENCES companies(id),
+    FOREIGN KEY (comment_id) REFERENCES comments(id)
+);
+
+CREATE TABLE tasks_comments (
+    tasks_id            BIGINT NOT NULL,
+    comment_id          BIGINT NOT NULL,
+    PRIMARY KEY (tasks_id, comment_id),
+    FOREIGN KEY (tasks_id) REFERENCES tasks(id),
+    FOREIGN KEY (comment_id) REFERENCES comments(id)
 );
 
 CREATE TABLE employees_projects (

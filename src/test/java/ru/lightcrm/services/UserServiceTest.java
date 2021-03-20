@@ -8,8 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ActiveProfiles;
-import ru.lightcrm.entities.Priority;
-import ru.lightcrm.entities.User;
+import ru.lightcrm.entities.*;
+import ru.lightcrm.entities.dtos.UserDTO;
+import ru.lightcrm.repositories.ProfileRepository;
 import ru.lightcrm.repositories.UsersRepository;
 import ru.lightcrm.services.interfaces.UserService;
 
@@ -23,13 +24,15 @@ public class UserServiceTest {
 
     @MockBean
     private UsersRepository usersRepository;
+    @MockBean
+    private ProfileRepository profileRepository;
 
     @Test
     public void getByUsernameTest() {
         Mockito.doReturn(generateMockUser()).when(usersRepository)
                 .findByLogin("user");
 
-        User user = userService.getByUsername("user").orElse(null);
+        UserDTO user = userService.getByUsername("user");
         Assertions.assertNotNull(user);
         Assertions.assertTrue(user.isEnabled());
         Assertions.assertEquals(1, user.getPriorities().size());
@@ -39,6 +42,9 @@ public class UserServiceTest {
     @Test
     public void loadUserByUsernameTest() {
         Mockito.doReturn(generateMockUser()).when(usersRepository)
+                .findByLogin("user");
+
+        Mockito.doReturn(generateMockProfile()).when(profileRepository)
                 .findByLogin("user");
 
         UserDetails userDetails = userService.loadUserByUsername("user");
@@ -61,5 +67,27 @@ public class UserServiceTest {
         user.setEnabled(true);
         user.setPriorities(priorities);
         return Optional.of(user);
+    }
+
+    private Optional<Profile> generateMockProfile() {
+        Set<Priority> priorities = new HashSet<>(1);
+        Set<Role> roles = new HashSet<>(1);
+        Priority priority = new Priority();
+        priority.setId(1L);
+        priority.setName("TEST");
+        priorities.add(priority);
+        Role role = new Role();
+        role.setId(1L);
+        role.setName("ROLE_TEST");
+        role.setPriorities(priorities);
+        roles.add(role);
+        StaffUnit staffUnit = new StaffUnit();
+        staffUnit.setId(1L);
+        staffUnit.setName("TEST");
+        staffUnit.setRoles(roles);
+        Profile profile = new Profile();
+        profile.setId(1L);
+        profile.setStaffUnit(staffUnit);
+        return Optional.of(profile);
     }
 }

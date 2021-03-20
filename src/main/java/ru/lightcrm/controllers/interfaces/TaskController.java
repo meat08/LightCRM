@@ -2,8 +2,8 @@ package ru.lightcrm.controllers.interfaces;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import io.swagger.annotations.ApiParam;
+import org.springframework.web.bind.annotation.*;
 import ru.lightcrm.entities.dtos.TaskDTO;
 
 import java.util.List;
@@ -12,25 +12,36 @@ import java.util.List;
 @RequestMapping("/api/v1/tasks")
 public interface TaskController {
 
-    @ApiOperation(value = "Получить список проектов с отбором по параметрам",
+    @ApiOperation(value = "Получить список задач",
             response = TaskDTO.class,
             responseContainer = "List"
     )
     @GetMapping
     List<TaskDTO> getAllTasks();
 
+    @ApiOperation(value = "Получить задачу по её Id",
+            response = TaskDTO.class
+    )
+    @GetMapping(value = "/{id}", produces = "application/json")
     TaskDTO getTaskById(Long id);
 
-    TaskDTO findOneByTitle(String title);
+    @ApiOperation(value = "Сохранить новую задачу (не работает)",
+            response = TaskDTO.class
 
-    List<TaskDTO> findByProducerId(Long id);
+    )
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    TaskDTO saveTask(@ApiParam(value = "новая задача", required = true) @RequestBody TaskDTO taskDTO);
 
-    List<TaskDTO> findByProducerIdAndTaskStateId(Long producerId, Long taskStateId);
+    @ApiOperation(value = "Обновить задачу (не работает)",
+            response = TaskDTO.class
 
-    List<TaskDTO> findByResponsibleId(Long id);
+    )
+    @PutMapping(consumes = "application/json", produces = "application/json")
+    TaskDTO updateTask(@ApiParam(value = "измененная задача", required = true) @RequestBody TaskDTO taskDTO);
 
-    List<TaskDTO> findByResponsibleIdAndTaskStateId(Long responsibleId, Long taskStateId);
+    @ApiOperation(value = "Удалить задачу (не работает)")
+    @DeleteMapping(value = "/{id}")
+    void deleteTaskById(@ApiParam(value = "идентификатор удаляемой задачи", required = true) @PathVariable Long id);
 
-    List<TaskDTO> findByProjectId(Long id);
 
 }

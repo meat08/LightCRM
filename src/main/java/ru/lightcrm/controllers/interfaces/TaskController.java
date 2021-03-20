@@ -23,7 +23,7 @@ public interface TaskController {
             response = TaskDTO.class
     )
     @GetMapping(value = "/{id}", produces = "application/json")
-    TaskDTO getTaskById(Long id);
+    TaskDTO getTaskById(@ApiParam(value = "идентификатор задачи", required = true) @PathVariable Long id);
 
     @ApiOperation(value = "Сохранить новую задачу (не работает)",
             response = TaskDTO.class

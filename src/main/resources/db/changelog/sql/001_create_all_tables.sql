@@ -49,8 +49,15 @@ CREATE TABLE companies (
     inn                 BIGINT,
     bill_number         BIGINT,
     phone_number        VARCHAR(50),
-    email               VARCHAR(50),
-    manager_id          BIGINT REFERENCES profiles(id)
+    email               VARCHAR(50)
+);
+
+CREATE TABLE companies_managers (
+    profile_id          BIGINT NOT NULL,
+    company_id       BIGINT NOT NULL,
+    PRIMARY KEY (profile_id, company_id),
+    FOREIGN KEY (profile_id) REFERENCES profiles(id),
+    FOREIGN KEY (company_id) REFERENCES companies(id)
 );
 
 CREATE TABLE contacts (

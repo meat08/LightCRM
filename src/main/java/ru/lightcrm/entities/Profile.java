@@ -68,10 +68,12 @@ public class Profile {
     @ApiModelProperty(notes = "Описание должности сотрудника.", required = true, position = 11)
     private StaffUnit staffUnit;
 
-    @ManyToOne
-    @JoinColumn(name = "manager_id")
-    @ApiModelProperty(notes = "Компания, курируемая сотрудником.", position = 12)
-    private Company company;
+    @ManyToMany
+    @JoinTable(name = "companies_managers",
+            joinColumns = @JoinColumn(name = "profile_id"),
+            inverseJoinColumns = @JoinColumn(name = "company_id"))
+    @ApiModelProperty(notes = "Компании, курируемые сотрудником.", position = 12)
+    private List<Company> companies;
 
 
     @OneToOne(mappedBy = "leader")

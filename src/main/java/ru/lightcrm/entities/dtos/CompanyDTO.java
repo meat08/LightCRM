@@ -6,8 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.lightcrm.entities.Company;
 import ru.lightcrm.entities.Contact;
+
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @ApiModel(description = "Компания DTO")
 @Data
@@ -38,6 +40,9 @@ public class CompanyDTO {
     @ApiModelProperty(notes = "Email компании", example = "GazpromInfo@gazprom.ru", required = true, position = 8)
     private String email;
 
+    @ApiModelProperty(notes = "Курирующие менеджеры компании", example = "(Иванов, Петров)", required = true, position = 9)
+    private List<ProfileDto> managers;
+
     public CompanyDTO(Company company) {
         this.id = company.getId();
         this.name = company.getName();
@@ -47,6 +52,7 @@ public class CompanyDTO {
         this.contacts = company.getContacts();
         this.phoneNumber = company.getPhoneNumber();
         this.email = company.getEmail();
+        this.managers = company.getManagers().stream().map(ProfileDto::new).collect(Collectors.toList());
 
         // TODO ожидание сущностей Менеджер и Комментарий
     }

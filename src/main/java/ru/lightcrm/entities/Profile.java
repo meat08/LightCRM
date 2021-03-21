@@ -36,8 +36,8 @@ public class Profile {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "birthday")
-    private LocalDate birthday;
+    @Column(name = "birthdate")
+    private LocalDate birthdate;
 
     @Column(name = "employment_date")
     private LocalDate employmentDate;

@@ -69,7 +69,7 @@ public class ProfileFullDto extends ProfileDto {
         this.sex = profile.getSex();
         this.phone = profile.getPhone();
         this.email = profile.getEmail();
-        this.birthday = profile.getBirthday();
+        this.birthday = profile.getBirthdate();
         this.employentDate = profile.getEmploymentDate();
         this.dismissalDate = profile.getDismissalDate();
         // Company

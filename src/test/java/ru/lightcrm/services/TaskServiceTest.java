@@ -11,7 +11,7 @@ import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.Project;
 import ru.lightcrm.entities.Task;
 import ru.lightcrm.entities.TaskState;
-import ru.lightcrm.entities.dtos.TaskDTO;
+import ru.lightcrm.entities.dtos.TaskDto;
 import ru.lightcrm.repositories.TaskRepository;
 import ru.lightcrm.services.interfaces.TaskService;
 
@@ -68,7 +68,7 @@ public class TaskServiceTest {
     public void findAllTest() {
         Mockito.doReturn(initMockTaskList()).when(taskRepository).findAll();
 
-        List<TaskDTO> taskDTOList = taskService.findAll();
+        List<TaskDto> taskDTOList = taskService.findAll();
         Assertions.assertNotNull(taskDTOList);
         Assertions.assertEquals(TASK_COUNT, taskDTOList.size());
         Assertions.assertEquals(TASK_NAME + " 1", taskDTOList.get(0).getTitle());
@@ -81,7 +81,7 @@ public class TaskServiceTest {
         Long id = 1L;
         Mockito.doReturn(initMockTask(id)).when(taskRepository).findById(id);
 
-        TaskDTO taskDTO = taskService.findById(id);
+        TaskDto taskDTO = taskService.findById(id);
         Assertions.assertNotNull(taskDTO);
         Assertions.assertEquals(TASK_NAME + " " + id, taskDTO.getTitle());
         Assertions.assertEquals(TASK_DESCRIPTION + " " + id, taskDTO.getDescription());
@@ -95,7 +95,7 @@ public class TaskServiceTest {
         final String name = TASK_NAME + " " + id;
         Mockito.doReturn(initMockTask(id)).when(taskRepository).findOneByTitle(name);
 
-        TaskDTO taskDTO = taskService.findOneByTitle(name);
+        TaskDto taskDTO = taskService.findOneByTitle(name);
         Assertions.assertNotNull(taskDTO);
         Assertions.assertEquals(id, taskDTO.getId());
         Assertions.assertEquals(TASK_DESCRIPTION + " " + id, taskDTO.getDescription());
@@ -107,7 +107,7 @@ public class TaskServiceTest {
         Long id = 1L;
         Mockito.doReturn(initMockTaskList()).when(taskRepository).findByProducerId(id);
 
-        List<TaskDTO> taskDTOList = taskService.findByProducerId(id);
+        List<TaskDto> taskDTOList = taskService.findByProducerId(id);
         Assertions.assertNotNull(taskDTOList);
         Assertions.assertEquals(TASK_COUNT, taskDTOList.size());
         for(int i = 0; i < TASK_COUNT; i++)
@@ -119,7 +119,7 @@ public class TaskServiceTest {
         Long producerId = 1L, taskStateId = 1L;
         Mockito.doReturn(initMockTaskList()).when(taskRepository).findByProducerIdAndTaskStateId(producerId, taskStateId);
 
-        List<TaskDTO> taskDTOList = taskService.findByProducerIdAndTaskStateId(producerId, taskStateId);
+        List<TaskDto> taskDTOList = taskService.findByProducerIdAndTaskStateId(producerId, taskStateId);
         Assertions.assertNotNull(taskDTOList);
         Assertions.assertEquals(TASK_COUNT, taskDTOList.size());
         for(int i = 0; i < TASK_COUNT; i++) {
@@ -133,7 +133,7 @@ public class TaskServiceTest {
         Long id = 2L;
         Mockito.doReturn(initMockTaskList()).when(taskRepository).findByResponsibleId(id);
 
-        List<TaskDTO> taskDTOList = taskService.findByResponsibleId(id);
+        List<TaskDto> taskDTOList = taskService.findByResponsibleId(id);
         Assertions.assertNotNull(taskDTOList);
         Assertions.assertEquals(TASK_COUNT, taskDTOList.size());
         for(int i = 0; i < TASK_COUNT; i++)
@@ -145,7 +145,7 @@ public class TaskServiceTest {
         Long responsibleId = 2L, taskStateId = 1L;
         Mockito.doReturn(initMockTaskList()).when(taskRepository).findByResponsibleIdAndTaskStateId(responsibleId, taskStateId);
 
-        List<TaskDTO> taskDTOList = taskService.findByResponsibleIdAndTaskStateId(responsibleId, taskStateId);
+        List<TaskDto> taskDTOList = taskService.findByResponsibleIdAndTaskStateId(responsibleId, taskStateId);
         Assertions.assertNotNull(taskDTOList);
         Assertions.assertEquals(TASK_COUNT, taskDTOList.size());
         for(int i = 0; i < TASK_COUNT; i++) {
@@ -159,7 +159,7 @@ public class TaskServiceTest {
         Long id = 3L;
         Mockito.doReturn(initMockTaskList()).when(taskRepository).findByProjectId(id);
 
-        List<TaskDTO> taskDTOList = taskService.findByProjectId(id);
+        List<TaskDto> taskDTOList = taskService.findByProjectId(id);
         Assertions.assertNotNull(taskDTOList);
         Assertions.assertEquals(TASK_COUNT, taskDTOList.size());
         for(int i = 0; i < TASK_COUNT; i++)

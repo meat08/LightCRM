@@ -9,7 +9,7 @@ import ru.lightcrm.entities.Contact;
 @ApiModel(description = "Контактное лицо dto в приложении")
 @Data
 @NoArgsConstructor
-public class ContactDTO {
+public class ContactDto {
     @ApiModelProperty(notes = "Идентификатор контактного лица", example = "1", required = true, position = 1)
     private Long id;
 
@@ -29,7 +29,7 @@ public class ContactDTO {
     private String description;
 
 
-    public ContactDTO(Contact contact) {
+    public ContactDto(Contact contact) {
         this.id = contact.getId();
         this.name = contact.getName();
         this.post = contact.getPost();

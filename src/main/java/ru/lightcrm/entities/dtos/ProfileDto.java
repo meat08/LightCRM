@@ -34,7 +34,7 @@ public class ProfileDto {
     private String staffUnitName;
     private List<String> roles;
     // Company
-    private List<CompanyDTO> companies;
+    private List<CompanyDto> companies;
     // Department
     private Long managedDepartmentId;
     private String managedDepartmentName;
@@ -64,7 +64,7 @@ public class ProfileDto {
         this.roles = profile.getStaffUnit().getRoles().stream().map(Role::getName).collect(Collectors.toList());
         // Company
         this.companies = profile.getCompanies() != null
-                ? profile.getCompanies().stream().map(CompanyDTO::new).collect(Collectors.toList())
+                ? profile.getCompanies().stream().map(CompanyDto::new).collect(Collectors.toList())
                 : null;
         // Department
         this.managedDepartmentId = profile.getManagedDepartment().getId();

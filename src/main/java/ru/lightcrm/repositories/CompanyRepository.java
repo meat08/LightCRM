@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public interface CompaniesRepository extends JpaRepository<Company, Long> {
+public interface CompanyRepository extends JpaRepository<Company, Long> {
     Optional<Company> findOneByName(String name);
     Optional<Company> findOneByInn(Long inn);
     Optional<Company> findOneById(Long id);

@@ -6,6 +6,6 @@ import ru.lightcrm.entities.Role;
 import java.util.Optional;
 
 
-public interface RolesRepository extends JpaRepository<Role, Long> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
     Optional<Role>  findOneByName(String name);
 }

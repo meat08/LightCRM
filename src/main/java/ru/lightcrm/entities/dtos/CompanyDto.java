@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @ApiModel(description = "Компания DTO")
 @Data
 @NoArgsConstructor
-public class CompanyDTO {
+public class CompanyDto {
 
     @ApiModelProperty(notes = "Идентификатор компании", example = "1", required = true, position = 1)
     private Long id;
@@ -43,7 +43,7 @@ public class CompanyDTO {
     @ApiModelProperty(notes = "Курирующие менеджеры компании", example = "(Иванов, Петров)", required = true, position = 9)
     private List<ProfileDto> managers;
 
-    public CompanyDTO(Company company) {
+    public CompanyDto(Company company) {
         this.id = company.getId();
         this.name = company.getName();
         this.type = company.isType();

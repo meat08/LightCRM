@@ -39,8 +39,8 @@ public class Profile {
     @Column(name = "birthday")
     private LocalDate birthday;
 
-    @Column(name = "employent_date")
-    private LocalDate employentDate;
+    @Column(name = "employment_date")
+    private LocalDate employmentDate;
 
     @Column(name = "dismissal_date")
     private LocalDate dismissalDate;

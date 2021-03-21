@@ -52,7 +52,10 @@ public class CompanyDTO {
         this.contacts = company.getContacts();
         this.phoneNumber = company.getPhoneNumber();
         this.email = company.getEmail();
-        this.managers = company.getManagers().stream().map(ProfileDto::new).collect(Collectors.toList());
+        //TODO на обсуждении (карточка 81), может ли у компании не быть курирующего менеджера
+        this.managers = company.getManagers() != null
+                ? company.getManagers().stream().map(ProfileDto::new).collect(Collectors.toList())
+                : null;
 
         // TODO ожидание сущностей Менеджер и Комментарий
     }

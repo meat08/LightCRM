@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @ApiModel(description = "Класс Задача.")
 public class TaskDTO {
-    @ApiModelProperty(notes = "Уникальный идентификатор задачи.", example = "1", required = true, position = 0)
+    @ApiModelProperty(notes = "Уникальный идентификатор задачи.", example = "1", required = true)
     private Long id;
 
     @ApiModelProperty(notes = "Наименование задачи.", example = "Отпуск сотрудника.", required = true, position = 1)
@@ -78,8 +78,14 @@ public class TaskDTO {
         this.allowChangeDeadline = task.isAllowChangeDeadline();
         this.projectId = task.getProject().getId();
         this.expired = task.isExpired();
-        this.coExecutors = task.getCoExecutors().stream().map(ProfileDto::new).collect(Collectors.toSet());
-        this.spectators = task.getSpectators().stream().map(ProfileDto::new).collect(Collectors.toSet());
-        this.comments = task.getComments().stream().map(CommentDto::new).collect(Collectors.toSet());
+        this.coExecutors = task.getCoExecutors() != null
+                ? task.getCoExecutors().stream().map(ProfileDto::new).collect(Collectors.toSet())
+                : null;
+        this.spectators = task.getSpectators() != null
+                ? task.getSpectators().stream().map(ProfileDto::new).collect(Collectors.toSet())
+                : null;
+        this.comments = task.getComments() != null
+                ? task.getComments().stream().map(CommentDto::new).collect(Collectors.toSet())
+                : null;
     }
 }

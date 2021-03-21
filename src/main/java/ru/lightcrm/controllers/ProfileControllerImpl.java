@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.lightcrm.controllers.interfaces.ProfileController;
 import ru.lightcrm.entities.dtos.ProfileDto;
+import ru.lightcrm.entities.dtos.ProfileFullDto;
 import ru.lightcrm.services.interfaces.ProfileService;
 
 import java.util.List;
@@ -27,5 +28,17 @@ public class ProfileControllerImpl implements ProfileController {
     @GetMapping
     public List<ProfileDto> getAll() {
         return profileService.findAll();
+    }
+
+    @Override
+    @GetMapping(value = "/full/{id}")
+    public ProfileFullDto getProfileFullById(@PathVariable Long id) {
+        return profileService.findFullById(id);
+    }
+
+    @Override
+    @GetMapping(value = "/full")
+    public List<ProfileFullDto> getAllProfilesFull() {
+        return profileService.findFullAll();
     }
 }

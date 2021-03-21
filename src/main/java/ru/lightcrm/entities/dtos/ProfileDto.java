@@ -9,6 +9,7 @@ import ru.lightcrm.entities.Role;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
@@ -28,11 +29,11 @@ public class ProfileDto {
     // User
     private Long userId;
     private String userLogin;
-    private List<String> priorities;
+    private Set<String> priorities;
     // StaffUnit
     private Long staffUnitId;
     private String staffUnitName;
-    private List<String> roles;
+    private Set<String> roles;
     // Company
     private List<CompanyDto> companies;
     // Department
@@ -57,11 +58,11 @@ public class ProfileDto {
         // User
         this.userId = profile.getUser().getId();
         this.userLogin = profile.getUser().getLogin();
-        this.priorities = profile.getUser().getPriorities().stream().map(Priority::getName).collect(Collectors.toList());
+        this.priorities = profile.getUser().getPriorities().stream().map(Priority::getName).collect(Collectors.toSet());
         // StaffUnit
         this.staffUnitId = profile.getStaffUnit().getId();
         this.staffUnitName = profile.getStaffUnit().getName();
-        this.roles = profile.getStaffUnit().getRoles().stream().map(Role::getName).collect(Collectors.toList());
+        this.roles = profile.getStaffUnit().getRoles().stream().map(Role::getName).collect(Collectors.toSet());
         // Company
         this.companies = profile.getCompanies() != null
                 ? profile.getCompanies().stream().map(CompanyDto::new).collect(Collectors.toList())

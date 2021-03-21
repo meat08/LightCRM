@@ -10,4 +10,6 @@ public interface ProfileService {
 
     List<ProfileDto> findAll();
 
+    ProfileDto findByUserId(Long userId);
+
 }

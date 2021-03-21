@@ -2,6 +2,7 @@ package ru.lightcrm.entities.dtos;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.lightcrm.entities.Company;
 import ru.lightcrm.entities.Department;
 import ru.lightcrm.entities.Priority;
 import ru.lightcrm.entities.Profile;
@@ -23,7 +24,7 @@ public class ProfileDto {
     private String phone;
     private String email;
     private LocalDate birthday;
-    private LocalDate employentDate;
+    private LocalDate employmentDate;
     private LocalDate dismissalDate;
     // User
     private Long userId;
@@ -34,7 +35,8 @@ public class ProfileDto {
     private String staffUnitName;
     private List<String> roles;
     // Company
-    private List<CompanyDTO> companies;
+    //private List<CompanyDTO> companies;
+    private List<String> companyNames;
     // Department
     private Long managedDepartmentId;
     private String managedDepartmentName;
@@ -52,7 +54,7 @@ public class ProfileDto {
         this.phone = profile.getPhone();
         this.email = profile.getEmail();
         this.birthday = profile.getBirthday();
-        this.employentDate = profile.getEmployentDate();
+        this.employmentDate = profile.getEmploymentDate();
         this.dismissalDate = profile.getDismissalDate();
         // User
         this.userId = profile.getUser().getId();
@@ -63,7 +65,10 @@ public class ProfileDto {
         this.staffUnitName = profile.getStaffUnit().getName();
         this.roles = profile.getStaffUnit().getRoles().stream().map(Role::getName).collect(Collectors.toList());
         // Company
-        this.companies = profile.getCompanies().stream().map(CompanyDTO::new).collect(Collectors.toList());
+        //this.companies = profile.getCompanies().stream().map(CompanyDTO::new).collect(Collectors.toList());
+        //todo мини Dto для компании - companyId + companyName (иначе циклическая ссылка)
+        //временно сделан лист названий компаний
+        this.companyNames = profile.getCompanies().stream().map(Company::getName).collect(Collectors.toList());
         // Department
         this.managedDepartmentId = profile.getManagedDepartment().getId();
         this.managedDepartmentName = profile.getManagedDepartment().getName();

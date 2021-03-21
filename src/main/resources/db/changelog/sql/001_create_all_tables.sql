@@ -18,7 +18,7 @@ CREATE TABLE profiles (
     sex                 VARCHAR(50),
     phone               VARCHAR(50),
     email               VARCHAR(50),
-    birthdate           DATE,
+    birthday            DATE,
     employment_date     DATE,
     dismissal_date      DATE,
     user_id             BIGINT REFERENCES users(id),

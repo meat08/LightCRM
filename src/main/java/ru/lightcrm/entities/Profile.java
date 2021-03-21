@@ -50,9 +50,9 @@ public class Profile {
     @ApiModelProperty(notes = "Дата рождения сотрудника.", example = "1990-12-25", position = 7)
     private LocalDate birthday;
 
-    @Column(name = "employent_date")
+    @Column(name = "employment_date")
     @ApiModelProperty(notes = "Дата найма сотрудника.", example = "2000-12-25", position = 8)
-    private LocalDate employentDate;
+    private LocalDate employmentDate;
 
     @Column(name = "dismissal_date")
     @ApiModelProperty(notes = "Дата увольнения сотрудника.", example = "2000-12-25", position = 9)
@@ -81,7 +81,7 @@ public class Profile {
     private Department managedDepartment;
 
     @ManyToMany
-    @JoinTable(name = "profiles_departments",
+    @JoinTable(name = "departments_profiles",
             joinColumns = @JoinColumn(name = "profile_id"),
             inverseJoinColumns = @JoinColumn(name = "department_id"))
     @ApiModelProperty(notes = "Отделы, к которым приписан сотрудник.", required = true, position = 14)

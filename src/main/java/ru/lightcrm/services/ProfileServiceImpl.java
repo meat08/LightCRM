@@ -24,4 +24,11 @@ public class ProfileServiceImpl implements ProfileService {
     public List<ProfileDto> findAll() {
         return profileRepository.findAll().stream().map(ProfileDto::new).collect(Collectors.toList());
     }
+
+    @Override
+    public ProfileDto findByUserId(Long userId) {
+        return new ProfileDto(
+            profileRepository.findByUserId(userId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format("Профиль с user id %d отсутствует", userId))));
+    }
 }

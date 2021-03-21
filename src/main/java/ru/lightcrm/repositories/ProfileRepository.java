@@ -13,4 +13,7 @@ public interface ProfileRepository extends JpaRepository<Profile, Long>, JpaSpec
 
     @Query("SELECT p FROM Profile p WHERE p.user.login = ?1")
     Optional<Profile> findByLogin(String login);
+
+     Optional<Profile> findByUserId(Long userId);
+
 }

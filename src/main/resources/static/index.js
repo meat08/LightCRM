@@ -15,7 +15,11 @@
             .when('/auth', {
                 templateUrl: 'auth/auth.html',
                 controller: 'authController'
-            });
+            })
+        .when('/profiles/profile', {
+            templateUrl: 'profile/profile.html',
+            controller: 'profileController'
+        });
     }
 
     //Функция проверяет наличие пользователя в локальном хранилище и клеит токен к заголовку

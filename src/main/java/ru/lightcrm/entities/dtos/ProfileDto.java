@@ -63,7 +63,9 @@ public class ProfileDto {
         this.staffUnitName = profile.getStaffUnit().getName();
         this.roles = profile.getStaffUnit().getRoles().stream().map(Role::getName).collect(Collectors.toList());
         // Company
-        this.companies = profile.getCompanies().stream().map(CompanyDto::new).collect(Collectors.toList());
+        this.companies = profile.getCompanies() != null
+                ? profile.getCompanies().stream().map(CompanyDto::new).collect(Collectors.toList())
+                : null;
         // Department
         this.managedDepartmentId = profile.getManagedDepartment().getId();
         this.managedDepartmentName = profile.getManagedDepartment().getName();

@@ -6,7 +6,6 @@ import lombok.Data;
 import ru.lightcrm.entities.Priority;
 import ru.lightcrm.entities.User;
 
-import java.util.List;
 import java.util.Set;
 
 @ApiModel(description = "Пользователь DTO")

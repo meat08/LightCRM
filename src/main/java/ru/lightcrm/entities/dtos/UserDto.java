@@ -11,7 +11,7 @@ import java.util.Set;
 
 @ApiModel(description = "Пользователь DTO")
 @Data
-public class UserDTO {
+public class UserDto {
 
     @ApiModelProperty(notes = "Идентификатор пользователя", example = "1", required = true, position = 1)
     private Long id;
@@ -28,7 +28,7 @@ public class UserDTO {
     @ApiModelProperty(notes = "Права пользователя", example = "(Изменение задач, Удаление задач)", required = true, position = 5)
     private Set<Priority> priorities;
 
-    public UserDTO(User user) {
+    public UserDto(User user) {
         this.id = user.getId();
         this.login = user.getLogin();
         this.password = user.getPassword();

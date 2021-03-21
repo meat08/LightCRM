@@ -1,16 +1,16 @@
 package ru.lightcrm.services.interfaces;
 
-import ru.lightcrm.entities.dtos.ProjectDTO;
+import ru.lightcrm.entities.dtos.ProjectDto;
 
 import java.util.List;
 
 public interface ProjectService {
 
-    List<ProjectDTO> findAll();
+    List<ProjectDto> findAll();
 
-    ProjectDTO findById(Long id);
+    ProjectDto findById(Long id);
 
-    ProjectDTO findOneByName(String name);
+    ProjectDto findOneByName(String name);
 
-    List<ProjectDTO> findByManagerId(Long id);
+    List<ProjectDto> findByManagerId(Long id);
 }

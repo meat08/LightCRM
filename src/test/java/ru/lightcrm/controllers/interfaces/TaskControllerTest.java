@@ -10,7 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.lightcrm.entities.dtos.TaskDTO;
+import ru.lightcrm.entities.dtos.TaskDto;
 import ru.lightcrm.services.interfaces.TaskService;
 
 
@@ -34,12 +34,12 @@ public class TaskControllerTest {
     @MockBean
     private TaskService taskService;
 
-    private static List<TaskDTO> testListTaskDto;
-    private static TaskDTO testTaskDto;
+    private static List<TaskDto> testListTaskDto;
+    private static TaskDto testTaskDto;
 
     @BeforeAll
     public static void init(){
-        testTaskDto = new TaskDTO();
+        testTaskDto = new TaskDto();
         testTaskDto.setId(1l);
         testTaskDto.setTitle("Task test");
         testTaskDto.setDescription("Description of task");

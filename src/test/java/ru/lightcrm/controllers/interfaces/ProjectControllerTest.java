@@ -10,7 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.lightcrm.entities.dtos.ProjectDTO;
+import ru.lightcrm.entities.dtos.ProjectDto;
 import ru.lightcrm.services.interfaces.ProjectService;
 
 import java.util.List;
@@ -33,12 +33,12 @@ public class ProjectControllerTest {
     @MockBean
     private ProjectService projectService;
 
-    private static List<ProjectDTO> testListProjectDto;
-    private static ProjectDTO testProjectDto;
+    private static List<ProjectDto> testListProjectDto;
+    private static ProjectDto testProjectDto;
 
     @BeforeAll
     public static void init(){
-        testProjectDto = new ProjectDTO();
+        testProjectDto = new ProjectDto();
         testProjectDto.setId(1l);
         testProjectDto.setName("Project test");
         testProjectDto.setDescription("Description of project");

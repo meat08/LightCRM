@@ -2,7 +2,7 @@ package ru.lightcrm.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.lightcrm.entities.dtos.ProjectDTO;
+import ru.lightcrm.entities.dtos.ProjectDto;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.repositories.ProjectRepository;
 import ru.lightcrm.services.interfaces.ProjectService;
@@ -16,24 +16,24 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
 
     @Override
-    public List<ProjectDTO> findAll() {
-        return projectRepository.findAll().stream().map(ProjectDTO::new).collect(Collectors.toList());
+    public List<ProjectDto> findAll() {
+        return projectRepository.findAll().stream().map(ProjectDto::new).collect(Collectors.toList());
     }
 
     @Override
-    public ProjectDTO findById(Long id) {
-        return new ProjectDTO(projectRepository.findById(id)
+    public ProjectDto findById(Long id) {
+        return new ProjectDto(projectRepository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException(String.format("Проект с id = %s не найден", id))));
     }
 
     @Override
-    public ProjectDTO findOneByName(String name) {
-        return new ProjectDTO(projectRepository.findOneByName(name)
+    public ProjectDto findOneByName(String name) {
+        return new ProjectDto(projectRepository.findOneByName(name)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Проект с наименованием = \"%s\" не найден", name))));
     }
 
     @Override
-    public List<ProjectDTO> findByManagerId(Long id) {
-        return projectRepository.findByManagerId(id).stream().map(ProjectDTO::new).collect(Collectors.toList());
+    public List<ProjectDto> findByManagerId(Long id) {
+        return projectRepository.findByManagerId(id).stream().map(ProjectDto::new).collect(Collectors.toList());
     }
 }

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(description = "Класс Задача.")
-public class TaskDTO {
+public class TaskDto {
     @ApiModelProperty(notes = "Уникальный идентификатор задачи.", example = "1", required = true, position = 0)
     private Long id;
 
@@ -64,7 +64,7 @@ public class TaskDTO {
     @ApiModelProperty(notes = "Список комментариев к заданию", required = true, position = 15)
     private Set<CommentDto> comments;
 
-    public TaskDTO(Task task) {
+    public TaskDto(Task task) {
         this.id = task.getId();
         this.title = task.getTitle();
         this.description = task.getDescription();

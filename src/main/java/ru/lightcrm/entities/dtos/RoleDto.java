@@ -11,7 +11,7 @@ import java.util.Set;
 
 @ApiModel(description = "Роль DTO")
 @Data
-public class RoleDTO {
+public class RoleDto {
 
     @ApiModelProperty(notes = "Идентификатор роли", example = "1", required = true, position = 1)
     private Long id;
@@ -22,7 +22,7 @@ public class RoleDTO {
     @ApiModelProperty(notes = "Права, принадлежащие данной роли", example = "(Изменение задач, Удаление задач)", required = true, position = 3)
     private Set<Priority> priorities;
 
-    public RoleDTO(Role role) {
+    public RoleDto(Role role) {
         this.id = role.getId();
         this.name = role.getName();
         this.priorities = role.getPriorities();

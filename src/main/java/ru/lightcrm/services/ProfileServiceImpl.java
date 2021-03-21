@@ -3,6 +3,7 @@ package ru.lightcrm.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.lightcrm.entities.dtos.ProfileDto;
+import ru.lightcrm.entities.dtos.ProfileFullDto;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.repositories.ProfileRepository;
 import ru.lightcrm.services.interfaces.ProfileService;
@@ -23,5 +24,15 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public List<ProfileDto> findAll() {
         return profileRepository.findAll().stream().map(ProfileDto::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public ProfileFullDto findFullById(Long id) {
+        return new ProfileFullDto(profileRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format("Профиль с id %s отсутствует", id))));
+    }
+
+    @Override
+    public List<ProfileFullDto> findFullAll() {
+        return profileRepository.findAll().stream().map(ProfileFullDto::new).collect(Collectors.toList());
     }
 }

@@ -1,14 +1,16 @@
 package ru.lightcrm.entities;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.util.Collection;
 import java.util.Set;
+import javax.persistence.*;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+// @Data замени на эти две аннотации - иначе зацикливание
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "priorities")
 public class Priority {
@@ -22,5 +24,4 @@ public class Priority {
 
     @ManyToMany(mappedBy = "priorities")
     private Set<Role> roles;
-
 }

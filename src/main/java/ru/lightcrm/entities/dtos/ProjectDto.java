@@ -12,7 +12,7 @@ import ru.lightcrm.entities.Project;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(description = "Класс Проект DTO для группировки задач одного бизнес-процесса или направления.")
-public class ProjectDTO {
+public class ProjectDto {
 
     @ApiModelProperty(notes = "Уникальный идентификатор проекта.", example = "1", required = true, position = 0)
     private Long id;
@@ -27,7 +27,7 @@ public class ProjectDTO {
     private Long managerId;
 
 
-    public ProjectDTO(Project project) {
+    public ProjectDto(Project project) {
         this.id = project.getId();
         this.name = project.getName();
         this.description = project.getDescription();

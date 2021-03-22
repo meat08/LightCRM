@@ -28,6 +28,6 @@ class AuthControllerTest {
     mockMvc.perform(MockMvcRequestBuilders.post("/auth")
         .contentType(MediaType.APPLICATION_JSON)
         .content(writer.toString()))
-        .andExpect(MockMvcResultMatchers.status().is(401));
+        .andExpect(MockMvcResultMatchers.status().is(404));
   }
 }

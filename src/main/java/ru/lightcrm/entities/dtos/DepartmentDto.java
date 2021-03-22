@@ -11,7 +11,7 @@ import ru.lightcrm.entities.Department;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(description = "Класс Отдел DTO для организации иерархической структуры компании.")
-public class DepartmentDTO {
+public class DepartmentDto {
 
     @ApiModelProperty(notes = "Уникальный идентификатор отдела.", example = "1", required = true, position = 0)
     private Long id;
@@ -26,7 +26,7 @@ public class DepartmentDTO {
     private Long leaderId;
 
 
-    public DepartmentDTO(Department department) {
+    public DepartmentDto(Department department) {
         this.id = department.getId();
         this.name = department.getName();
         this.description = department.getDescription();

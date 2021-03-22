@@ -12,7 +12,8 @@ angular.module('app').controller('authController',
             $localStorage.currentUser = {
               username: $scope.user.username,
               token: response.data.token,
-              roles: response.data.roles
+              roles: response.data.roles,
+                profileId: response.data.profileId
             };
 
             $scope.user.username = null;

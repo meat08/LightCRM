@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.lightcrm.configs.JwtTokenUtil;
 import ru.lightcrm.controllers.interfaces.AuthController;
 import ru.lightcrm.entities.User;
+import ru.lightcrm.entities.dtos.ProfileDto;
 import ru.lightcrm.entities.dtos.UserDto;
 import ru.lightcrm.exceptions.LightCrmError;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
+import ru.lightcrm.services.interfaces.ProfileService;
 import ru.lightcrm.services.interfaces.UserService;
 import ru.lightcrm.utils.JwtRequest;
 import ru.lightcrm.utils.JwtResponse;
@@ -29,6 +31,7 @@ public class AuthControllerImpl implements AuthController {
   private final AuthenticationManager authenticationManager;
   private final JwtTokenUtil jwtTokenUtil;
   private final UserService userService;
+  private final ProfileService profileService;
 
 
   public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest jwtRequest) {
@@ -55,7 +58,8 @@ public class AuthControllerImpl implements AuthController {
           HttpStatus.NOT_FOUND);
     }
     UserDetails userDetails = userService.loadUserByUsername(username);
-    String token = jwtTokenUtil.generateToken(userDetails);
+    ProfileDto profileDto = profileService.findByLogin(username);
+    String token = jwtTokenUtil.generateToken(userDetails, profileDto.getId());
     log.info("Successfully created token for user login {}", username);
     return ResponseEntity.ok(new JwtResponse(token));
   }

@@ -10,7 +10,7 @@ import java.util.Set;
 
 @ApiModel(description = "Права DTO")
 @Data
-public class PriorityDTO {
+public class PriorityDto {
     @ApiModelProperty(notes = "Идентификатор права", example = "1", required = true, position = 1)
     private Long id;
 
@@ -20,7 +20,7 @@ public class PriorityDTO {
     @ApiModelProperty(notes = "Роли, в которые включено данное право", example = "(Administrator, Manager, User)", required = true, position = 3)
     private Set<Role> roles;
 
-    public PriorityDTO(Priority priority) {
+    public PriorityDto(Priority priority) {
         this.id = priority.getId();
         this.name = priority.getName();
         this.roles = priority.getRoles();

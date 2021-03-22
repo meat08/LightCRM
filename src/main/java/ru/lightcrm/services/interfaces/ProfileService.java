@@ -1,6 +1,7 @@
 package ru.lightcrm.services.interfaces;
 
 import ru.lightcrm.entities.dtos.ProfileDto;
+import ru.lightcrm.entities.dtos.ProfileFullDto;
 
 import java.util.List;
 
@@ -10,6 +11,10 @@ public interface ProfileService {
 
     List<ProfileDto> findAll();
 
-    ProfileDto findByUserId(Long userId);
+    ProfileFullDto findFullById(Long id);
+
+    List<ProfileFullDto> findFullAll();
+
+    ProfileFullDto findFullByUserId(Long userId);
 
 }

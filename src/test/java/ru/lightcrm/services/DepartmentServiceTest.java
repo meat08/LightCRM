@@ -9,7 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import ru.lightcrm.entities.Department;
 import ru.lightcrm.entities.Profile;
-import ru.lightcrm.entities.dtos.DepartmentDTO;
+import ru.lightcrm.entities.dtos.DepartmentDto;
 import ru.lightcrm.repositories.DepartmentRepository;
 import ru.lightcrm.services.interfaces.DepartmentService;
 
@@ -55,7 +55,7 @@ public class DepartmentServiceTest {
     public void findAll() {
         Mockito.doReturn(initMockDepartmentList()).when(departmentRepository).findAll();
 
-        List<DepartmentDTO> departmentDTOList = departmentService.findAll();
+        List<DepartmentDto> departmentDTOList = departmentService.findAll();
         Assertions.assertNotNull(departmentDTOList);
         Assertions.assertEquals(DEPARTMENT_COUNT, departmentDTOList.size());
         Assertions.assertEquals(DEPARTMENT_NAME + " 1", departmentDTOList.get(0).getName());
@@ -67,7 +67,7 @@ public class DepartmentServiceTest {
         Long id = 1L;
         Mockito.doReturn(initMockDepartment(id)).when(departmentRepository).findById(id);
 
-        DepartmentDTO departmentDTO = departmentService.findById(id);
+        DepartmentDto departmentDTO = departmentService.findById(id);
         Assertions.assertNotNull(departmentDTO);
         Assertions.assertEquals(DEPARTMENT_NAME + " " + id, departmentDTO.getName());
         Assertions.assertEquals(DEPARTMENT_DESCRIPTION + " " + id, departmentDTO.getDescription());
@@ -80,7 +80,7 @@ public class DepartmentServiceTest {
         final String name = DEPARTMENT_NAME + " " + id;
         Mockito.doReturn(initMockDepartment(id)).when(departmentRepository).findOneByName(name);
 
-        DepartmentDTO departmentDTO = departmentService.findOneByName(name);
+        DepartmentDto departmentDTO = departmentService.findOneByName(name);
         Assertions.assertNotNull(departmentDTO);
         Assertions.assertEquals(id, departmentDTO.getId());
         Assertions.assertEquals(DEPARTMENT_DESCRIPTION + " " + id, departmentDTO.getDescription());
@@ -92,7 +92,7 @@ public class DepartmentServiceTest {
         Long id = 1L;
         Mockito.doReturn(initMockDepartment(id)).when(departmentRepository).findOneByLeaderId(id);
 
-        DepartmentDTO departmentDTO = departmentService.findOneByLeaderId(id);
+        DepartmentDto departmentDTO = departmentService.findOneByLeaderId(id);
         Assertions.assertNotNull(departmentDTO);
         Assertions.assertEquals(DEPARTMENT_NAME + " " + id, departmentDTO.getName());
         Assertions.assertEquals(DEPARTMENT_DESCRIPTION + " " + id, departmentDTO.getDescription());

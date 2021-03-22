@@ -9,9 +9,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import ru.lightcrm.entities.*;
-import ru.lightcrm.entities.dtos.UserDTO;
+import ru.lightcrm.entities.dtos.UserDto;
 import ru.lightcrm.repositories.ProfileRepository;
-import ru.lightcrm.repositories.UsersRepository;
+import ru.lightcrm.repositories.UserRepository;
 import ru.lightcrm.services.interfaces.UserService;
 
 import java.util.*;
@@ -23,7 +23,7 @@ public class UserServiceTest {
     private UserService userService;
 
     @MockBean
-    private UsersRepository usersRepository;
+    private UserRepository usersRepository;
     @MockBean
     private ProfileRepository profileRepository;
 
@@ -32,7 +32,7 @@ public class UserServiceTest {
         Mockito.doReturn(generateMockUser()).when(usersRepository)
                 .findByLogin("user");
 
-        UserDTO user = userService.getByUsername("user");
+        UserDto user = userService.getByUsername("user");
         Assertions.assertNotNull(user);
         Assertions.assertTrue(user.isEnabled());
         Assertions.assertEquals(1, user.getPriorities().size());

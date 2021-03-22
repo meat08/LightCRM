@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+// @Data замени на эти две аннотации - иначе зацикливание
 @Getter
 @Setter
 @NoArgsConstructor

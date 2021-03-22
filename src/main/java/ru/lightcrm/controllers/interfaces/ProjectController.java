@@ -4,7 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
-import ru.lightcrm.entities.dtos.ProjectDTO;
+import ru.lightcrm.entities.dtos.ProjectDto;
 
 import java.util.List;
 
@@ -13,31 +13,31 @@ import java.util.List;
 public interface ProjectController {
 
     @ApiOperation(value = "Получить список проектов",
-            response = ProjectDTO.class,
+            response = ProjectDto.class,
             responseContainer = "List"
     )
     @GetMapping
-    List<ProjectDTO> getAllProjects();
+    List<ProjectDto> getAllProjects();
 
     @ApiOperation(value = "Получить проект по его Id",
-            response = ProjectDTO.class
+            response = ProjectDto.class
     )
     @GetMapping(value = "/{id}", produces = "application/json")
-    ProjectDTO getProjectById(@ApiParam(value = "идентификатор проекта", required = true) @PathVariable Long id);
+    ProjectDto getProjectById(@ApiParam(value = "идентификатор проекта", required = true) @PathVariable Long id);
 
     @ApiOperation(value = "Сохранить новый проект (не работает)",
-            response = ProjectDTO.class
+            response = ProjectDto.class
 
     )
     @PostMapping(consumes = "application/json", produces = "application/json")
-    ProjectDTO saveProject(@ApiParam(value = "новый проект", required = true) @RequestBody ProjectDTO projectDTO);
+    ProjectDto saveProject(@ApiParam(value = "новый проект", required = true) @RequestBody ProjectDto projectDTO);
 
     @ApiOperation(value = "Обновить проект (не работает)",
-            response = ProjectDTO.class
+            response = ProjectDto.class
 
     )
     @PutMapping(consumes = "application/json", produces = "application/json")
-    ProjectDTO updateProject(@ApiParam(value = "измененный проект", required = true) @RequestBody ProjectDTO projectDTO);
+    ProjectDto updateProject(@ApiParam(value = "измененный проект", required = true) @RequestBody ProjectDto projectDTO);
 
     @ApiOperation(value = "Удалить проект (не работает)")
     @DeleteMapping(value = "/{id}")

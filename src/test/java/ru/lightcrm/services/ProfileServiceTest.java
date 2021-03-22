@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import ru.lightcrm.entities.*;
 import ru.lightcrm.entities.dtos.ProfileDto;
+import ru.lightcrm.entities.dtos.ProfileFullDto;
 import ru.lightcrm.repositories.ProfileRepository;
 import ru.lightcrm.services.interfaces.ProfileService;
 
@@ -32,7 +33,7 @@ public class ProfileServiceTest {
     private static Profile testProfile;
 
     @BeforeAll
-    public static void init() {
+    public static void prepareTestData() {
         testProfile = new Profile();
         User testUser = new User();
         testUser.setId(1L);
@@ -66,7 +67,7 @@ public class ProfileServiceTest {
     }
 
     @Test
-    public void findProfileByIdTest() {
+    public void findByIdTest() {
         Mockito.doReturn(Optional.of(testProfile))
                 .when(profileRepository)
                 .findById(testProfile.getId());
@@ -77,6 +78,21 @@ public class ProfileServiceTest {
         Assertions.assertEquals(testProfile.getFirstname(), profileDto.getFirstname());
         Assertions.assertEquals(testProfile.getLastname(), profileDto.getLastname());
         Assertions.assertEquals(testProfile.getMiddlename(), profileDto.getMiddlename());
+        Mockito.verify(profileRepository, Mockito.times(1)).findById(testProfile.getId());
+    }
+
+    @Test
+    public void findFullByIdTest() {
+        Mockito.doReturn(Optional.of(testProfile))
+                .when(profileRepository)
+                .findById(testProfile.getId());
+
+        ProfileFullDto profileFullDto = profileService.findFullById(testProfile.getId());
+
+        Assertions.assertNotNull(profileFullDto);
+        Assertions.assertEquals(testProfile.getUser().getLogin(), profileFullDto.getUserLogin());
+        Assertions.assertEquals(testProfile.getCompanies().get(0).getName(), profileFullDto.getCompanyNames().get(0));
+        Assertions.assertEquals(testProfile.getDepartments().get(0).getName(), profileFullDto.getManagedDepartmentName());
         Mockito.verify(profileRepository, Mockito.times(1)).findById(testProfile.getId());
     }
 
@@ -93,6 +109,22 @@ public class ProfileServiceTest {
         Assertions.assertEquals(testProfileList.get(0).getFirstname(), profileDtos.get(0).getFirstname());
         Assertions.assertEquals(testProfileList.get(0).getLastname(), profileDtos.get(0).getLastname());
         Assertions.assertEquals(testProfileList.get(0).getMiddlename(), profileDtos.get(0).getMiddlename());
+        Mockito.verify(profileRepository, Mockito.times(1)).findAll();
+    }
+
+    @Test
+    public void findFullAllTest() {
+        Mockito.doReturn(testProfileList)
+                .when(profileRepository)
+                .findAll();
+
+        List<ProfileFullDto> profileFullDtos = profileService.findFullAll();
+
+        Assertions.assertNotNull(profileFullDtos);
+        Assertions.assertEquals(testProfileList.size(), profileFullDtos.size());
+        Assertions.assertEquals(testProfileList.get(0).getUser().getLogin(), profileFullDtos.get(0).getUserLogin());
+        Assertions.assertEquals(testProfileList.get(0).getCompanies().get(0).getName(), profileFullDtos.get(0).getCompanyNames().get(0));
+        Assertions.assertEquals(testProfileList.get(0).getDepartments().get(0).getName(), profileFullDtos.get(0).getManagedDepartmentName());
         Mockito.verify(profileRepository, Mockito.times(1)).findAll();
     }
 }

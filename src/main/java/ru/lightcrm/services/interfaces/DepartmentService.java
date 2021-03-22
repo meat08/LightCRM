@@ -1,15 +1,15 @@
 package ru.lightcrm.services.interfaces;
 
-import ru.lightcrm.entities.dtos.DepartmentDTO;
+import ru.lightcrm.entities.dtos.DepartmentDto;
 
 import java.util.List;
 
 public interface DepartmentService {
-    List<DepartmentDTO> findAll();
+    List<DepartmentDto> findAll();
 
-    DepartmentDTO findById(Long id);
+    DepartmentDto findById(Long id);
 
-    DepartmentDTO findOneByName(String name);
+    DepartmentDto findOneByName(String name);
 
-    DepartmentDTO findOneByLeaderId(Long id);
+    DepartmentDto findOneByLeaderId(Long id);
 }

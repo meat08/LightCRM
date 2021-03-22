@@ -9,7 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.Project;
-import ru.lightcrm.entities.dtos.ProjectDTO;
+import ru.lightcrm.entities.dtos.ProjectDto;
 import ru.lightcrm.repositories.ProjectRepository;
 import ru.lightcrm.services.interfaces.ProjectService;
 
@@ -57,7 +57,7 @@ public class ProjectServiceTest {
     public void findAll() {
         Mockito.doReturn(initMockProjectList()).when(projectRepository).findAll();
 
-        List<ProjectDTO> projectDTOList = projectService.findAll();
+        List<ProjectDto> projectDTOList = projectService.findAll();
         Assertions.assertNotNull(projectDTOList);
         Assertions.assertEquals(PROJECT_COUNT, projectDTOList.size());
         Assertions.assertEquals(PROJECT_NAME + " 1", projectDTOList.get(0).getName());
@@ -69,7 +69,7 @@ public class ProjectServiceTest {
         Long id = 1L;
         Mockito.doReturn(initMockProject(id)).when(projectRepository).findById(id);
 
-        ProjectDTO projectDTO = projectService.findById(id);
+        ProjectDto projectDTO = projectService.findById(id);
         Assertions.assertNotNull(projectDTO);
         Assertions.assertEquals(PROJECT_NAME + " " + id, projectDTO.getName());
         Assertions.assertEquals(PROJECT_DESCRIPTION + " " + id, projectDTO.getDescription());
@@ -82,7 +82,7 @@ public class ProjectServiceTest {
         final String name = PROJECT_NAME + " " + id;
         Mockito.doReturn(initMockProject(id)).when(projectRepository).findOneByName(name);
 
-        ProjectDTO projectDTO = projectService.findOneByName(name);
+        ProjectDto projectDTO = projectService.findOneByName(name);
         Assertions.assertNotNull(projectDTO);
         Assertions.assertEquals(id, projectDTO.getId());
         Assertions.assertEquals(PROJECT_DESCRIPTION + " " + id, projectDTO.getDescription());
@@ -94,7 +94,7 @@ public class ProjectServiceTest {
         Long id = 1L;
         Mockito.doReturn(initMockProjectList()).when(projectRepository).findByManagerId(id);
 
-        List<ProjectDTO> projectDTOList = projectService.findByManagerId(id);
+        List<ProjectDto> projectDTOList = projectService.findByManagerId(id);
         Assertions.assertNotNull(projectDTOList);
         Assertions.assertEquals(PROJECT_COUNT, projectDTOList.size());
         for(int i = 0; i < PROJECT_COUNT; i++)

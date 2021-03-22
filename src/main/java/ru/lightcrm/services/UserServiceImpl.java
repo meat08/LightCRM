@@ -10,10 +10,10 @@ import ru.lightcrm.entities.Priority;
 import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.Role;
 import ru.lightcrm.entities.User;
-import ru.lightcrm.entities.dtos.UserDTO;
+import ru.lightcrm.entities.dtos.UserDto;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.repositories.ProfileRepository;
-import ru.lightcrm.repositories.UsersRepository;
+import ru.lightcrm.repositories.UserRepository;
 import ru.lightcrm.services.interfaces.UserService;
 
 import java.util.*;
@@ -21,12 +21,12 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final UsersRepository usersRepository;
+    private final UserRepository usersRepository;
     private final ProfileRepository profileRepository;
 
     @Override
-    public UserDTO getByUsername(String username) {
-        return new UserDTO(usersRepository.findByLogin(username)
+    public UserDto getByUsername(String username) {
+        return new UserDto(usersRepository.findByLogin(username)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Пользователь '%s' не найден", username))));
     }
 
@@ -37,11 +37,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDTO user = getByUsername(username);
+        UserDto user = getByUsername(username);
         return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), getAuthorities(user));
     }
 
-    private Collection<? extends GrantedAuthority> getAuthorities(UserDTO user) {
+    private Collection<? extends GrantedAuthority> getAuthorities(UserDto user) {
         return getGrantedAuthorities(getPriorities(user));
     }
 
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
         return authorities;
     }
 
-    private Set<String> getPriorities(UserDTO user) {
+    private Set<String> getPriorities(UserDto user) {
         Set<String> priorities = new HashSet<>();
         Set<Priority> collection = user.getPriorities();
         Profile profile = profileRepository.findByLogin(user.getLogin())

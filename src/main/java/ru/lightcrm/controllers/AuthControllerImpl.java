@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.lightcrm.configs.JwtTokenUtil;
 import ru.lightcrm.controllers.interfaces.AuthController;
-import ru.lightcrm.entities.User;
-import ru.lightcrm.entities.dtos.UserDTO;
+import ru.lightcrm.entities.dtos.UserDto;
 import ru.lightcrm.exceptions.LightCrmError;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.services.interfaces.UserService;
@@ -34,7 +33,7 @@ public class AuthControllerImpl implements AuthController {
   public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest jwtRequest) {
     String username = jwtRequest.getUsername();
     try {
-      UserDTO user = userService.getByUsername(username);
+      UserDto user = userService.getByUsername(username);
       if (!user.isEnabled()) {
         log.warn("User with login: {} deleted", username);
         return new ResponseEntity<>(

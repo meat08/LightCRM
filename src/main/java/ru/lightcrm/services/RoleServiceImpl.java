@@ -1,21 +1,20 @@
 package ru.lightcrm.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.lightcrm.entities.Role;
-import ru.lightcrm.entities.dtos.RoleDTO;
+import ru.lightcrm.entities.dtos.RoleDto;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
-import ru.lightcrm.repositories.RolesRepository;
-import ru.lightcrm.services.interfaces.RolesService;
+import ru.lightcrm.repositories.RoleRepository;
+import ru.lightcrm.services.interfaces.RoleService;
 
 @Service
 @RequiredArgsConstructor
-public class RolesServiceImpl implements RolesService {
-    private final RolesRepository rolesRepository;
+public class RoleServiceImpl implements RoleService {
+    private final RoleRepository rolesRepository;
 
-    public RoleDTO findByName(String name) {
+    public RoleDto findByName(String name) {
         Role role = rolesRepository.findOneByName(name).orElseThrow(() -> new ResourceNotFoundException(String.format("Роль '%s' не найдена", name)));
-        return new RoleDTO (role);
+        return new RoleDto(role);
     }
 }

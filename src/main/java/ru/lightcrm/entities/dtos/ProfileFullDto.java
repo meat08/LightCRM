@@ -3,6 +3,7 @@ package ru.lightcrm.entities.dtos;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -51,7 +52,7 @@ public class ProfileFullDto extends ProfileDto {
 
     // Company
     @ApiModelProperty(notes = "Компании, курируемые сотрудником", dataType = "List<CompanyDto>", position = 17)
-    private List<CompanyDto> companies;
+    private List<String> companyNames;
 
     // Department
     @Min(1)
@@ -74,9 +75,14 @@ public class ProfileFullDto extends ProfileDto {
         this.employmentDate = profile.getEmploymentDate();
         this.dismissalDate = profile.getDismissalDate();
         // Company
-        this.companies = profile.getCompanies() != null
-                ? profile.getCompanies().stream().map(CompanyDto::new).collect(Collectors.toList())
-                : null;
+        //  this.companies = profile.getCompanies() != null
+        //                ? profile.getCompanies().stream().map(CompanyDto::new).collect(Collectors.toList())
+        //                : null;
+        //todo мини Dto для компании - companyId + companyName (иначе циклическая ссылка)
+        //временно сделан лист названий компаний
+        this.companyNames = profile.getCompanies() != null
+            ? profile.getCompanies().stream().map(Company::getName).collect(Collectors.toList())
+            : new ArrayList<>();
         // Department
         this.managedDepartmentId = profile.getManagedDepartment().getId();
         this.managedDepartmentName = profile.getManagedDepartment().getName();

@@ -129,10 +129,10 @@ CREATE TABLE companies_comments (
 );
 
 CREATE TABLE tasks_comments (
-    tasks_id            BIGINT NOT NULL,
+    task_id            BIGINT NOT NULL,
     comment_id          BIGINT NOT NULL,
-    PRIMARY KEY (tasks_id, comment_id),
-    FOREIGN KEY (tasks_id) REFERENCES tasks(id),
+    PRIMARY KEY (task_id, comment_id),
+    FOREIGN KEY (task_id) REFERENCES tasks(id),
     FOREIGN KEY (comment_id) REFERENCES comments(id)
 );
 

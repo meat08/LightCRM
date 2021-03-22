@@ -64,7 +64,7 @@ public class Profile {
     private Department managedDepartment;
 
     @ManyToMany
-    @JoinTable(name = "profiles_departments",
+    @JoinTable(name = "departments_profiles",
             joinColumns = @JoinColumn(name = "profile_id"),
             inverseJoinColumns = @JoinColumn(name = "department_id"))
     private List<Department> departments;

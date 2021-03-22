@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import ru.lightcrm.entities.Priority;
 import ru.lightcrm.entities.Role;
-import java.util.Collection;
 import java.util.Set;
 
 

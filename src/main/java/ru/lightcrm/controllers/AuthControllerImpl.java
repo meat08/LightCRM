@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.lightcrm.configs.JwtTokenUtil;
 import ru.lightcrm.controllers.interfaces.AuthController;
-import ru.lightcrm.entities.User;
 import ru.lightcrm.entities.dtos.UserDto;
 import ru.lightcrm.exceptions.LightCrmError;
 import ru.lightcrm.exceptions.ResourceNotFoundException;

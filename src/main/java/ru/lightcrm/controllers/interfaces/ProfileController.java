@@ -7,6 +7,7 @@ import ru.lightcrm.entities.dtos.ProfileFullDto;
 
 import java.util.List;
 
+
 @Api(value = "/api/v1/profiles", tags = "Контроллер для работы с профилями", produces = "application/json")
 public interface ProfileController {
 

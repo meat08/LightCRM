@@ -51,7 +51,7 @@ public class ProfileFullDto extends ProfileDto {
 
     // Company
     @ApiModelProperty(notes = "Компании, курируемые сотрудником", dataType = "List<CompanyDto>", position = 17)
-    private List<String> companyNames;
+    private List<CompanyDto> companies;
 
     // Department
     @Min(1)
@@ -74,10 +74,9 @@ public class ProfileFullDto extends ProfileDto {
         this.employmentDate = profile.getEmploymentDate();
         this.dismissalDate = profile.getDismissalDate();
         // Company
-        //this.companies = profile.getCompanies().stream().map(CompanyDTO::new).collect(Collectors.toList());
-        //todo мини Dto для компании - companyId + companyName (иначе циклическая ссылка)
-        //временно сделан лист названий компаний
-        this.companyNames = profile.getCompanies().stream().map(Company::getName).collect(Collectors.toList());
+        this.companies = profile.getCompanies() != null
+                ? profile.getCompanies().stream().map(CompanyDto::new).collect(Collectors.toList())
+                : null;
         // Department
         this.managedDepartmentId = profile.getManagedDepartment().getId();
         this.managedDepartmentName = profile.getManagedDepartment().getName();
@@ -85,6 +84,5 @@ public class ProfileFullDto extends ProfileDto {
         this.comments = profile.getComments() != null
                 ? profile.getComments().stream().map(CommentDto::new).collect(Collectors.toList())
                 : Collections.emptyList();
-
     }
 }

@@ -16,10 +16,14 @@
                 templateUrl: 'auth/auth.html',
                 controller: 'authController'
             })
-        .when('/profiles/profile', {
-            templateUrl: 'profile/profile.html',
-            controller: 'profileController'
-        });
+            .when('/profiles/profile', {
+                templateUrl: 'profile/profile.html',
+                controller: 'profileController'
+            })
+            .when('/tasks', {
+                templateUrl: 'tasks/tasks.html',
+                controller: 'taskController'
+            });
     }
 
     //Функция проверяет наличие пользователя в локальном хранилище и клеит токен к заголовку

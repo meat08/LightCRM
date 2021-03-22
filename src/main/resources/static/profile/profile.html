@@ -1,0 +1,149 @@
+<h3>Профиль сотрудника</h3>
+
+<div class="mb-3 text-left">
+
+  <hr/>
+  <form class="form-signin">
+    <div class="form-group row">
+      <label for="nickname" class="col-sm-3 col-form-label col-form-label-lg">Логин</label>
+      <div class="col-sm-5">
+        <input type="text" readonly class="form-control form-control-lg" id="nickname"
+               value="{{profile.userLogin}}">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="lastname" class="col-sm-3 col-form-label col-form-label-lg">Фамилия</label>
+      <div class="col-sm-5">
+        <input type="text" readonly class="form-control form-control-lg" id="lastname"
+               value="{{profile.lastname}}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="firstname" class="col-sm-3 col-form-label col-form-label-lg">Имя</label>
+      <div class="col-sm-5">
+        <input type="text" readonly class="form-control form-control-lg" id="firstname"
+               value="{{profile.firstname}}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="middlename" class="col-sm-3 col-form-label col-form-label-lg">Отчество</label>
+      <div class="col-sm-5">
+        <input type="text" readonly class="form-control form-control-lg" id="middlename"
+               value="{{profile.middlename}}">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="staticEmail" class="col-sm-3 col-form-label col-form-label-lg">Email</label>
+      <div class="col-sm-5">
+        <input type="text" readonly class="form-control form-control-lg" id="staticEmail"
+               value="{{profile.email}}">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="phone" class="col-sm-3 col-form-label col-form-label-lg">Телефон</label>
+      <div class="col-sm-5">
+        <input type="text" readonly class="form-control form-control-lg" id="phone"
+               value="{{profile.phone}}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="birthday" class="col-sm-3 col-form-label col-form-label-lg">Дата
+        рождения</label>
+      <div class="col-sm-5">
+        <input type="date" readonly class="form-control form-control-lg" id="birthday"
+               value="{{profile.birthdate}}">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="staticSex" class="col-sm-3 col-form-label col-form-label-lg">Пол</label>
+      <div class="col-sm-5">
+        <input type="text" readonly class="form-control form-control-lg" id="staticSex"
+               value="{{profile.sex}}">
+      </div>
+    </div>
+    <hr/>
+    <div class="form-group row">
+      <label for="staffUnit" class="col-sm-3 col-form-label col-form-label-lg">Должность</label>
+      <div class="col-sm-5">
+        <input type="text" readonly class="form-control form-control-lg" id="staffUnit"
+               value="{{profile.staffUnitName}}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="employmentDate" class="col-sm-3 col-form-label col-form-label-lg">Дата
+        приема</label>
+      <div class="col-sm-5">
+        <input type="text" readonly class="form-control form-control-lg" id="employmentDate"
+               value="{{profile.employmentDate}}">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="department" class="col-sm-3 col-form-label col-form-label-lg">Отдел</label>
+      <div class="col-sm-5">
+        <input type="text" readonly ng-repeat="d in profile.departmentNames" class="form-control form-control-lg" id="department"
+               value="{{d}}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="leaderDepartment" class="col-sm-3 col-form-label col-form-label-lg">Вышестоящий
+        отдел</label>
+      <div class="col-sm-5">
+        <input type="text" readonly class="form-control form-control-lg" id="leaderDepartment"
+               value="{{profile.managedDepartmentName}}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="companies" class="col-sm-3 col-form-label col-form-label-lg">Клиенты</label>
+      <div class="col-sm-5">
+        <input type="text" readonly ng-repeat="c in profile.companyNames" class="form-control form-control-lg" id="companies"
+               value="{{c}}">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="roles" class="col-sm-3 col-form-label col-form-label-lg">Уровни доступа</label>
+      <div class="col-sm-5">
+        <input type="text" readonly ng-repeat="r in profile.roles" class="form-control form-control-lg" id="roles"
+               value="{{r}}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="priorities" class="col-sm-3 col-form-label col-form-label-lg">Доп. доступы</label>
+      <div class="col-sm-5">
+        <input type="text" readonly readonly ng-repeat="p in profile.priorities" class="form-control form-control-lg" id="priorities"
+               value="{{p}}">
+      </div>
+    </div>
+  </form>
+</div>
+<hr/>
+
+<div>
+  <h6>Комментарии</h6>
+  <table class="table table-hover" cellpadding="0" cellspacing="0">
+    <thead class="thead-light">
+    <tr align="center">
+      <th>Автор</th>
+      <th>Email автора</th>
+      <th>Дата</th>
+      <th>Содержание</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr align="center" ng-repeat="com in profile.comments">
+      <td>{{com.authorFirstName}} {{com.authorLastName}}</td>
+      <td>{{com.authorEmail}}</td>
+      <td>
+      <time>{{com.createdDate}}</time>
+      </td>
+      <td>{{com.text}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</div>

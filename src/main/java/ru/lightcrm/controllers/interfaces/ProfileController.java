@@ -1,10 +1,12 @@
 package ru.lightcrm.controllers.interfaces;
 
 import io.swagger.annotations.*;
+import java.security.Principal;
 import ru.lightcrm.entities.dtos.ProfileDto;
 import ru.lightcrm.entities.dtos.ProfileFullDto;
 
 import java.util.List;
+
 
 @Api(value = "/api/v1/profiles", tags = "Контроллер для работы с профилями", produces = "application/json")
 public interface ProfileController {
@@ -47,4 +49,12 @@ public interface ProfileController {
     })
     List<ProfileFullDto> getAllProfilesFull();
 
+  @ApiOperation(value = "Возвращает профиль по объекту Principal", httpMethod = "GET", produces = "application/json", response = ProfileFullDto.class)
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "OK", response = ProfileFullDto.class),
+      @ApiResponse(code = 401, message = "Клиент не авторизован"),
+      @ApiResponse(code = 403, message = "Нет прав"),
+      @ApiResponse(code = 404, message = "Пользователь userId не найден")
+  })
+  ProfileFullDto getProfileFull(Principal principal);
 }

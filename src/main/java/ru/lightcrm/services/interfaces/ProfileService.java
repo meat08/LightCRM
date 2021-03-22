@@ -15,6 +15,8 @@ public interface ProfileService {
 
     List<ProfileFullDto> findFullAll();
 
+    ProfileFullDto findFullByUserId(Long userId);
+
     ProfileDto findByLogin(String login);
 
 }

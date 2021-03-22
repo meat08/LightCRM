@@ -37,6 +37,13 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    public ProfileFullDto findFullByUserId(Long userId) {
+        return new ProfileFullDto(
+            profileRepository.findByUserId(userId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format("Профиль с user id %d отсутствует", userId))));
+    }
+
+    @Override
     public ProfileDto findByLogin(String login) {
         return new ProfileDto(profileRepository.findByLogin(login).orElseThrow(() -> new ResourceNotFoundException(String.format("Профиль с логином %s отсутствует", login))));
     }

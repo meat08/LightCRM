@@ -91,7 +91,7 @@ public class ProfileServiceTest {
 
         Assertions.assertNotNull(profileFullDto);
         Assertions.assertEquals(testProfile.getUser().getLogin(), profileFullDto.getUserLogin());
-        Assertions.assertEquals(testProfile.getCompanies().get(0).getName(), profileFullDto.getCompanies().get(0).getName());
+        Assertions.assertEquals(testProfile.getCompanies().get(0).getName(), profileFullDto.getCompanyNames().get(0));
         Assertions.assertEquals(testProfile.getDepartments().get(0).getName(), profileFullDto.getManagedDepartmentName());
         Mockito.verify(profileRepository, Mockito.times(1)).findById(testProfile.getId());
     }
@@ -123,7 +123,7 @@ public class ProfileServiceTest {
         Assertions.assertNotNull(profileFullDtos);
         Assertions.assertEquals(testProfileList.size(), profileFullDtos.size());
         Assertions.assertEquals(testProfileList.get(0).getUser().getLogin(), profileFullDtos.get(0).getUserLogin());
-        Assertions.assertEquals(testProfileList.get(0).getCompanies().get(0).getName(), profileFullDtos.get(0).getCompanies().get(0).getName());
+        Assertions.assertEquals(testProfileList.get(0).getCompanies().get(0).getName(), profileFullDtos.get(0).getCompanyNames().get(0));
         Assertions.assertEquals(testProfileList.get(0).getDepartments().get(0).getName(), profileFullDtos.get(0).getManagedDepartmentName());
         Mockito.verify(profileRepository, Mockito.times(1)).findAll();
     }

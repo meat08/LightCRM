@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import ru.lightcrm.entities.Role;
 import ru.lightcrm.entities.StaffUnit;
-import java.util.Collection;
 import java.util.Set;
 
 @ApiModel(description = "Штатная единица DTO")

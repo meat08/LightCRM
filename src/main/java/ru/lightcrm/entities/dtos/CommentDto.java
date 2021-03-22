@@ -38,7 +38,8 @@ public class CommentDto {
         this.authorFirstName = comment.getAuthor().getFirstname();
         this.authorLastName = comment.getAuthor().getLastname();
         this.authorEmail = comment.getAuthor().getEmail();
-        this.createdDate = comment.getCreatedDate();
+        this.createdDate = comment.getCreatedDate().withNano(0);
         this.text = comment.getText();
+
     }
 }

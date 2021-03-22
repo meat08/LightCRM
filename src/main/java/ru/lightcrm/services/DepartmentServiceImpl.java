@@ -2,6 +2,7 @@ package ru.lightcrm.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.lightcrm.entities.Department;
 import ru.lightcrm.entities.dtos.DepartmentDto;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.repositories.DepartmentRepository;
@@ -21,15 +22,20 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public DepartmentDto findById(Long id) {
+    public DepartmentDto findDtoById(Long id) {
         return new DepartmentDto(departmentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Отдел с id = %s не найден", id))));
     }
 
     @Override
-    public DepartmentDto findOneByName(String name) {
-        return new DepartmentDto(departmentRepository.findOneByName(name)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Отдел с наименованием = \"%s\" не найден", name))));
+    public Department findOneByName(String name) {
+        return departmentRepository.findOneByName(name)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Отдел с наименованием = \"%s\" не найден", name)));
+    }
+
+    @Override
+    public DepartmentDto findOneDtoByName(String name) {
+        return new DepartmentDto(findOneByName(name));
     }
 
     @Override

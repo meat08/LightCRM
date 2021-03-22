@@ -127,4 +127,11 @@ public class ProfileServiceTest {
         Assertions.assertEquals(testProfileList.get(0).getDepartments().get(0).getName(), profileFullDtos.get(0).getManagedDepartmentName());
         Mockito.verify(profileRepository, Mockito.times(1)).findAll();
     }
+
+    @Test
+    public void saveProfileTest() {
+        Profile profile = new Profile();
+        profileService.saveProfile(profile);
+        Mockito.verify(profileRepository, Mockito.times(1)).save(profile);
+    }
 }

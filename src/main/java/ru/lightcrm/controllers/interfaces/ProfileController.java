@@ -78,7 +78,7 @@ public interface ProfileController {
             @ApiResponse(code = 404, message = "Ресурс отсутствует")
     })
     @PostMapping(value = "/register", consumes = "application/json")
-    ResponseEntity<?> saveNewUser(
+    ResponseEntity<? extends > saveNewUser(
             @ApiParam(value = "JSON представление данных нового пользователя", name = "systemUserDto", required = true,
                     example = "{\"firstname\": \"Иван\", \"lastname\": \"Иванов\", \"middlename\": \"Иванович\", " +
                             "\"staffUnitName\": \"string\", \"employmentDate\": \"2012-10-23\", \"departmentNames\": [\"string\"], " +

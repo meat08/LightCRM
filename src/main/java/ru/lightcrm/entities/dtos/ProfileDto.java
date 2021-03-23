@@ -32,6 +32,7 @@ public class ProfileDto extends ProfileMiniDto {
 
     @Size(min = 3, max = 50, message = "Логин сотрудника должен содержать от 3 до 50 символов")
     @ApiModelProperty(notes = "Логин сотрудника.", dataType = "String", example = "Aladdin", position = 8)
+    // TODO над всеми полями @JsonProperty("...")
     private String userLogin;
 
     @ApiModelProperty(notes = "Список прав сотрудника", dataType = "List<String>", required = true, position = 9)

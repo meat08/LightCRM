@@ -12,6 +12,7 @@ import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,7 +41,7 @@ public class ProfileMiniDto {
     @PastOrPresent(message = "Дата найма должна быть не позже настоящего времени")
     @ApiModelProperty(notes = "Дата найма сотрудника", dataType = "LocalDate", example = "2000-12-25", position = 5)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate employmentDate;
+    private OffsetDateTime employmentDate;
 
     @ApiModelProperty(notes = "Список отделов, к которым приписан сотрудник", dataType = "List<String>", required = true, position = 6)
     private List<String> departmentNames;

@@ -66,6 +66,7 @@ public class ProfileControllerImpl implements ProfileController {
 
     @Override
     public ResponseEntity<?> saveNewUser(SystemUserDto systemUserDto, BindingResult bindingResult) {
+        // TODO вынести в сервис ->
         if (userService.isPresent(systemUserDto.getLogin())) {
             log.warn("User with login: {} already exists", systemUserDto.getLogin());
             return new ResponseEntity<>(
@@ -102,7 +103,7 @@ public class ProfileControllerImpl implements ProfileController {
 
         userService.saveUser(newUser);
         profileService.saveProfile(newProfile);
-
+// TODO вынести в сервис <-
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

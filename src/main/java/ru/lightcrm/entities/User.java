@@ -1,5 +1,6 @@
 package ru.lightcrm.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,8 @@ import java.util.Set;
 @Entity
 @Data
 @Table(name = "users")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +35,13 @@ public class User {
 
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public static User createNewUser(String login, String password) {
+        User user = new User();
+        user.setLogin(login);
+        user.setPassword(password);
+        user.setEnabled(true);
+        return user;
     }
 }

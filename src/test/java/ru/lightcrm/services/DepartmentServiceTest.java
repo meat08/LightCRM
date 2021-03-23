@@ -67,7 +67,7 @@ public class DepartmentServiceTest {
         Long id = 1L;
         Mockito.doReturn(initMockDepartment(id)).when(departmentRepository).findById(id);
 
-        DepartmentDto departmentDTO = departmentService.findById(id);
+        DepartmentDto departmentDTO = departmentService.findDtoById(id);
         Assertions.assertNotNull(departmentDTO);
         Assertions.assertEquals(DEPARTMENT_NAME + " " + id, departmentDTO.getName());
         Assertions.assertEquals(DEPARTMENT_DESCRIPTION + " " + id, departmentDTO.getDescription());
@@ -80,7 +80,7 @@ public class DepartmentServiceTest {
         final String name = DEPARTMENT_NAME + " " + id;
         Mockito.doReturn(initMockDepartment(id)).when(departmentRepository).findOneByName(name);
 
-        DepartmentDto departmentDTO = departmentService.findOneByName(name);
+        DepartmentDto departmentDTO = departmentService.findOneDtoByName(name);
         Assertions.assertNotNull(departmentDTO);
         Assertions.assertEquals(id, departmentDTO.getId());
         Assertions.assertEquals(DEPARTMENT_DESCRIPTION + " " + id, departmentDTO.getDescription());

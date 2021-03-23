@@ -2,6 +2,7 @@ package ru.lightcrm.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.lightcrm.entities.dtos.SystemUserDto;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -72,4 +73,14 @@ public class Profile {
     @OneToMany(mappedBy = "author")
     private List<Comment> comments;
 
+    public static Profile createNewProfileForUserRegistration(SystemUserDto systemUserDto, User user, StaffUnit staffUnit, List<Department> departments) {
+        Profile profile = new Profile();
+        profile.setUser(user);
+        profile.setStaffUnit(staffUnit);
+        profile.setDepartments(departments);
+        profile.setFirstname(systemUserDto.getFirstname());
+        profile.setLastname(systemUserDto.getLastname());
+        profile.setMiddlename(systemUserDto.getMiddlename());
+        return profile;
+    }
 }

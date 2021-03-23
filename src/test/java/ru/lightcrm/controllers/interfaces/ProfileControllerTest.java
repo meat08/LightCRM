@@ -10,16 +10,25 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.lightcrm.entities.Department;
+import ru.lightcrm.entities.StaffUnit;
 import ru.lightcrm.entities.dtos.ProfileDto;
 import ru.lightcrm.entities.dtos.ProfileFullDto;
+import ru.lightcrm.entities.dtos.SystemUserDto;
+import ru.lightcrm.services.interfaces.DepartmentService;
 import ru.lightcrm.services.interfaces.ProfileService;
+import ru.lightcrm.services.interfaces.StaffUnitService;
+import ru.lightcrm.services.interfaces.UserService;
 
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -33,19 +42,38 @@ public class ProfileControllerTest {
 
     @MockBean
     private ProfileService profileService;
+    @MockBean
+    private UserService userService;
+    @MockBean
+    private StaffUnitService staffUnitService;
+    @MockBean
+    private DepartmentService departmentService;
 
+    private static String firstname;
+    private static String lastname;
+    private static String middlename;
+    private static String staffUnitName;
+    private static String departmentName;
     private static List<ProfileDto> testProfileDtoList;
     private static List<ProfileFullDto> testProfileFullDtoList;
     private static ProfileDto testProfileDto;
     private static ProfileFullDto testProfileFullDto;
+    private static SystemUserDto testSystemUserDto;
+    private static StaffUnit testStaffUnit;
+    private static Department testDepartment;
 
     @BeforeAll
     public static void prepareTestData() {
+        firstname = "Тест";
+        lastname = "Тестов";
+        middlename = "Тестович";
+        staffUnitName = "Тестовая должность";
+        departmentName = "Тестовый отдел";
         testProfileDto = new ProfileDto();
         testProfileDto.setId(1L);
-        testProfileDto.setFirstname("Тест");
-        testProfileDto.setLastname("Тестов");
-        testProfileDto.setMiddlename("Тестович");
+        testProfileDto.setFirstname(firstname);
+        testProfileDto.setLastname(lastname);
+        testProfileDto.setMiddlename(middlename);
         testProfileDtoList = List.of(testProfileDto);
         // Full
         testProfileFullDto = new ProfileFullDto();
@@ -53,7 +81,23 @@ public class ProfileControllerTest {
         testProfileFullDto.setPhone("80001112233");
         testProfileFullDto.setEmail("test@email.com");
         testProfileFullDtoList = List.of(testProfileFullDto);
-
+        // SystemUserDto
+        testSystemUserDto = new SystemUserDto();
+        testSystemUserDto.setLogin("Aladdin");
+        testSystemUserDto.setPassword("12345");
+        testSystemUserDto.setConfirmationPassword("12345");
+        testSystemUserDto.setFirstname(firstname);
+        testSystemUserDto.setLastname(lastname);
+        testSystemUserDto.setMiddlename(middlename);
+        testSystemUserDto.setStaffUnitName(staffUnitName);
+        testSystemUserDto.setEmploymentDate(LocalDate.now());
+        testSystemUserDto.setDepartmentNames(Collections.singletonList(departmentName));
+        // StaffUnit
+        testStaffUnit = new StaffUnit();
+        testStaffUnit.setName(staffUnitName);
+        // Department
+        testDepartment = new Department();
+        testStaffUnit.setName(departmentName);
     }
 
     @Test
@@ -110,5 +154,22 @@ public class ProfileControllerTest {
                 .andExpect(jsonPath("$.sex", is(testProfileFullDto.getSex())))
                 .andExpect(jsonPath("$.phone", is(testProfileFullDto.getPhone())))
                 .andExpect(jsonPath("$.email", is(testProfileFullDto.getEmail())));
+    }
+
+    @Test
+    @WithMockUser(username = "Bob", authorities = "ADMIN")
+    public void saveNewUserTest() throws Exception {
+        given(staffUnitService.findByName(staffUnitName)).willReturn(testStaffUnit);
+        given(departmentService.findOneByName(departmentName)).willReturn(testDepartment);
+
+        String json = "{\"firstname\":\"Тест\",\"lastname\":\"Тестов\",\"middlename\":\"Тестович\"," +
+                "\"staffUnitName\":\"Тестовая должность\",\"employmentDate\":\"2021-03-22\"," +
+                "\"departmentNames\":[\"Тестовый отдел\"],\"login\":\"Aladdin\",\"password\":\"12345\"," +
+                "\"confirmationPassword\":\"12345\"}";
+
+        mvc.perform(post("/api/v1/profiles/register").content(json)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
     }
 }

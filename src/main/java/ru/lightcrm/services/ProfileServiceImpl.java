@@ -2,6 +2,7 @@ package ru.lightcrm.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.dtos.ProfileDto;
 import ru.lightcrm.entities.dtos.ProfileFullDto;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
@@ -18,7 +19,8 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ProfileDto findById(Long id) {
-        return new ProfileDto(profileRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format("Профиль с id %s отсутствует", id))));
+        return new ProfileDto(profileRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Профиль с id %s отсутствует", id))));
     }
 
     @Override
@@ -28,7 +30,8 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ProfileFullDto findFullById(Long id) {
-        return new ProfileFullDto(profileRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format("Профиль с id %s отсутствует", id))));
+        return new ProfileFullDto(profileRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Профиль с id %s отсутствует", id))));
     }
 
     @Override
@@ -39,8 +42,13 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public ProfileFullDto findFullByUserId(Long userId) {
         return new ProfileFullDto(
-            profileRepository.findByUserId(userId).orElseThrow(() ->
-                new ResourceNotFoundException(String.format("Профиль с user id %d отсутствует", userId))));
+                profileRepository.findByUserId(userId).orElseThrow(() ->
+                        new ResourceNotFoundException(String.format("Профиль с user id %d отсутствует", userId))));
+    }
+
+    @Override
+    public void saveProfile(Profile profile) {
+        profileRepository.save(profile);
     }
 
     @Override

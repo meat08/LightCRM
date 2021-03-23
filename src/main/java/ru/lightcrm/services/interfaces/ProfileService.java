@@ -1,5 +1,6 @@
 package ru.lightcrm.services.interfaces;
 
+import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.dtos.ProfileDto;
 import ru.lightcrm.entities.dtos.ProfileFullDto;
 
@@ -18,5 +19,7 @@ public interface ProfileService {
     ProfileFullDto findFullByUserId(Long userId);
 
     ProfileDto findByLogin(String login);
+
+    void saveProfile(Profile profile);
 
 }

@@ -8,13 +8,15 @@ import lombok.NoArgsConstructor;
 import ru.lightcrm.entities.Task;
 
 import java.time.LocalDateTime;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(description = "Класс Задача.")
-public class TaskDTO {
-    @ApiModelProperty(notes = "Уникальный идентификатор задачи.", example = "1", required = true, position = 0)
+public class TaskDto {
+    @ApiModelProperty(notes = "Уникальный идентификатор задачи.", example = "1", required = true)
     private Long id;
 
     @ApiModelProperty(notes = "Наименование задачи.", example = "Отпуск сотрудника.", required = true, position = 1)
@@ -50,7 +52,19 @@ public class TaskDTO {
     @ApiModelProperty(notes = "Проект к которому относится задача.", required = true, position = 11)
     private Long projectId;
 
-    public TaskDTO(Task task) {
+    @ApiModelProperty(notes = "Просрочена ли задача", required = true, position = 12)
+    private boolean expired;
+
+    @ApiModelProperty(notes = "Список соисполнителей задачи", required = true, position = 13)
+    private Set<ProfileDto> coExecutors;
+
+    @ApiModelProperty(notes = "Список наблюдателей задачи", required = true, position = 14)
+    private Set<ProfileDto> spectators;
+
+    @ApiModelProperty(notes = "Список комментариев к заданию", required = true, position = 15)
+    private Set<CommentDto> comments;
+
+    public TaskDto(Task task) {
         this.id = task.getId();
         this.title = task.getTitle();
         this.description = task.getDescription();
@@ -63,5 +77,15 @@ public class TaskDTO {
         this.lastUpdateDate = task.getLastUpdateDate();
         this.allowChangeDeadline = task.isAllowChangeDeadline();
         this.projectId = task.getProject().getId();
+        this.expired = task.isExpired();
+        this.coExecutors = task.getCoExecutors() != null
+                ? task.getCoExecutors().stream().map(ProfileDto::new).collect(Collectors.toSet())
+                : null;
+        this.spectators = task.getSpectators() != null
+                ? task.getSpectators().stream().map(ProfileDto::new).collect(Collectors.toSet())
+                : null;
+        this.comments = task.getComments() != null
+                ? task.getComments().stream().map(CommentDto::new).collect(Collectors.toSet())
+                : null;
     }
 }

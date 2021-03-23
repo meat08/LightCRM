@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.lightcrm.configs.JwtTokenUtil;
 import ru.lightcrm.controllers.interfaces.AuthController;
-import ru.lightcrm.entities.User;
+import ru.lightcrm.entities.dtos.UserDto;
 import ru.lightcrm.exceptions.LightCrmError;
+import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.services.interfaces.UserService;
 import ru.lightcrm.utils.JwtRequest;
 import ru.lightcrm.utils.JwtResponse;
@@ -32,8 +33,8 @@ public class AuthControllerImpl implements AuthController {
   public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest jwtRequest) {
     String username = jwtRequest.getUsername();
     try {
-      User user = userService.getByUsername(username).get();
-      if (!user.getEnabled()) {
+      UserDto user = userService.getByUsername(username);
+      if (!user.isEnabled()) {
         log.warn("User with login: {} deleted", username);
         return new ResponseEntity<>(
             new LightCrmError(HttpStatus.UNAUTHORIZED.value(), "Account deleted"),
@@ -47,6 +48,10 @@ public class AuthControllerImpl implements AuthController {
       return new ResponseEntity<>(
           new LightCrmError(HttpStatus.UNAUTHORIZED.value(), "Incorrect username or password"),
           HttpStatus.UNAUTHORIZED);
+    } catch (ResourceNotFoundException e){
+      return new ResponseEntity<>(
+          new LightCrmError(HttpStatus.NOT_FOUND.value(), e.getMessage()),
+          HttpStatus.NOT_FOUND);
     }
     UserDetails userDetails = userService.loadUserByUsername(username);
     String token = jwtTokenUtil.generateToken(userDetails);

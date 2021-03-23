@@ -15,5 +15,6 @@
   <div ng-if="isUserLoggedIn()">
     <span>Вы вошли в приложение. Для выхода нажмите на кнопку</span>
     <button class="btn btn-outline-secondary" ng-click="tryToLogout()">Выйти</button>
+    <a class="btn btn-outline-warning" ng-if="isUserLoggedIn()" href="#!/profiles/profile">Профиль</a>
   </div>
 </div>

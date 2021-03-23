@@ -44,12 +44,20 @@ CREATE TABLE departments_profiles (
 
 CREATE TABLE companies (
     id                  BIGSERIAL PRIMARY KEY,
+    name                VARCHAR(50),
     type                BOOLEAN,
     inn                 BIGINT,
     bill_number         BIGINT,
     phone_number        VARCHAR(50),
-    email               VARCHAR(50),
-    manager_id          BIGINT REFERENCES profiles(id)
+    email               VARCHAR(50)
+);
+
+CREATE TABLE companies_managers (
+    profile_id          BIGINT NOT NULL,
+    company_id       BIGINT NOT NULL,
+    PRIMARY KEY (profile_id, company_id),
+    FOREIGN KEY (profile_id) REFERENCES profiles(id),
+    FOREIGN KEY (company_id) REFERENCES companies(id)
 );
 
 CREATE TABLE contacts (
@@ -66,8 +74,7 @@ CREATE TABLE comments (
     id                  BIGSERIAL PRIMARY KEY,
     author_id           BIGINT REFERENCES profiles(id),
     created_date        TIMESTAMP,
-    text                VARCHAR(255),
-    company_id          BIGINT REFERENCES companies(id)
+    text                VARCHAR(255)
 );
 
 CREATE TABLE projects (
@@ -93,7 +100,40 @@ CREATE TABLE tasks (
     deadline                DATE,
     task_state_id           BIGINT REFERENCES task_states(id),
     allow_change_deadline   BOOLEAN,
-    project_id              BIGINT REFERENCES projects(id)
+    project_id              BIGINT REFERENCES projects(id),
+    expired                 BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE tasks_coexecutors (
+    task_id             BIGINT NOT NULL,
+    profile_id          BIGINT NOT NULL,
+    PRIMARY KEY (task_id, profile_id),
+    FOREIGN KEY (task_id) REFERENCES tasks(id),
+    FOREIGN KEY (profile_id) REFERENCES profiles(id)
+);
+
+CREATE TABLE tasks_spectators (
+    task_id             BIGINT NOT NULL,
+    profile_id          BIGINT NOT NULL,
+    PRIMARY KEY (task_id, profile_id),
+    FOREIGN KEY (task_id) REFERENCES tasks(id),
+    FOREIGN KEY (profile_id) REFERENCES profiles(id)
+);
+
+CREATE TABLE companies_comments (
+    company_id          BIGINT NOT NULL,
+    comment_id          BIGINT NOT NULL,
+    PRIMARY KEY (company_id, comment_id),
+    FOREIGN KEY (company_id) REFERENCES companies(id),
+    FOREIGN KEY (comment_id) REFERENCES comments(id)
+);
+
+CREATE TABLE tasks_comments (
+    task_id            BIGINT NOT NULL,
+    comment_id          BIGINT NOT NULL,
+    PRIMARY KEY (task_id, comment_id),
+    FOREIGN KEY (task_id) REFERENCES tasks(id),
+    FOREIGN KEY (comment_id) REFERENCES comments(id)
 );
 
 CREATE TABLE employees_projects (

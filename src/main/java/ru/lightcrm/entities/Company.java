@@ -2,10 +2,10 @@ package ru.lightcrm.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -21,30 +21,36 @@ public class Company {
     private String name;
 
     @Column(name = "type")
-    private Boolean type;
+    private boolean type;
 
     @Column(name = "inn")
     private Long inn;
 
-    @Column(name = "billNumber")
+    @Column(name = "bill_number")
     private Long billNumber;
 
     @OneToMany(mappedBy = "company")
-    private List<Contact> contacts;
+    private Set<Contact> contacts;
 
-    @Column(name = "phoneNumber")
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     @Column(name = "email")
     private String email;
 
+    @ManyToMany
+    @JoinTable(name = "companies_managers",
+            joinColumns = @JoinColumn(name = "company_id"),
+            inverseJoinColumns = @JoinColumn(name = "profile_id"))
+    private List<Profile> managers;
+
+    public boolean isType() {
+        return type;
+    }
+
     //TODO ожидается появление нужных сущностей
-//    @OneToMany(mappedBy = "companies")
-//    @Cascade(org.hibernate.annotations.CascadeType.ALL)
 //    private List<Comment> comments;
-//
-//    @OneToMany(mappedBy = "companies")
-//    private List<Profile> manager;
+
 
 
 }

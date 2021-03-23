@@ -1,77 +1,65 @@
 package ru.lightcrm.entities.dtos;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import ru.lightcrm.entities.Department;
 import ru.lightcrm.entities.Priority;
 import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.Role;
 
-import java.time.LocalDate;
-import java.util.List;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+import java.util.Collections;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-public class ProfileDto {
+@ApiModel(description = "Класс, представляющий профиль с основными сведениями о конкретном сотруднике", parent = ProfileMiniDto.class, subTypes = ProfileFullDto.class)
+public class ProfileDto extends ProfileMiniDto {
 
+    @Min(1)
+    @ApiModelProperty(notes = "Уникальный идентификатор профиля", dataType = "Long", example = "1", required = true)
     private Long id;
-    private String firstname;
-    private String lastname;
-    private String middlename;
-    private String sex;
-    private String phone;
-    private String email;
-    private LocalDate birthday;
-    private LocalDate employentDate;
-    private LocalDate dismissalDate;
-    // User
-    private Long userId;
-    private String userLogin;
-    private List<String> priorities;
-    // StaffUnit
-    private Long staffUnitId;
-    private String staffUnitName;
-    private List<String> roles;
-    // Company
-    private Long companyId;
-    private String companyName;
-    // Department
-    private Long managedDepartmentId;
-    private String managedDepartmentName;
-    private List<String> departmentNames;
 
-    // TODO Сущность Comment
-//    private List<CommentDto> comments;
+    // User
+    @Min(1)
+    @ApiModelProperty(notes = "Уникальный идентификатор данных авторизации сотрудника", dataType = "Long", example = "1", required = true, position = 7)
+    private Long userId;
+
+    @Size(min = 3, max = 50, message = "Логин сотрудника должен содержать от 3 до 50 символов")
+    @ApiModelProperty(notes = "Логин сотрудника.", dataType = "String", example = "Aladdin", position = 8)
+    private String userLogin;
+
+    @ApiModelProperty(notes = "Список прав сотрудника", dataType = "List<String>", required = true, position = 9)
+    private Set<String> priorities;
+
+    // StaffUnit
+    @Min(1)
+    @ApiModelProperty(notes = "Уникальный идентификатор должности, занимаемой сотрудником", dataType = "Long", example = "1", required = true, position = 10)
+    private Long staffUnitId;
+
+
+    @ApiModelProperty(notes = "Список ролей сотрудника", dataType = "List<String>", required = true, position = 11)
+    private Set<String> roles;
+
 
     public ProfileDto(Profile profile) {
+        super(profile);
         this.id = profile.getId();
-        this.firstname = profile.getFirstname();
-        this.lastname = profile.getLastname();
-        this.middlename = profile.getMiddlename();
-        this.sex = profile.getSex();
-        this.phone = profile.getPhone();
-        this.email = profile.getEmail();
-        this.birthday = profile.getBirthday();
-        this.employentDate = profile.getEmployentDate();
-        this.dismissalDate = profile.getDismissalDate();
         // User
         this.userId = profile.getUser().getId();
         this.userLogin = profile.getUser().getLogin();
-        this.priorities = profile.getUser().getPriorities().stream().map(Priority::getName).collect(Collectors.toList());
+        this.priorities = profile.getUser().getPriorities() != null
+                ? profile.getUser().getPriorities().stream().map(Priority::getName).collect(Collectors.toSet())
+                : Collections.emptySet();
         // StaffUnit
         this.staffUnitId = profile.getStaffUnit().getId();
-        this.staffUnitName = profile.getStaffUnit().getName();
-        this.roles = profile.getStaffUnit().getRoles().stream().map(Role::getName).collect(Collectors.toList());
-        // Company
-        this.companyId = profile.getCompany().getId();
-        this.companyName = profile.getCompany().getName();
-        // Department
-        this.managedDepartmentId = profile.getManagedDepartment().getId();
-        this.managedDepartmentName = profile.getManagedDepartment().getName();
-        this.departmentNames = profile.getDepartments().stream().map(Department::getName).collect(Collectors.toList());
-
-        // TODO Сущность Comment
-//        this.comments = profile.getComments().stream().map(CommentDto::new).collect(Collectors.toList());
+        this.roles = profile.getStaffUnit() != null
+                ? profile.getStaffUnit().getRoles().stream().map(Role::getName).collect(Collectors.toSet())
+                : Collections.emptySet();
     }
 }

@@ -16,6 +16,14 @@
                 templateUrl: 'auth/auth.html',
                 controller: 'authController'
             })
+            .when('/companies', {
+                templateUrl: 'company/companies.html',
+                controller: 'companyController'
+            })
+            .when('/profiles', {
+                templateUrl: 'profile/profiles.html',
+                controller: 'profileController'
+            })
             .when('/profiles/profile', {
                 templateUrl: 'profile/profile.html',
                 controller: 'profileController'

@@ -14,3 +14,10 @@ databaseChangeLog:
         - sqlFile:
             path: sql/002_fill_all_tables.sql
             relativeToChangelogFile: true
+  - changeSet:
+      id: fix_department_table
+      author: Oleg Zakhlivny
+      changes:
+        - sqlFile:
+            path: sql/003_fix_department_and_project_tables.sql
+            relativeToChangelogFile: true

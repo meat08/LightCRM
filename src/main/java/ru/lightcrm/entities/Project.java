@@ -36,11 +36,16 @@ public class Project {
     @ApiModelProperty(notes = "Руководитель проекта.", required = true, position = 3)
     private Profile manager;
 
+    @OneToOne
+    @JoinColumn(name = "company_id")
+    @ApiModelProperty(notes = "Связанный с проектом клиент.", required = true, position = 4)
+    private Company company;
+
     @ManyToMany
     @JoinTable(name = "employees_projects",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "profile_id"))
-    @ApiModelProperty(notes = "Список сотрудников имеющих доступ к проекту.", required = false, position = 4)
+    @ApiModelProperty(notes = "Список сотрудников имеющих доступ к проекту.", required = false, position = 5)
     private List<Profile> profiles;
 
     @OneToMany(mappedBy = "project")

@@ -51,7 +51,9 @@ public class ProfileMiniDto {
         this.middlename = profile.getMiddlename();
         this.employmentDate = profile.getEmploymentDate();
         // StaffUnit
-        this.staffUnitName = profile.getStaffUnit().getName();
+        this.staffUnitName = profile.getStaffUnit() != null
+                ? profile.getStaffUnit().getName()
+                : null;
         // Department
         this.departmentNames = profile.getDepartments() != null
                 ? profile.getDepartments().stream().map(Department::getName).collect(Collectors.toList())

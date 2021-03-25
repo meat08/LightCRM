@@ -18,4 +18,15 @@ angular.module('app').controller('profileController',
 
       $scope.getProfile();
 
+        $scope.allProfiles = function () {
+            $http({
+                url: contextPath + '/api/v1/profiles',
+                method: 'GET'
+            }).then(function (response) {
+                $scope.allProfiles = response.data;
+            });
+        };
+
+        $scope.allProfiles();
+
     });

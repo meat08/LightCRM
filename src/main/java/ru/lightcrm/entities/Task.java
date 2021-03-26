@@ -9,7 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Set;
 
 @Entity
@@ -46,25 +46,20 @@ public class Task {
     @CreationTimestamp
     @Column(name = "start_date")
     @ApiModelProperty(notes = "Дата постановки задачи.", required = true, position = 5)
-    private LocalDateTime startDate;
+    private OffsetDateTime startDate;
 
     @Column(name = "end_date")
     @ApiModelProperty(notes = "Дата окончания задачи.", required = true, position = 6)
-    private LocalDateTime endDate;
+    private OffsetDateTime endDate;
 
     @Column(name = "deadline")
     @ApiModelProperty(notes = "Дата планируемого окончания задачи.", required = true, position = 7)
-    private LocalDateTime deadline;
+    private OffsetDateTime deadline;
 
     @ManyToOne
     @JoinColumn(name = "task_state_id")
     @ApiModelProperty(notes = "Статус состояния задачи.", required = true, position = 8)
     private TaskState taskState;
-
-    @UpdateTimestamp
-    @Column(name = "update_date")
-    @ApiModelProperty(notes = " Дата последнего обновления задачи.", required = true, position = 9)
-    private LocalDateTime lastUpdateDate;
 
     @Column(name = "allow_change_deadline")
     @ApiModelProperty(notes = "Признак доступа ответственного к смене даты планируемого окончания задачи.", required = true, position = 10)

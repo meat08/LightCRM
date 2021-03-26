@@ -4,25 +4,25 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import ru.lightcrm.entities.Task;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
-
-    Optional<Task> findOneByTitle(String title);
+    Optional<Task> findOneByTitle(@NotNull String title);
 
     @Query("SELECT t FROM Task t WHERE t.producer.id = ?1")
-    List<Task> findByProducerId(Long id);
+    List<Task> findByProducerId(@NotNull Long id);
 
     @Query("SELECT t FROM Task t WHERE t.producer.id = ?1 AND t.taskState.id = ?2")
-    List<Task> findByProducerIdAndTaskStateId(Long producerId, Long taskStateId);
+    List<Task> findByProducerIdAndTaskStateId(@NotNull Long producerId, @NotNull Long taskStateId);
 
     @Query("SELECT t FROM Task t WHERE t.responsible.id = ?1")
-    List<Task> findByResponsibleId(Long id);
+    List<Task> findByResponsibleId(@NotNull Long id);
 
     @Query("SELECT t FROM Task t WHERE t.responsible.id = ?1 AND t.taskState.id = ?2")
-    List<Task> findByResponsibleIdAndTaskStateId(Long responsibleId, Long taskStateId);
+    List<Task> findByResponsibleIdAndTaskStateId(@NotNull Long responsibleId, @NotNull Long taskStateId);
 
     @Query("SELECT t FROM Task t WHERE t.project.id = ?1")
-    List<Task> findByProjectId(Long id);
+    List<Task> findByProjectId(@NotNull Long id);
 }

@@ -72,8 +72,12 @@ public class ProfileFullDto extends ProfileDto {
                 ? profile.getCompanies().stream().map(Company::getName).collect(Collectors.toList())
                 : new ArrayList<>();
         // Department
-        this.managedDepartmentId = profile.getManagedDepartment().getId();
-        this.managedDepartmentName = profile.getManagedDepartment().getName();
+        this.managedDepartmentId = profile.getManagedDepartment() != null
+                ? profile.getManagedDepartment().getId()
+                : null;
+        this.managedDepartmentName = profile.getManagedDepartment() != null
+                ? profile.getManagedDepartment().getName()
+                : null;
         // Comment
         this.comments = profile.getComments() != null
                 ? profile.getComments().stream().map(CommentDto::new).collect(Collectors.toList())

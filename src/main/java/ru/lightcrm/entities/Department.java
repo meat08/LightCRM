@@ -35,10 +35,15 @@ public class Department {
     @ApiModelProperty(notes = "Руководитель отдела.", required = true, position = 3)
     private Profile leader;
 
+    @OneToOne
+    @JoinColumn(name = "lead_department_id")
+    @ApiModelProperty(notes = "Отдел, которому подчиняется.", required = true, position = 4)
+    private Department leadDepartment;
+
     @ManyToMany
     @JoinTable(name = "profiles_projects",
             joinColumns = @JoinColumn(name = "department_id"),
             inverseJoinColumns = @JoinColumn(name = "profile_id"))
-    @ApiModelProperty(notes = "Список сотрудников работающих в отделе.", required = true, position = 4)
+    @ApiModelProperty(notes = "Список сотрудников работающих в отделе.", required = true, position = 5)
     private List<Profile> employees;
 }

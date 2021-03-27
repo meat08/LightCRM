@@ -25,11 +25,15 @@ public class DepartmentDto {
     @ApiModelProperty(notes = "Идентификатор руководителя отдела.", required = true, position = 3)
     private Long leaderId;
 
+    @ApiModelProperty(notes = "Идентификатор отдела, которому подчиняется.", required = true, position = 4)
+    private Long leadDepartmentId;
+
 
     public DepartmentDto(Department department) {
         this.id = department.getId();
         this.name = department.getName();
         this.description = department.getDescription();
         this.leaderId = department.getLeader().getId();
+        this.leadDepartmentId = department.getLeadDepartment().getId();
     }
 }

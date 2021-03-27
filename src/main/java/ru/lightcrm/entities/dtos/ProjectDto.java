@@ -35,6 +35,12 @@ public class ProjectDto {
     @ApiModelProperty(notes = "Список заданий проекта.", required = true, position = 6)
     private Set<TaskDto> tasks;
 
+    @ApiModelProperty(notes = "Идентификатор связанного с проектом клиента.", required = true, position = 4)
+    private Long companyId;
+
+    @ApiModelProperty(notes = "Наименование (имя) связанного с проектом клиента.", required = true, position = 5)
+    private String companyName;
+
     public ProjectDto(Project project) {
         this.id = project.getId();
         this.name = project.getName();
@@ -49,5 +55,6 @@ public class ProjectDto {
 //        this.tasks = project.getTasks() != null
 //                ? project.getTasks().stream().map(TaskDto::new).collect(Collectors.toSet())
 //                : null;
+
     }
 }

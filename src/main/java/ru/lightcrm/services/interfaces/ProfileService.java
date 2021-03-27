@@ -10,6 +10,8 @@ public interface ProfileService {
 
     ProfileDto findById(Long id);
 
+    Profile findEntityById(Long id);
+
     List<ProfileDto> findAll();
 
     ProfileFullDto findFullById(Long id);

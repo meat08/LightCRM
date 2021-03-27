@@ -52,22 +52,22 @@ public class TaskDto {
     @ApiModelProperty(notes = "Статус состояния задачи.", required = true, position = 8)
     private Long taskStateId;
 
-    @ApiModelProperty(notes = "Признак доступа ответственного к смене даты планируемого окончания задачи.", required = true, position = 10)
+    @ApiModelProperty(notes = "Признак доступа ответственного к смене даты планируемого окончания задачи.", required = true, position = 9)
     private boolean allowChangeDeadline;
 
-    @ApiModelProperty(notes = "Проект к которому относится задача.", required = true, position = 11)
+    @ApiModelProperty(notes = "Проект к которому относится задача.", required = true, position = 10)
     private Long projectId;
 
-    @ApiModelProperty(notes = "Просрочена ли задача", required = true, position = 12)
+    @ApiModelProperty(notes = "Просрочена ли задача", required = true, position = 11)
     private boolean expired;
 
-    @ApiModelProperty(notes = "Список соисполнителей задачи", required = true, position = 13)
+    @ApiModelProperty(notes = "Список соисполнителей задачи", required = true, position = 12)
     private Set<ProfileDto> coExecutors;
 
-    @ApiModelProperty(notes = "Список наблюдателей задачи", required = true, position = 14)
+    @ApiModelProperty(notes = "Список наблюдателей задачи", required = true, position = 13)
     private Set<ProfileDto> spectators;
 
-    @ApiModelProperty(notes = "Список комментариев к заданию", required = true, position = 15)
+    @ApiModelProperty(notes = "Список комментариев к заданию", required = true, position = 14)
     private Set<CommentDto> comments;
 
     public TaskDto(Task task) {

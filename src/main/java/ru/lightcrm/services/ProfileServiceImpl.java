@@ -18,6 +18,12 @@ public class ProfileServiceImpl implements ProfileService {
     private final ProfileRepository profileRepository;
 
     @Override
+    public Profile findEntityById(Long id) {
+        return profileRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Профиль с id %s отсутствует", id)));
+    }
+
+    @Override
     public ProfileDto findById(Long id) {
         return new ProfileDto(profileRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Профиль с id %s отсутствует", id))));

@@ -30,8 +30,7 @@ CREATE TABLE departments (
     name                VARCHAR(50),
     description         VARCHAR(255),
     leader_id           BIGINT REFERENCES profiles(id),
-    lead_department_id  BIGINT,
-    sub_department_id   BIGINT
+    lead_department_id  BIGINT
 );
 
 CREATE TABLE departments_profiles (
@@ -81,7 +80,8 @@ CREATE TABLE projects (
     id                  BIGSERIAL PRIMARY KEY,
     name                VARCHAR(50),
     description         VARCHAR(255),
-    manager_id          BIGINT REFERENCES profiles(id)
+    manager_id          BIGINT REFERENCES profiles(id),
+    company_id          BIGINT REFERENCES companies(id)
 );
 
 CREATE TABLE task_states (

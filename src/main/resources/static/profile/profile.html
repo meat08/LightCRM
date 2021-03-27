@@ -90,17 +90,25 @@
       </div>
     </div>
     <div class="form-group row">
-      <label for="leaderDepartment" class="col-sm-3 col-form-label col-form-label-lg">Вышестоящий
-        отдел</label>
+      <label for="managedDepartment" class="col-sm-3 col-form-label col-form-label-lg">Возглавляемые
+        отделы</label>
       <div class="col-sm-5">
-        <input type="text" readonly class="form-control form-control-lg" id="leaderDepartment"
-               value="{{profile.managedDepartmentName}}">
+        <div class="form-group row">
+          <span class="col-sm-3 col-form-label col-form-label-lg" ng-if="profile.managedDepartments.length == 0">Отсутствуют</span>
+        </div>
+        <input type="text" readonly ng-if="profile.managedDepartments.length > 0" ng-repeat="m in profile.managedDepartments"
+               class="form-control form-control-lg" id="managedDepartment"
+               value="{{m.name}}">
       </div>
     </div>
     <div class="form-group row">
       <label for="companies" class="col-sm-3 col-form-label col-form-label-lg">Клиенты</label>
       <div class="col-sm-5">
-        <input type="text" readonly ng-repeat="c in profile.companyNames" class="form-control form-control-lg" id="companies"
+        <div class="form-group row">
+          <span class="col-sm-3 col-form-label col-form-label-lg" ng-if="profile.companyNames.length == 0">Отсутствуют</span>
+        </div>
+        <input type="text" readonly ng-if="profile.companyNames.length > 0" ng-repeat="c in profile.companyNames"
+               class="form-control form-control-lg" id="companies"
                value="{{c}}">
       </div>
     </div>

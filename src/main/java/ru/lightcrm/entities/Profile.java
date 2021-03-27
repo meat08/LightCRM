@@ -60,9 +60,8 @@ public class Profile {
             inverseJoinColumns = @JoinColumn(name = "company_id"))
     private List<Company> companies;
 
-
-    @OneToOne(mappedBy = "leader")
-    private Department managedDepartment;
+    @OneToMany(mappedBy = "leader")
+    private List<Department> managedDepartments;
 
     @ManyToMany
     @JoinTable(name = "departments_profiles",

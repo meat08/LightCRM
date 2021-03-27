@@ -14,6 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "priorities")
 public class Priority {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

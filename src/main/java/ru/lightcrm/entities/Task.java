@@ -9,7 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Set;
 
 @Entity
@@ -46,57 +46,52 @@ public class Task {
     @CreationTimestamp
     @Column(name = "start_date")
     @ApiModelProperty(notes = "Дата постановки задачи.", required = true, position = 5)
-    private LocalDateTime startDate;
+    private OffsetDateTime startDate;
 
     @Column(name = "end_date")
     @ApiModelProperty(notes = "Дата окончания задачи.", required = true, position = 6)
-    private LocalDateTime endDate;
+    private OffsetDateTime endDate;
 
     @Column(name = "deadline")
     @ApiModelProperty(notes = "Дата планируемого окончания задачи.", required = true, position = 7)
-    private LocalDateTime deadline;
+    private OffsetDateTime deadline;
 
     @ManyToOne
     @JoinColumn(name = "task_state_id")
     @ApiModelProperty(notes = "Статус состояния задачи.", required = true, position = 8)
     private TaskState taskState;
 
-    @UpdateTimestamp
-    @Column(name = "update_date")
-    @ApiModelProperty(notes = " Дата последнего обновления задачи.", required = true, position = 9)
-    private LocalDateTime lastUpdateDate;
-
     @Column(name = "allow_change_deadline")
-    @ApiModelProperty(notes = "Признак доступа ответственного к смене даты планируемого окончания задачи.", required = true, position = 10)
+    @ApiModelProperty(notes = "Признак доступа ответственного к смене даты планируемого окончания задачи.", required = true, position = 9)
     private boolean allowChangeDeadline;
 
     @ManyToOne
     @JoinColumn(name = "project_id")
-    @ApiModelProperty(notes = "Проект к которому относится задача.", required = true, position = 11)
+    @ApiModelProperty(notes = "Проект к которому относится задача.", required = true, position = 10)
     private Project project;
 
     @Column(name = "expired")
-    @ApiModelProperty(notes = "Просрочена ли задача", required = true, position = 12)
+    @ApiModelProperty(notes = "Просрочена ли задача", required = true, position = 11)
     private boolean expired;
 
     @ManyToMany
     @JoinTable(name = "tasks_coexecutors",
                 joinColumns = @JoinColumn(name = "task_id"),
                 inverseJoinColumns = @JoinColumn(name = "profile_id"))
-    @ApiModelProperty(notes = "Список соисполнителей задачи", required = true, position = 13)
+    @ApiModelProperty(notes = "Список соисполнителей задачи", required = true, position = 12)
     private Set<Profile> coExecutors;
 
     @ManyToMany
     @JoinTable(name = "tasks_spectators",
                 joinColumns = @JoinColumn(name = "task_id"),
                 inverseJoinColumns = @JoinColumn(name = "profile_id"))
-    @ApiModelProperty(notes = "Список наблюдателей задачи", required = true, position = 14)
+    @ApiModelProperty(notes = "Список наблюдателей задачи", required = true, position = 13)
     private Set<Profile> spectators;
 
     @OneToMany
     @JoinTable(name = "tasks_comments",
                 joinColumns = @JoinColumn(name = "task_id"),
                 inverseJoinColumns = @JoinColumn(name = "comment_id"))
-    @ApiModelProperty(notes = "Список комментариев к заданию", required = true, position = 15)
+    @ApiModelProperty(notes = "Список комментариев к заданию", required = true, position = 14)
     private Set<Comment> comments;
 }

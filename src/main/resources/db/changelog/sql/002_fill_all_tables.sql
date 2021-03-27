@@ -179,7 +179,7 @@ VALUES
 (11, 4);
 
 --статусы задач
-INSERT INTO task_states(id,name)
+INSERT INTO task_states(name)
 VALUES
 ('Новая'),
 ('Назначена'),
@@ -208,7 +208,7 @@ VALUES
 --департаменты
 INSERT INTO departments(name, description, leader_id)
 VALUES
-('IT-отдел', 'Админы, прогеры и прочее', 2),
+('IT-отдел', 'Админы, прогеры и прочее', 1),
 ('Отдел продаж', 'манагеры', 2);
 
 --работники отделов

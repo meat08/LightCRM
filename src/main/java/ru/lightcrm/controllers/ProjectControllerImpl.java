@@ -27,23 +27,18 @@ public class ProjectControllerImpl implements ProjectController {
 
     @Override
     public ProjectDto saveProject(ProjectDto projectDTO) {
-        //ожидаем реализацию
-        //return projectService.save(projectDTO);
-        return null;
-
+        projectDTO.setId(null);
+        return projectService.saveOrUpdate(projectDTO);
     }
 
     @Override
     public ProjectDto updateProject(ProjectDto projectDTO) {
-        //ожидаем реализацию
-        //return projectService.save(projectDTO)
-        return null;
+        return projectService.saveOrUpdate(projectDTO);
     }
 
     @Override
     public void deleteProjectById(Long id) {
-        //ожидаем реализацию
-        //projectService.deleteById(id)
+        projectService.deleteById(id);
     }
 
 }

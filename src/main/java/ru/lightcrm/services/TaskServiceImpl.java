@@ -2,6 +2,7 @@ package ru.lightcrm.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.lightcrm.entities.Task;
 import ru.lightcrm.entities.dtos.TaskDto;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.repositories.TaskRepository;
@@ -19,6 +20,12 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<TaskDto> findAll() {
         return taskRepository.findAll().stream().map(TaskDto::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public Task findEntityById(Long id) {
+        return taskRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Задача с id = %s не найден", id)));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ru.lightcrm.entities.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -8,9 +9,10 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import ru.lightcrm.entities.Company;
 import ru.lightcrm.entities.Profile;
+import ru.lightcrm.utils.CustomDateDeserializer;
 
 import javax.validation.constraints.*;
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,14 +35,16 @@ public class ProfileFullDto extends ProfileDto {
     private String email;
 
     @Past(message = "Дата рождения сотрудника должна быть раньше настоящего времени")
-    @ApiModelProperty(notes = "Дата рождения сотрудника", dataType = "LocalDate", example = "1990-12-25", position = 15)
+    @ApiModelProperty(notes = "Дата рождения сотрудника", dataType = "OffsetDateTime", example = "1990-12-25", position = 15)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate birthdate;
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    private OffsetDateTime birthdate;
 
     @PastOrPresent(message = "Дата увольнения должна быть не позже настоящего времени")
-    @ApiModelProperty(notes = "Дата увольнения сотрудника", dataType = "LocalDate", example = "2000-12-25", position = 16)
+    @ApiModelProperty(notes = "Дата увольнения сотрудника", dataType = "OffsetDateTime", example = "2000-12-25", position = 16)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate dismissalDate;
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    private OffsetDateTime dismissalDate;
 
     // Company
     @ApiModelProperty(notes = "Компании, курируемые сотрудником", dataType = "List<CompanyDto>", position = 17)
@@ -72,8 +76,12 @@ public class ProfileFullDto extends ProfileDto {
                 ? profile.getCompanies().stream().map(Company::getName).collect(Collectors.toList())
                 : new ArrayList<>();
         // Department
-        this.managedDepartmentId = profile.getManagedDepartment().getId();
-        this.managedDepartmentName = profile.getManagedDepartment().getName();
+        this.managedDepartmentId = profile.getManagedDepartment() != null
+                ? profile.getManagedDepartment().getId()
+                : null;
+        this.managedDepartmentName = profile.getManagedDepartment() != null
+                ? profile.getManagedDepartment().getName()
+                : null;
         // Comment
         this.comments = profile.getComments() != null
                 ? profile.getComments().stream().map(CommentDto::new).collect(Collectors.toList())

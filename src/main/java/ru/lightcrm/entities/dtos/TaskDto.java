@@ -1,13 +1,16 @@
 package ru.lightcrm.entities.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.lightcrm.entities.Task;
+import ru.lightcrm.utils.CustomDateDeserializer;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,36 +35,39 @@ public class TaskDto {
     private Long responsibleId;
 
     @ApiModelProperty(notes = "Дата постановки задачи.", required = true, position = 5)
-    private LocalDateTime startDate;
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private OffsetDateTime startDate;
 
     @ApiModelProperty(notes = "Дата окончания задачи.", required = true, position = 6)
-    private LocalDateTime endDate;
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private OffsetDateTime endDate;
 
     @ApiModelProperty(notes = "Дата планируемого окончания задачи.", required = true, position = 7)
-    private LocalDateTime deadline;
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private OffsetDateTime deadline;
 
     @ApiModelProperty(notes = "Статус состояния задачи.", required = true, position = 8)
     private Long taskStateId;
 
-    @ApiModelProperty(notes = " Дата последнего обновления задачи.", required = true, position = 9)
-    private LocalDateTime lastUpdateDate;
-
-    @ApiModelProperty(notes = "Признак доступа ответственного к смене даты планируемого окончания задачи.", required = true, position = 10)
+    @ApiModelProperty(notes = "Признак доступа ответственного к смене даты планируемого окончания задачи.", required = true, position = 9)
     private boolean allowChangeDeadline;
 
-    @ApiModelProperty(notes = "Проект к которому относится задача.", required = true, position = 11)
+    @ApiModelProperty(notes = "Проект к которому относится задача.", required = true, position = 10)
     private Long projectId;
 
-    @ApiModelProperty(notes = "Просрочена ли задача", required = true, position = 12)
+    @ApiModelProperty(notes = "Просрочена ли задача", required = true, position = 11)
     private boolean expired;
 
-    @ApiModelProperty(notes = "Список соисполнителей задачи", required = true, position = 13)
+    @ApiModelProperty(notes = "Список соисполнителей задачи", required = true, position = 12)
     private Set<ProfileDto> coExecutors;
 
-    @ApiModelProperty(notes = "Список наблюдателей задачи", required = true, position = 14)
+    @ApiModelProperty(notes = "Список наблюдателей задачи", required = true, position = 13)
     private Set<ProfileDto> spectators;
 
-    @ApiModelProperty(notes = "Список комментариев к заданию", required = true, position = 15)
+    @ApiModelProperty(notes = "Список комментариев к заданию", required = true, position = 14)
     private Set<CommentDto> comments;
 
     public TaskDto(Task task) {
@@ -74,7 +80,6 @@ public class TaskDto {
         this.endDate = task.getEndDate();
         this.deadline = task.getDeadline();
         this.taskStateId = task.getTaskState().getId();
-        this.lastUpdateDate = task.getLastUpdateDate();
         this.allowChangeDeadline = task.isAllowChangeDeadline();
         this.projectId = task.getProject().getId();
         this.expired = task.isExpired();

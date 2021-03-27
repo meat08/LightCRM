@@ -57,7 +57,9 @@ public class ProfileDto extends ProfileMiniDto {
                 ? profile.getUser().getPriorities().stream().map(Priority::getName).collect(Collectors.toSet())
                 : Collections.emptySet();
         // StaffUnit
-        this.staffUnitId = profile.getStaffUnit().getId();
+        this.staffUnitId = profile.getStaffUnit() != null
+                ? profile.getStaffUnit().getId()
+                : null;
         this.roles = profile.getStaffUnit() != null
                 ? profile.getStaffUnit().getRoles().stream().map(Role::getName).collect(Collectors.toSet())
                 : Collections.emptySet();

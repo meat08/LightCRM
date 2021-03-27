@@ -34,6 +34,8 @@ public class DepartmentDto {
         this.name = department.getName();
         this.description = department.getDescription();
         this.leaderId = department.getLeader().getId();
-        this.leadDepartmentId = department.getLeadDepartment().getId();
+        this.leadDepartmentId = department.getLeadDepartment() != null
+                ? department.getLeadDepartment().getId()
+                : null;
     }
 }

@@ -253,7 +253,7 @@ VALUES
 --задачи
 INSERT INTO tasks(title, description, producer_id, responsible_id, start_date, task_state_id, allow_change_deadline, project_id)
 VALUES
-('Задача 1', 'Написать письмо клиенту', 2, 3, '2021-02-10', 1, false, 1),
+('Задача 1', 'Написать письмо клиенту', 2, 3, '2021-02-10', 1, false, null),
 ('Задача 2', 'Провести анализ по проекту', 2, 4, '2021-03-10', 1, true, 1),
 ('Задача 3', 'Посчитать затраты', 2, 4, '2021-03-10', 1, true, 1);
 

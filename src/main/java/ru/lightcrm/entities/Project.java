@@ -3,7 +3,6 @@ package ru.lightcrm.entities;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,26 +13,24 @@ import java.util.List;
 @Table(name = "projects")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@ApiModel(description = "Класс Проект для группировки задач одного бизнес-процесса или направления.")
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @ApiModelProperty(notes = "Уникальный идентификатор проекта.", example = "1", required = true, position = 0)
+    @ApiModelProperty(notes = "Уникальный идентификатор проекта.", example = "1", required = true, position = 1)
     private Long id;
 
     @Column(name = "name")
-    @ApiModelProperty(notes = "Наименование проекта.", example = "Ревизия складских остатков.", required = true, position = 1)
+    @ApiModelProperty(notes = "Наименование проекта.", example = "Ревизия складских остатков.", required = true, position = 2)
     private String name;
 
     @Column(name = "description")
-    @ApiModelProperty(notes = "Описание проекта.", example = "Плановая ежегодная ревизия складских остатков.", required = true, position = 2)
+    @ApiModelProperty(notes = "Описание проекта.", example = "Плановая ежегодная ревизия складских остатков.", required = true, position = 3)
     private String description;
 
     @ManyToOne
     @JoinColumn(name = "manager_id")
-    @ApiModelProperty(notes = "Руководитель проекта.", required = true, position = 3)
+    @ApiModelProperty(notes = "Руководитель проекта.", required = true, position = 4)
     private Profile manager;
 
     @OneToOne

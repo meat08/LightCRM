@@ -1,17 +1,18 @@
 package ru.lightcrm.entities.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.lightcrm.entities.Department;
 import ru.lightcrm.entities.Profile;
+import ru.lightcrm.utils.CustomDateDeserializer;
 
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,9 +39,10 @@ public class ProfileMiniDto {
     private String staffUnitName;
 
     @PastOrPresent(message = "Дата найма должна быть не позже настоящего времени")
-    @ApiModelProperty(notes = "Дата найма сотрудника", dataType = "LocalDate", example = "2000-12-25", position = 5)
+    @ApiModelProperty(notes = "Дата найма сотрудника", dataType = "OffsetDateTime", example = "2000-12-25", position = 5)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate employmentDate;
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    private OffsetDateTime employmentDate;
 
     @ApiModelProperty(notes = "Список отделов, к которым приписан сотрудник", dataType = "List<String>", required = true, position = 6)
     private List<String> departmentNames;

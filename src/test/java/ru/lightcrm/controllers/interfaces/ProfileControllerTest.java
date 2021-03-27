@@ -20,7 +20,7 @@ import ru.lightcrm.services.interfaces.ProfileService;
 import ru.lightcrm.services.interfaces.StaffUnitService;
 import ru.lightcrm.services.interfaces.UserService;
 
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -90,7 +90,7 @@ public class ProfileControllerTest {
         testSystemUserDto.setLastname(lastname);
         testSystemUserDto.setMiddlename(middlename);
         testSystemUserDto.setStaffUnitName(staffUnitName);
-        testSystemUserDto.setEmploymentDate(LocalDate.now());
+        testSystemUserDto.setEmploymentDate(OffsetDateTime.now());
         testSystemUserDto.setDepartmentNames(Collections.singletonList(departmentName));
         // StaffUnit
         testStaffUnit = new StaffUnit();
@@ -162,9 +162,9 @@ public class ProfileControllerTest {
         given(staffUnitService.findByName(staffUnitName)).willReturn(testStaffUnit);
         given(departmentService.findOneByName(departmentName)).willReturn(testDepartment);
 
-        String json = "{\"firstname\":\"Тест\",\"lastname\":\"Тестов\",\"middlename\":\"Тестович\"," +
-                "\"staffUnitName\":\"Тестовая должность\",\"employmentDate\":\"2021-03-22\"," +
-                "\"departmentNames\":[\"Тестовый отдел\"],\"login\":\"Aladdin\",\"password\":\"12345\"," +
+        String json = "{\"firstname\":\"Иван\",\"lastname\":\"Иванов\",\"middlename\":\"Иванович\"," +
+                "\"staffUnitName\":\"Администратор\",\"employmentDate\":\"2021-03-22\"," +
+                "\"departmentNames\":[\"IT-отдел\"],\"login\":\"Aladdin\",\"password\":\"12345\"," +
                 "\"confirmationPassword\":\"12345\"}";
 
         mvc.perform(post("/api/v1/profiles/register").content(json)

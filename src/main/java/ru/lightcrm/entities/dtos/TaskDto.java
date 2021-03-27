@@ -1,13 +1,16 @@
 package ru.lightcrm.entities.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.lightcrm.entities.Task;
+import ru.lightcrm.utils.CustomDateDeserializer;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,13 +35,19 @@ public class TaskDto {
     private Long responsibleId;
 
     @ApiModelProperty(notes = "Дата постановки задачи.", required = true, position = 5)
-    private LocalDateTime startDate;
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private OffsetDateTime startDate;
 
     @ApiModelProperty(notes = "Дата окончания задачи.", required = true, position = 6)
-    private LocalDateTime endDate;
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private OffsetDateTime endDate;
 
     @ApiModelProperty(notes = "Дата планируемого окончания задачи.", required = true, position = 7)
-    private LocalDateTime deadline;
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private OffsetDateTime deadline;
 
     @ApiModelProperty(notes = "Статус состояния задачи.", required = true, position = 8)
     private Long taskStateId;

@@ -1,13 +1,14 @@
 package ru.lightcrm.entities.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.lightcrm.entities.Comment;
-import ru.lightcrm.entities.Contact;
+import ru.lightcrm.utils.CustomDateDeserializer;
 
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 @ApiModel(description = "Комментарии dto в приложении")
@@ -27,6 +28,8 @@ public class CommentDto {
     private String authorEmail;
 
     @ApiModelProperty(notes = "Дата создания комментария", required = true, position = 5)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonDeserialize(using = CustomDateDeserializer.class)
     private OffsetDateTime createdDate;
 
     @ApiModelProperty(notes = "Содержание комментария", example = "Уточнить реквизиты компании.", required = true, position = 6)

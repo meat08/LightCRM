@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import ru.lightcrm.entities.dtos.SystemUserDto;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Entity
@@ -38,13 +38,13 @@ public class Profile {
     private String email;
 
     @Column(name = "birthdate")
-    private LocalDate birthdate;
+    private OffsetDateTime birthdate;
 
     @Column(name = "employment_date")
-    private LocalDate employmentDate;
+    private OffsetDateTime employmentDate;
 
     @Column(name = "dismissal_date")
-    private LocalDate dismissalDate;
+    private OffsetDateTime dismissalDate;
 
     @OneToOne
     @JoinColumn(name = "user_id")

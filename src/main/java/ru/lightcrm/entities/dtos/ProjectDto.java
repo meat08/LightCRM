@@ -26,11 +26,19 @@ public class ProjectDto {
     @ApiModelProperty(notes = "Идентификатор руководителя проекта.", required = true, position = 3)
     private Long managerId;
 
+    @ApiModelProperty(notes = "Идентификатор связанного с проектом клиента.", required = true, position = 4)
+    private Long companyId;
+
+    @ApiModelProperty(notes = "Наименование (имя) связанного с проектом клиента.", required = true, position = 5)
+    private String companyName;
+
 
     public ProjectDto(Project project) {
         this.id = project.getId();
         this.name = project.getName();
         this.description = project.getDescription();
         this.managerId = project.getManager().getId();
+        this.companyId = project.getCompany().getId();
+        this.companyName = project.getCompany().getName();
     }
 }

@@ -81,6 +81,9 @@ public class Profile {
         profile.setFirstname(systemUserDto.getFirstname());
         profile.setLastname(systemUserDto.getLastname());
         profile.setMiddlename(systemUserDto.getMiddlename());
+        profile.setEmploymentDate(systemUserDto.getEmploymentDate() != null
+                ? systemUserDto.getEmploymentDate()
+                : OffsetDateTime.now());
         return profile;
     }
 }

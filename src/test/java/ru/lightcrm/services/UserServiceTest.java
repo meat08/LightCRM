@@ -32,7 +32,7 @@ public class UserServiceTest {
         Mockito.doReturn(generateMockUser()).when(usersRepository)
                 .findByLogin("user");
 
-        UserDto user = userService.getByUsername("user");
+        UserDto user = userService.getDtoByUsername("user");
         Assertions.assertNotNull(user);
         Assertions.assertTrue(user.isEnabled());
         Assertions.assertEquals(1, user.getPriorities().size());

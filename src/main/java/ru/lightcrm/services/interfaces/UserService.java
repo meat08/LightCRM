@@ -5,7 +5,8 @@ import ru.lightcrm.entities.User;
 import ru.lightcrm.entities.dtos.UserDto;
 
 public interface UserService extends UserDetailsService {
-    UserDto getByUsername(String username);
+    UserDto getDtoByUsername(String username);
+    User getByUsername(String username);
     void saveUser(User user);
     boolean isPresent(String login);
 }

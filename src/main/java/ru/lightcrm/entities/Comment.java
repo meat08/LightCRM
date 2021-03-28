@@ -1,6 +1,5 @@
 package ru.lightcrm.entities;
 
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,12 +11,13 @@ import java.time.OffsetDateTime;
 @Data
 @NoArgsConstructor
 public class Comment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private Profile author;
 
@@ -26,5 +26,4 @@ public class Comment {
 
     @Column(name = "text")
     private String text;
-    
 }

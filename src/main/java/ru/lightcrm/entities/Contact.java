@@ -1,8 +1,8 @@
 package ru.lightcrm.entities;
 
-
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -10,9 +10,11 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "contacts")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Contact {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -35,8 +37,7 @@ public class Contact {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private Company company;
-
 }

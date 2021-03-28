@@ -1,5 +1,7 @@
 package ru.lightcrm.entities.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,33 +21,38 @@ import java.util.stream.Collectors;
 @Data
 @NoArgsConstructor
 @ApiModel(description = "Класс, представляющий профиль с основными сведениями о конкретном сотруднике", parent = ProfileMiniDto.class, subTypes = ProfileFullDto.class)
+@JsonRootName("ProfileDto")
 public class ProfileDto extends ProfileMiniDto {
 
     @Min(1)
     @ApiModelProperty(notes = "Уникальный идентификатор профиля", dataType = "Long", example = "1", required = true)
+    @JsonProperty("id")
     private Long id;
 
     // User
     @Min(1)
     @ApiModelProperty(notes = "Уникальный идентификатор данных авторизации сотрудника", dataType = "Long", example = "1", required = true, position = 7)
+    @JsonProperty("userId")
     private Long userId;
 
     @Size(min = 3, max = 50, message = "Логин сотрудника должен содержать от 3 до 50 символов")
     @ApiModelProperty(notes = "Логин сотрудника.", dataType = "String", example = "Aladdin", position = 8)
+    @JsonProperty("userLogin")
     private String userLogin;
 
     @ApiModelProperty(notes = "Список прав сотрудника", dataType = "List<String>", required = true, position = 9)
+    @JsonProperty("priorities")
     private Set<String> priorities;
 
     // StaffUnit
     @Min(1)
     @ApiModelProperty(notes = "Уникальный идентификатор должности, занимаемой сотрудником", dataType = "Long", example = "1", required = true, position = 10)
+    @JsonProperty("staffUnitId")
     private Long staffUnitId;
 
-
     @ApiModelProperty(notes = "Список ролей сотрудника", dataType = "List<String>", required = true, position = 11)
+    @JsonProperty("roles")
     private Set<String> roles;
-
 
     public ProfileDto(Profile profile) {
         super(profile);

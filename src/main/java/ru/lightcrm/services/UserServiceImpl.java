@@ -21,13 +21,19 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
     private final UserRepository usersRepository;
     private final ProfileRepository profileRepository;
 
     @Override
-    public UserDto getByUsername(String username) {
-        return new UserDto(usersRepository.findByLogin(username)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Пользователь '%s' не найден", username))));
+    public User getByUsername(String username) {
+        return usersRepository.findByLogin(username)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Пользователь '%s' не найден", username)));
+    }
+
+    @Override
+    public UserDto getDtoByUsername(String username) {
+        return new UserDto(getByUsername(username));
     }
 
     @Override
@@ -42,11 +48,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDto user = getByUsername(username);
+        User user = getByUsername(username);
         return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), getAuthorities(user));
     }
 
-    private Collection<? extends GrantedAuthority> getAuthorities(UserDto user) {
+    private Collection<? extends GrantedAuthority> getAuthorities(User user) {
         return getGrantedAuthorities(getPriorities(user));
     }
 
@@ -58,7 +64,7 @@ public class UserServiceImpl implements UserService {
         return authorities;
     }
 
-    private Set<String> getPriorities(UserDto user) {
+    private Set<String> getPriorities(User user) {
         Set<String> priorities = new HashSet<>();
         Set<Priority> collection = user.getPriorities();
         Profile profile = profileRepository.findByLogin(user.getLogin())
@@ -72,6 +78,4 @@ public class UserServiceImpl implements UserService {
         }
         return priorities;
     }
-
-
 }

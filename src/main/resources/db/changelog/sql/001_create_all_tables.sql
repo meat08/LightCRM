@@ -30,8 +30,7 @@ CREATE TABLE departments (
     name                VARCHAR(50),
     description         VARCHAR(255),
     leader_id           BIGINT REFERENCES profiles(id),
-    lead_department_id  BIGINT,
-    sub_department_id   BIGINT
+    lead_department_id  BIGINT
 );
 
 CREATE TABLE departments_profiles (
@@ -81,7 +80,8 @@ CREATE TABLE projects (
     id                  BIGSERIAL PRIMARY KEY,
     name                VARCHAR(50),
     description         VARCHAR(255),
-    manager_id          BIGINT REFERENCES profiles(id)
+    manager_id          BIGINT REFERENCES profiles(id),
+    company_id          BIGINT REFERENCES companies(id)
 );
 
 CREATE TABLE task_states (
@@ -95,9 +95,9 @@ CREATE TABLE tasks (
     description             VARCHAR(255),
     producer_id             BIGINT REFERENCES profiles(id),
     responsible_id          BIGINT REFERENCES profiles(id),
-    start_date              DATE,
-    end_date                DATE,
-    deadline                DATE,
+    start_date              TIMESTAMP,
+    end_date                TIMESTAMP,
+    deadline                TIMESTAMP,
     task_state_id           BIGINT REFERENCES task_states(id),
     allow_change_deadline   BOOLEAN,
     project_id              BIGINT REFERENCES projects(id),

@@ -36,7 +36,7 @@ public class AuthControllerImpl implements AuthController {
   public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest jwtRequest) {
     String username = jwtRequest.getUsername();
     try {
-      UserDto user = userService.getByUsername(username);
+      UserDto user = userService.getDtoByUsername(username);
       if (!user.isEnabled()) {
         log.warn("User with login: {} deleted", username);
         return new ResponseEntity<>(

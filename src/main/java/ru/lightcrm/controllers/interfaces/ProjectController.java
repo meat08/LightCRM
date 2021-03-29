@@ -25,21 +25,21 @@ public interface ProjectController {
     @GetMapping(value = "/{id}", produces = "application/json")
     ProjectDto getProjectById(@ApiParam(value = "идентификатор проекта", required = true) @PathVariable Long id);
 
-    @ApiOperation(value = "Сохранить новый проект (не работает)",
+    @ApiOperation(value = "Сохранить новый проект",
             response = ProjectDto.class
 
     )
     @PostMapping(consumes = "application/json", produces = "application/json")
     ProjectDto saveProject(@ApiParam(value = "новый проект", required = true) @RequestBody ProjectDto projectDTO);
 
-    @ApiOperation(value = "Обновить проект (не работает)",
+    @ApiOperation(value = "Обновить проект",
             response = ProjectDto.class
 
     )
     @PutMapping(consumes = "application/json", produces = "application/json")
     ProjectDto updateProject(@ApiParam(value = "измененный проект", required = true) @RequestBody ProjectDto projectDTO);
 
-    @ApiOperation(value = "Удалить проект (не работает)")
+    @ApiOperation(value = "Удалить проект")
     @DeleteMapping(value = "/{id}")
     void deleteProjectById(@ApiParam(value = "идентификатор удаляемого проекта", required = true) @PathVariable Long id);
 

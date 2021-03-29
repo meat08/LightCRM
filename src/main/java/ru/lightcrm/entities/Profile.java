@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import ru.lightcrm.entities.dtos.SystemUserDto;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Entity
@@ -38,13 +38,13 @@ public class Profile {
     private String email;
 
     @Column(name = "birthdate")
-    private LocalDate birthdate;
+    private OffsetDateTime birthdate;
 
     @Column(name = "employment_date")
-    private LocalDate employmentDate;
+    private OffsetDateTime employmentDate;
 
     @Column(name = "dismissal_date")
-    private LocalDate dismissalDate;
+    private OffsetDateTime dismissalDate;
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -60,9 +60,8 @@ public class Profile {
             inverseJoinColumns = @JoinColumn(name = "company_id"))
     private List<Company> companies;
 
-
-    @OneToOne(mappedBy = "leader")
-    private Department managedDepartment;
+    @OneToMany(mappedBy = "leader")
+    private List<Department> managedDepartments;
 
     @ManyToMany
     @JoinTable(name = "departments_profiles",
@@ -81,6 +80,9 @@ public class Profile {
         profile.setFirstname(systemUserDto.getFirstname());
         profile.setLastname(systemUserDto.getLastname());
         profile.setMiddlename(systemUserDto.getMiddlename());
+        profile.setEmploymentDate(systemUserDto.getEmploymentDate() != null
+                ? systemUserDto.getEmploymentDate()
+                : OffsetDateTime.now());
         return profile;
     }
 }

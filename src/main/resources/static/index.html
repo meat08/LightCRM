@@ -23,6 +23,33 @@
 <body>
 
 <div class="container">
+    <div ng-controller="indexController">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" ng-if="isUserLoggedIn()">
+            <div class="container-fluid" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="btn btn-outline-primary" href="#!/">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-primary" href="#!/profiles/profile">Профиль</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-primary" href="#!/tasks">Задачи</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-primary" href="#!/profiles">Сотрудники</a>
+                    </li>
+
+
+                </ul>
+                <div class="d-grid gap-2 d-md-block" ng-if="isUserLoggedIn()">
+                    <button class="btn btn-outline-secondary" ng-click="tryToLogout()">Выйти</button>
+                    <span class="navbar-text">{{currentUserName}}</span>
+                </div>
+                </ul>
+            </div>
+        </nav>
+    </div>
 
     <ng-view></ng-view>
 

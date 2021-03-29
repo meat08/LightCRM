@@ -22,9 +22,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/api/**").authenticated()
                 //TODO потестить какие эндпоинты чата нужно закрывать
-//                .antMatchers("/chat/**").authenticated()
-//                .antMatchers("/user/**").authenticated()
-//                .antMatchers("/messages/**").authenticated()
+//                .antMatchers("/ws/**").authenticated()
+                .antMatchers("/user/**").authenticated()
+                .antMatchers("/chats/**").authenticated()
                 .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().permitAll()
                 .and()

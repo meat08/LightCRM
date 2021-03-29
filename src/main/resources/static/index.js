@@ -3,7 +3,7 @@
 
     //Какие-то из модулей могут быть не нужны. Лишнее выпилим при рефакторинге
     angular
-        .module('app', ['ngRoute', 'ngStorage', 'angular-jwt', 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'app.services'])
+        .module('app', ['ngRoute', 'ngStorage', 'angular-jwt', 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ngStomp'])
         .config(config)
         .run(run);
 

@@ -1,5 +1,5 @@
 angular.module('app').controller('authController',
-    function ($scope, $http, $location, $localStorage) {
+    function ($scope, $http, $location, $localStorage, jwtHelper) {
       const contextPath = 'http://localhost:8180/app';
 
       $scope.tryToAuth = function () {
@@ -9,11 +9,12 @@ angular.module('app').controller('authController',
             $http.defaults.headers.common.Authorization = 'Bearer '
                 + response.data.token;
 
+            $scope.tokenPayload = jwtHelper.decodeToken(response.data.token);
             $localStorage.currentUser = {
               username: $scope.user.username,
               token: response.data.token,
-              roles: response.data.roles,
-                profileId: response.data.profileId
+              roles: $scope.tokenPayload.roles,
+              profileId: $scope.tokenPayload.profileId
             };
 
             $scope.user.username = null;

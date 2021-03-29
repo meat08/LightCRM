@@ -35,8 +35,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
                 .timestamp(chatMessageDto.getTimestamp())
                 .messageStatus(chatMessageDto.getMessageStatus())
                 .build();
-        chatMessageRepository.save(saved);
-        return chatMessageDto;
+        return new ChatMessageDto(chatMessageRepository.save(saved));
     }
 
     @Override

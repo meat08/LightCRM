@@ -45,8 +45,7 @@ public class ProfileControllerImpl implements ProfileController {
     @Override
     public ProfileFullDto getProfileFull(Principal principal) {
         UserDto user = userService.getDtoByUsername(principal.getName());
-        ProfileFullDto profileFullDto = profileService.findFullByUserId(user.getId());
-        return profileFullDto;
+        return profileService.findFullByUserId(user.getId());
     }
 
     @Override

@@ -15,4 +15,6 @@ public interface DepartmentService {
     Department findOneByName(String name);
 
     DepartmentDto findOneByLeaderId(Long id);
+
+    List<String> getAllDepartmentNames();
 }

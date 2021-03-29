@@ -20,6 +20,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     public List<DepartmentDto> findAll() {
         return departmentRepository.findAll().stream().map(DepartmentDto::new).collect(Collectors.toList());
     }
+    @Override
+    public List<String> getAllDepartmentNames() {
+        return departmentRepository.findAll().stream().map(Department::getName).collect(Collectors.toList());
+    }
 
     @Override
     public DepartmentDto findDtoById(Long id) {

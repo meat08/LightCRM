@@ -67,20 +67,22 @@ public class ProjectServiceImpl implements ProjectService {
         project.setName(projectDto.getName());
         project.setDescription(projectDto.getDescription());
         project.setManager(profileService.findEntityById(projectDto.getManager().getId()));
-        List<Profile> profiles = projectDto.getProfiles().stream()
-                .map(profileDto -> profileService.findEntityById(profileDto.getId()))
-                .collect(Collectors.toList());
+
+        List<Profile> profiles = null;
+        if (projectDto.getProfiles() != null) {
+            profiles = projectDto.getProfiles().stream()
+                    .map(profileDto -> profileService.findEntityById(profileDto.getId()))
+                    .collect(Collectors.toList());
+        }
         project.setProfiles(profiles);
 
-//        TODO - добавление Таска не работает, получается петля и StackOverFlow, поэтому пока NULL
-//        List<Task> tasks = projectDto.getTasks().stream()
-//                .map(taskDto -> taskService.findEntityById(taskDto.getId()))
-//                .collect(Collectors.toList());
-//        project.setTasks(tasks);
-
-//        Project saved = projectRepository.save(project);
-//        ProjectDto savedDto = new ProjectDto(saved);
-//        return savedDto;
+        List<Task> tasks = null;
+        if (projectDto.getTasks() != null) {
+             tasks = projectDto.getTasks().stream()
+                    .map(taskDto -> taskService.findEntityById(taskDto.getId()))
+                    .collect(Collectors.toList());
+        }
+        project.setTasks(tasks);
 
         return new ProjectDto(projectRepository.save(project));
     }

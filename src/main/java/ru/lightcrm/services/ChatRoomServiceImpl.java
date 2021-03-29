@@ -3,10 +3,13 @@ package ru.lightcrm.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.lightcrm.entities.ChatRoom;
+import ru.lightcrm.entities.dtos.ChatRoomDto;
 import ru.lightcrm.repositories.ChatRoomRepository;
 import ru.lightcrm.services.interfaces.ChatRoomService;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,5 +43,10 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
                     return Optional.of(chatId);
                 });
+    }
+
+    @Override
+    public List<ChatRoomDto> getChatsDto(Long senderId) {
+        return chatRoomRepository.findAllBySenderId(senderId).stream().map(ChatRoomDto::new).collect(Collectors.toList());
     }
 }

@@ -3,6 +3,7 @@ package ru.lightcrm.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.lightcrm.entities.ChatMessage;
+import ru.lightcrm.entities.dtos.ChatMessageDto;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.repositories.ChatMessageRepository;
 import ru.lightcrm.services.interfaces.ChatMessageService;
@@ -12,6 +13,7 @@ import ru.lightcrm.utils.MessageStatus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,10 +22,21 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     private final ChatRoomService chatRoomService;
 
     @Override
-    public ChatMessage save(ChatMessage chatMessage) {
-        chatMessage.setMessageStatus(MessageStatus.RECEIVED);
-        chatMessageRepository.save(chatMessage);
-        return chatMessage;
+    public ChatMessageDto save(ChatMessageDto chatMessageDto) {
+        chatMessageDto.setMessageStatus(MessageStatus.RECEIVED);
+        ChatMessage saved = ChatMessage.builder()
+                .id(chatMessageDto.getId())
+                .chatId(chatMessageDto.getChatId())
+                .senderId(chatMessageDto.getSenderId())
+                .recipientId(chatMessageDto.getRecipientId())
+                .senderName(chatMessageDto.getSenderName())
+                .recipientName(chatMessageDto.getRecipientName())
+                .content(chatMessageDto.getContent())
+                .timestamp(chatMessageDto.getTimestamp())
+                .messageStatus(chatMessageDto.getMessageStatus())
+                .build();
+        chatMessageRepository.save(saved);
+        return chatMessageDto;
     }
 
     @Override
@@ -32,21 +45,21 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     }
 
     @Override
-    public List<ChatMessage> findChatMessages(Long senderId, Long recipientId) {
+    public List<ChatMessageDto> findChatMessages(Long senderId, Long recipientId) {
         Optional<String> chatId = chatRoomService.getChatId(senderId, recipientId, false);
         List<ChatMessage> messages = chatId.map(chatMessageRepository::findByChatId).orElse(new ArrayList<>());
         if (messages.size() > 0) {
             updateStatuses(messages, senderId, recipientId, MessageStatus.DELIVERED);
         }
-        return messages;
+        return messages.stream().map(ChatMessageDto::new).collect(Collectors.toList());
     }
 
     @Override
-    public ChatMessage findById(Long id) {
+    public ChatMessageDto findById(Long id) {
         return chatMessageRepository.findById(id).map(chatMessage -> {
             chatMessage.setMessageStatus(MessageStatus.DELIVERED);
             return chatMessageRepository.save(chatMessage);
-        }).orElseThrow(() -> new ResourceNotFoundException(String.format("Сообщение с id %d не найдено", id)));
+        }).map(ChatMessageDto::new).orElseThrow(() -> new ResourceNotFoundException(String.format("Сообщение с id %d не найдено", id)));
     }
 
     @Override

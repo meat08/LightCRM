@@ -1,6 +1,7 @@
 package ru.lightcrm.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.lightcrm.utils.MessageStatus;
@@ -13,6 +14,7 @@ import java.time.OffsetDateTime;
 @Table(name = "chat_message")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ChatMessage {
 
     @Id

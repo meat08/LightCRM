@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import ru.lightcrm.controllers.interfaces.ChatController;
-import ru.lightcrm.entities.ChatMessage;
 import ru.lightcrm.entities.ChatNotification;
+import ru.lightcrm.entities.dtos.ChatMessageDto;
 import ru.lightcrm.services.interfaces.ChatMessageService;
 import ru.lightcrm.services.interfaces.ChatRoomService;
 
@@ -21,11 +21,11 @@ public class ChatControllerImpl implements ChatController {
 
     @Override
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    public void processMessage(ChatMessage chatMessage) {
+    public void processMessage(ChatMessageDto chatMessage) {
         Optional<String> chatId = chatRoomService.getChatId(chatMessage.getSenderId(), chatMessage.getRecipientId(), true);
         chatMessage.setChatId(chatId.get());
 
-        ChatMessage saved = chatMessageService.save(chatMessage);
+        ChatMessageDto saved = chatMessageService.save(chatMessage);
         messagingTemplate.convertAndSendToUser(
                 chatMessage.getRecipientId().toString(), "/queue/messages",
                 new ChatNotification(saved.getId(), saved.getSenderId(), saved.getSenderName())
@@ -45,5 +45,10 @@ public class ChatControllerImpl implements ChatController {
     @Override
     public ResponseEntity<?> findMessage(Long id) {
         return ResponseEntity.ok(chatMessageService.findById(id));
+    }
+
+    @Override
+    public ResponseEntity<?> findRooms(Long senderId) {
+        return ResponseEntity.ok(chatRoomService.getChatsDto(senderId));
     }
 }

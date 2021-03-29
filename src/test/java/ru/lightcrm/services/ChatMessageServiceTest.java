@@ -9,6 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import ru.lightcrm.entities.ChatMessage;
 import ru.lightcrm.entities.ChatRoom;
+import ru.lightcrm.entities.dtos.ChatMessageDto;
 import ru.lightcrm.repositories.ChatMessageRepository;
 import ru.lightcrm.repositories.ChatRoomRepository;
 import ru.lightcrm.services.interfaces.ChatMessageService;
@@ -47,7 +48,7 @@ public class ChatMessageServiceTest {
         Mockito.doReturn(generateMockChatRoom()).when(chatRoomRepository)
                 .findBySenderIdAndRecipientId(1L, 2L);
 
-        List<ChatMessage> messages = chatMessageService.findChatMessages(1L, 2L);
+        List<ChatMessageDto> messages = chatMessageService.findChatMessages(1L, 2L);
         Assertions.assertEquals(2, messages.size());
         Assertions.assertNotNull(messages);
 

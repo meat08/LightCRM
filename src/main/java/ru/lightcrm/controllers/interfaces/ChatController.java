@@ -8,12 +8,12 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import ru.lightcrm.entities.ChatMessage;
+import ru.lightcrm.entities.dtos.ChatMessageDto;
 
 public interface ChatController {
 
     @MessageMapping("/chat")
-    void processMessage(@Payload ChatMessage chatMessage);
+    void processMessage(@Payload ChatMessageDto chatMessage);
 
     @ApiOperation(value = "Получить количество сообщений по отправителю и получателю.",
             response = ResponseEntity.class
@@ -32,4 +32,11 @@ public interface ChatController {
     )
     @GetMapping(value = "/messages/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<?> findMessage(@ApiParam(value = "Идентификатор сообщения", required = true) @PathVariable Long id);
+
+    @ApiOperation(value = "Получить чаты по id отправителя.",
+            response = ResponseEntity.class
+    )
+    @GetMapping(value = "/rooms/{senderId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<?> findRooms(@ApiParam(value = "Идентификатор отправителя", required = true) @PathVariable Long senderId);
+
 }

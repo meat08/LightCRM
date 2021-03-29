@@ -46,3 +46,20 @@
         });
     }
 })();
+
+angular.module('app').controller('indexController', function ($scope, $http, $location, $localStorage) {
+    $scope.tryToLogout = function () {
+        delete $localStorage.currentUser;
+        $http.defaults.headers.common.Authorization = '';
+        $location.path('/auth');
+    };
+
+    $scope.isUserLoggedIn = function () {
+        if ($localStorage.currentUser) {
+            $scope.currentUserName = $localStorage.currentUser.username;
+            return true;
+        } else {
+            return false;
+        }
+    };
+});

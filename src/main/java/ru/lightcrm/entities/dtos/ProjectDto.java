@@ -59,12 +59,8 @@ public class ProjectDto {
         this.profiles = project.getProfiles() != null
                 ? project.getProfiles().stream().map(ProfileDto::new).collect(Collectors.toSet())
                 : null;
-        this.tasks = null;
-
-//        TODO - добавление Таска не работает, получается петля и StackOverFlow, поэтому пока NULL
-//        this.tasks = project.getTasks() != null
-//                ? project.getTasks().stream().map(TaskDto::new).collect(Collectors.toSet())
-//                : null;
-
+        this.tasks = project.getTasks() != null
+                ? project.getTasks().stream().map(TaskDto::new).collect(Collectors.toSet())
+                : null;
     }
 }

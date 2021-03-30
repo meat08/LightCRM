@@ -1,33 +1,52 @@
 package ru.lightcrm.services;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import ru.lightcrm.configs.JwtTokenUtil;
 import ru.lightcrm.entities.Priority;
 import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.Role;
 import ru.lightcrm.entities.User;
 import ru.lightcrm.entities.dtos.UserDto;
+import ru.lightcrm.exceptions.LightCrmError;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.repositories.ProfileRepository;
 import ru.lightcrm.repositories.UserRepository;
 import ru.lightcrm.services.interfaces.UserService;
+import ru.lightcrm.utils.JwtRequest;
+import ru.lightcrm.utils.JwtResponse;
 
 import java.util.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
     private final UserRepository usersRepository;
     private final ProfileRepository profileRepository;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenUtil jwtTokenUtil;
+
 
     @Override
-    public UserDto getByUsername(String username) {
-        return new UserDto(usersRepository.findByLogin(username)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Пользователь '%s' не найден", username))));
+    public User getByUsername(String username) {
+        return usersRepository.findByLogin(username)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Пользователь '%s' не найден", username)));
+    }
+
+    @Override
+    public UserDto getDtoByUsername(String username) {
+        return new UserDto(getByUsername(username));
     }
 
     @Override
@@ -42,11 +61,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDto user = getByUsername(username);
+        User user = getByUsername(username);
         return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), getAuthorities(user));
     }
 
-    private Collection<? extends GrantedAuthority> getAuthorities(UserDto user) {
+    private Collection<? extends GrantedAuthority> getAuthorities(User user) {
         return getGrantedAuthorities(getPriorities(user));
     }
 
@@ -58,7 +77,7 @@ public class UserServiceImpl implements UserService {
         return authorities;
     }
 
-    private Set<String> getPriorities(UserDto user) {
+    private Set<String> getPriorities(User user) {
         Set<String> priorities = new HashSet<>();
         Set<Priority> collection = user.getPriorities();
         Profile profile = profileRepository.findByLogin(user.getLogin())
@@ -73,5 +92,21 @@ public class UserServiceImpl implements UserService {
         return priorities;
     }
 
+    public JwtResponse createAuthToken(JwtRequest jwtRequest) {
+        String username = jwtRequest.getUsername();
 
+        User user = getByUsername(username);
+        if (!user.isEnabled()) {
+            log.warn("User with login: {} deleted", username);
+            throw new ResourceNotFoundException("Account deleted");
+        }
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(jwtRequest.getUsername(),
+                        jwtRequest.getPassword()));
+        UserDetails userDetails = loadUserByUsername(username);
+        String token = jwtTokenUtil.generateToken(userDetails);
+        log.info("Successfully created token for user login {}", username);
+        return new JwtResponse(token);
+
+    }
 }

@@ -5,15 +5,18 @@
     <td>ID</td>
     <td>Наименование задачи</td>
     <td>Описание задачи</td>
-    <td>Постановщик задачи</td>
-    <td>Ответственный</td>
+    <td>Постановщик задачи (id)</td>
+    <td>Ответственный (id)</td>
     <td>Дата постановки задачи</td>
     <td>Дата окончания задачи</td>
     <td>Дата планируемого окончания задачи</td>
-    <td>Статус состояния задачи</td>
-    <td>Дата последнего обновления</td>
+    <td>Просрочена</td>
+    <td>Статус состояния задачи (id)</td>
     <td>Возможен ли сдвиг дедлайна</td>
-    <td>Проект задачи</td>
+    <td>Проект задачи (id)</td>
+    <td>Соисполнители (чел)</td>
+    <td>Наблюдатели (чел)</td>
+    <td>Комментарии (шт)</td>
   </tr>
   </thead>
   <tbody>
@@ -21,15 +24,18 @@
     <td>{{t.id}}</td>
     <td>{{t.title}}</td>
     <td>{{t.description}}</td>
-    <td>{{t.producer_id}}</td>
-    <td>{{t.responsible_id}}</td>
-    <td>{{t.start_date}}</td>
-    <td>{{t.end_date}}</td>
+    <td>{{t.producerId}}</td>
+    <td>{{t.responsibleId}}</td>
+    <td>{{t.startDate}}</td>
+    <td>{{t.endDate}}</td>
     <td>{{t.deadline}}</td>
-    <td>{{t.task_state_id}}</td>
-    <td>{{t.update_date}}</td>
-    <td>{{t.allow_change_deadline}}</td>
-    <td>{{t.project_id}}</td>
+    <td>{{t.expired}}</td>
+    <td>{{t.taskStateId}}</td>
+    <td>{{t.allowChangeDeadline}}</td>
+    <td>{{t.projectId}}</td>
+    <td>{{t.coExecutors.length}}</td>
+    <td>{{t.spectators.length}}</td>
+    <td>{{t.comments.length}}</td>
   </tr>
   </tbody>
 </table>

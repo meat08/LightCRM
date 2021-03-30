@@ -1,5 +1,7 @@
 package ru.lightcrm.services;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.lightcrm.entities.StaffUnit;
@@ -21,5 +23,10 @@ public class StaffUnitServiceImpl implements StaffUnitService {
     @Override
     public StaffUnitDto findDtoByName(String name) {
         return new StaffUnitDto(findByName(name));
+    }
+
+    @Override
+    public List<String> getNames() {
+        return staffUnitRepository.findAll().stream().map(su -> su.getName()).collect(Collectors.toList());
     }
 }

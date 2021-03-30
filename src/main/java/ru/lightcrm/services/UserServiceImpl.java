@@ -1,29 +1,42 @@
 package ru.lightcrm.services;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import ru.lightcrm.configs.JwtTokenUtil;
 import ru.lightcrm.entities.Priority;
 import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.Role;
 import ru.lightcrm.entities.User;
 import ru.lightcrm.entities.dtos.UserDto;
+import ru.lightcrm.exceptions.LightCrmError;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.repositories.ProfileRepository;
 import ru.lightcrm.repositories.UserRepository;
 import ru.lightcrm.services.interfaces.UserService;
+import ru.lightcrm.utils.JwtRequest;
+import ru.lightcrm.utils.JwtResponse;
 
 import java.util.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository usersRepository;
     private final ProfileRepository profileRepository;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenUtil jwtTokenUtil;
+
 
     @Override
     public User getByUsername(String username) {
@@ -77,5 +90,23 @@ public class UserServiceImpl implements UserService {
             priorities.add(priority.getName());
         }
         return priorities;
+    }
+
+    public JwtResponse createAuthToken(JwtRequest jwtRequest) {
+        String username = jwtRequest.getUsername();
+
+        User user = getByUsername(username);
+        if (!user.isEnabled()) {
+            log.warn("User with login: {} deleted", username);
+            throw new ResourceNotFoundException("Account deleted");
+        }
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(jwtRequest.getUsername(),
+                        jwtRequest.getPassword()));
+        UserDetails userDetails = loadUserByUsername(username);
+        String token = jwtTokenUtil.generateToken(userDetails);
+        log.info("Successfully created token for user login {}", username);
+        return new JwtResponse(token);
+
     }
 }

@@ -1,6 +1,7 @@
 package ru.lightcrm.services;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,44 +31,46 @@ public class TaskServiceTest {
 
     private static final String TASK_NAME = "Задача";
     private static final String TASK_DESCRIPTION = "Описание задачи";
-    private static final int TASK_COUNT = 2;
+    private static final int TASK_COUNT = 3;
 
-    private Optional<Task> initMockTask(Long id) {
-        Task task = new Task();
-        task.setId(id);
-        task.setTitle(TASK_NAME + " " + id);
-        task.setDescription(TASK_DESCRIPTION + " " + id);
-
+    @BeforeEach
+    private void init() {
         Profile producer = new Profile();
         producer.setId(1L);
-        task.setProducer(producer);
 
         Profile responsible = new Profile();
         responsible.setId(2L);
-        task.setResponsible(responsible);
 
         Project project = new Project();
         project.setId(3L);
-        task.setProject(project);
 
         TaskState taskState = new TaskState();
         taskState.setId(1L);
-        task.setTaskState(taskState);
 
-        return Optional.of(task);
-    }
+        List<Task> tasks = new ArrayList<>();
+        Task t1 = new Task(1L, TASK_NAME + " " + 1, TASK_DESCRIPTION + " " + 1, producer, responsible, taskState, project);
+        Task t2 = new Task(2L, TASK_NAME + " " + 2, TASK_DESCRIPTION + " " + 2, producer, responsible, taskState, project);
+        Task t3 = new Task(3L, TASK_NAME + " " + 3, TASK_DESCRIPTION + " " + 3, producer, responsible, taskState, project);
+        tasks.add(t1);
+        tasks.add(t2);
+        tasks.add(t3);
 
-    private List<Task> initMockTaskList(){
-        List<Task> taskList = new ArrayList<>();
-        for(int i = 0; i < TASK_COUNT; i++) taskList.add(initMockTask((long)(i + 1)).orElse(null));
-
-        return taskList;
+        Mockito.doReturn(tasks).when(taskRepository).findAll();
+        Mockito.doReturn(Optional.of(t1)).when(taskRepository).findById(t1.getId());
+        Mockito.doReturn(Optional.of(t1)).when(taskRepository).findOneByTitle(t1.getTitle());
+        Mockito.doReturn(tasks).when(taskRepository).findByProducerId(producer.getId());
+        Mockito.doReturn(tasks).when(taskRepository).findByProjectId(project.getId());
+        Mockito.doReturn(tasks).when(taskRepository).findByResponsibleId(responsible.getId());
+        Mockito.doReturn(tasks).when(taskRepository).findByProducerIdAndTaskStateId(producer.getId(), taskState.getId());
+        Mockito.doReturn(tasks).when(taskRepository).findByResponsibleIdAndTaskStateId(responsible.getId(), taskState.getId());
+        Mockito.doAnswer(invocation -> {
+            tasks.remove((int) (t3.getId() - 1));
+            return null;
+        }).when(taskRepository).deleteById(t3.getId());
     }
 
     @Test
     public void findAllTest() {
-        Mockito.doReturn(initMockTaskList()).when(taskRepository).findAll();
-
         List<TaskDto> taskDTOList = taskService.findAll();
         Assertions.assertNotNull(taskDTOList);
         Assertions.assertEquals(TASK_COUNT, taskDTOList.size());
@@ -79,7 +82,6 @@ public class TaskServiceTest {
     @Test
     public void findByIdTest() {
         Long id = 1L;
-        Mockito.doReturn(initMockTask(id)).when(taskRepository).findById(id);
 
         TaskDto taskDTO = taskService.findById(id);
         Assertions.assertNotNull(taskDTO);
@@ -93,7 +95,6 @@ public class TaskServiceTest {
     public void findOneByTitleTest() {
         Long id = 1L;
         final String name = TASK_NAME + " " + id;
-        Mockito.doReturn(initMockTask(id)).when(taskRepository).findOneByTitle(name);
 
         TaskDto taskDTO = taskService.findOneByTitle(name);
         Assertions.assertNotNull(taskDTO);
@@ -105,7 +106,6 @@ public class TaskServiceTest {
     @Test
     public void findByProducerIdTest() {
         Long id = 1L;
-        Mockito.doReturn(initMockTaskList()).when(taskRepository).findByProducerId(id);
 
         List<TaskDto> taskDTOList = taskService.findByProducerId(id);
         Assertions.assertNotNull(taskDTOList);
@@ -117,7 +117,6 @@ public class TaskServiceTest {
     @Test
     public void findByProducerIdAndTaskStateIdTest() {
         Long producerId = 1L, taskStateId = 1L;
-        Mockito.doReturn(initMockTaskList()).when(taskRepository).findByProducerIdAndTaskStateId(producerId, taskStateId);
 
         List<TaskDto> taskDTOList = taskService.findByProducerIdAndTaskStateId(producerId, taskStateId);
         Assertions.assertNotNull(taskDTOList);
@@ -131,7 +130,6 @@ public class TaskServiceTest {
     @Test
     public void findByResponsibleIdTest() {
         Long id = 2L;
-        Mockito.doReturn(initMockTaskList()).when(taskRepository).findByResponsibleId(id);
 
         List<TaskDto> taskDTOList = taskService.findByResponsibleId(id);
         Assertions.assertNotNull(taskDTOList);
@@ -143,7 +141,6 @@ public class TaskServiceTest {
     @Test
     public void findByResponsibleIdAndTaskStateIdTest() {
         Long responsibleId = 2L, taskStateId = 1L;
-        Mockito.doReturn(initMockTaskList()).when(taskRepository).findByResponsibleIdAndTaskStateId(responsibleId, taskStateId);
 
         List<TaskDto> taskDTOList = taskService.findByResponsibleIdAndTaskStateId(responsibleId, taskStateId);
         Assertions.assertNotNull(taskDTOList);
@@ -157,12 +154,40 @@ public class TaskServiceTest {
     @Test
     public void findByProjectIdTest() {
         Long id = 3L;
-        Mockito.doReturn(initMockTaskList()).when(taskRepository).findByProjectId(id);
 
         List<TaskDto> taskDTOList = taskService.findByProjectId(id);
         Assertions.assertNotNull(taskDTOList);
         Assertions.assertEquals(TASK_COUNT, taskDTOList.size());
         for(int i = 0; i < TASK_COUNT; i++)
             Assertions.assertEquals(id, taskDTOList.get(i).getProjectId());
+    }
+
+    @Test
+    public void deleteTest() {
+        Long id = 3L;
+
+        Assertions.assertEquals(TASK_COUNT, taskService.findAll().size());
+        taskService.deleteById(id);
+        Assertions.assertEquals(TASK_COUNT - 1, taskService.findAll().size());
+    }
+
+    @Test
+    public void saveOrUpdateTest() {
+        Profile producer = new Profile();
+        producer.setId(1L);
+
+        Profile responsible = new Profile();
+        responsible.setId(2L);
+
+        Project project = new Project();
+        project.setId(3L);
+
+        TaskState taskState = new TaskState();
+        taskState.setId(1L);
+
+        Task newTask = new Task(4L, TASK_NAME + " " + 4, TASK_DESCRIPTION + " " + 4, producer, responsible, taskState, project);
+
+        taskRepository.save(newTask);
+        Mockito.verify(taskRepository, Mockito.times(1)).save(newTask);
     }
 }

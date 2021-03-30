@@ -1,6 +1,7 @@
 package ru.lightcrm.services;
 
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.Project;
@@ -16,11 +17,26 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
-    private final ProjectRepository projectRepository;
-    private final ProfileService profileService;
-    private final TaskService taskService;
+    private ProjectRepository projectRepository;
+    private ProfileService profileService;
+    private TaskService taskService;
+
+    @Autowired
+    public void setTaskService(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
+    @Autowired
+    public void setProjectRepository(ProjectRepository projectRepository) {
+        this.projectRepository = projectRepository;
+    }
+
+    @Autowired
+    public void setProfileService(ProfileService profileService) {
+        this.profileService = profileService;
+    }
 
     @Override
     public List<ProjectDto> findAll() {

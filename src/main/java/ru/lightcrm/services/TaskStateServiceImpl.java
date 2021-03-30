@@ -2,6 +2,7 @@ package ru.lightcrm.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.lightcrm.entities.TaskState;
 import ru.lightcrm.entities.dtos.TaskStateDto;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.repositories.TaskStateRepository;
@@ -19,6 +20,12 @@ public class TaskStateServiceImpl implements TaskStateService {
     @Override
     public List<TaskStateDto> findAll() {
         return taskStateRepository.findAll().stream().map(TaskStateDto::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public TaskState findEntityById(Long id) {
+        return taskStateRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Статус задачи с id = %s не найден", id)));
     }
 
     @Override

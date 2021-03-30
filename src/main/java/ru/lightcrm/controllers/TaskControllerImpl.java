@@ -26,21 +26,17 @@ public class TaskControllerImpl implements TaskController {
 
     @Override
     public TaskDto saveTask(TaskDto taskDTO) {
-        //ожидаем реализацию
-        //return taskService.save(taskDTO);
-        return null;
+        taskDTO.setId(null);
+        return taskService.saveOrUpdate(taskDTO);
     }
 
     @Override
     public TaskDto updateTask(TaskDto taskDTO) {
-        //ожидаем реализацию
-        //return taskService.save(taskDTO);
-        return null;
+        return taskService.saveOrUpdate(taskDTO);
     }
 
     @Override
     public void deleteTaskById(Long id) {
-        //ожидаем реализацию
-        //taskService.deleteById(id)
+        taskService.deleteById(id);
     }
 }

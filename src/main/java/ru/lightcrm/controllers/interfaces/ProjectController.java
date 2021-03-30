@@ -3,7 +3,6 @@ package ru.lightcrm.controllers.interfaces;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 import ru.lightcrm.entities.dtos.ProjectDto;
-import ru.lightcrm.entities.dtos.TaskDto;
 
 import java.util.List;
 

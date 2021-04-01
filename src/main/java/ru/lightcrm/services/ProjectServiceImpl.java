@@ -1,6 +1,7 @@
 package ru.lightcrm.services;
 
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.Project;
@@ -16,11 +17,26 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
-    private final ProjectRepository projectRepository;
-    private final ProfileService profileService;
-    private final TaskService taskService;
+    private ProjectRepository projectRepository;
+    private ProfileService profileService;
+    private TaskService taskService;
+
+    @Autowired
+    public void setTaskService(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
+    @Autowired
+    public void setProjectRepository(ProjectRepository projectRepository) {
+        this.projectRepository = projectRepository;
+    }
+
+    @Autowired
+    public void setProfileService(ProfileService profileService) {
+        this.profileService = profileService;
+    }
 
     @Override
     public List<ProjectDto> findAll() {
@@ -67,20 +83,22 @@ public class ProjectServiceImpl implements ProjectService {
         project.setName(projectDto.getName());
         project.setDescription(projectDto.getDescription());
         project.setManager(profileService.findEntityById(projectDto.getManager().getId()));
-        List<Profile> profiles = projectDto.getProfiles().stream()
-                .map(profileDto -> profileService.findEntityById(profileDto.getId()))
-                .collect(Collectors.toList());
+
+        List<Profile> profiles = null;
+        if (projectDto.getProfiles() != null) {
+            profiles = projectDto.getProfiles().stream()
+                    .map(profileDto -> profileService.findEntityById(profileDto.getId()))
+                    .collect(Collectors.toList());
+        }
         project.setProfiles(profiles);
 
-//        TODO - добавление Таска не работает, получается петля и StackOverFlow, поэтому пока NULL
-//        List<Task> tasks = projectDto.getTasks().stream()
-//                .map(taskDto -> taskService.findEntityById(taskDto.getId()))
-//                .collect(Collectors.toList());
-//        project.setTasks(tasks);
-
-//        Project saved = projectRepository.save(project);
-//        ProjectDto savedDto = new ProjectDto(saved);
-//        return savedDto;
+        List<Task> tasks = null;
+        if (projectDto.getTasks() != null) {
+             tasks = projectDto.getTasks().stream()
+                    .map(taskDto -> taskService.findEntityById(taskDto.getId()))
+                    .collect(Collectors.toList());
+        }
+        project.setTasks(tasks);
 
         return new ProjectDto(projectRepository.save(project));
     }

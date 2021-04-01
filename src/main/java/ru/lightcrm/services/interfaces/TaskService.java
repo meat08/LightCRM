@@ -23,4 +23,8 @@ public interface TaskService {
     List<TaskDto> findByResponsibleIdAndTaskStateId(Long responsibleId, Long taskStateId);
 
     List<TaskDto> findByProjectId(Long id);
+
+    TaskDto saveOrUpdate(TaskDto taskDto);
+
+    void deleteById(Long id);
 }

@@ -47,7 +47,7 @@ public class ProjectControllerTest {
     @BeforeAll
     public static void init(){
         testProjectDto = new ProjectDto();
-        testProjectDto.setId(1l);
+        testProjectDto.setId(1L);
         testProjectDto.setName("Project test");
         testProjectDto.setDescription("Description of project");
 

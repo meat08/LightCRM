@@ -56,7 +56,7 @@ public class ProjectServiceTest {
         Mockito.doReturn(projects).when(projectRepository).findByManagerId(p1.getManager().getId());
         Mockito.doNothing().when(projectRepository).deleteById(p3.getId());
         Mockito.doAnswer(invocation -> {
-            projects.remove(2);
+            projects.remove((int)(p3.getId() - 1));
             return null;
         }).when(projectRepository).deleteById(p3.getId());
     }
@@ -107,9 +107,9 @@ public class ProjectServiceTest {
     public void deleteByIdTest() {
         Long id = 3L;
 
-        Assertions.assertEquals(3, projectService.findAll().size());
+        Assertions.assertEquals(PROJECT_COUNT, projectService.findAll().size());
         projectService.deleteById(id);
-        Assertions.assertEquals(2, projectService.findAll().size());
+        Assertions.assertEquals(PROJECT_COUNT - 1, projectService.findAll().size());
     }
 
     @Test

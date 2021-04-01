@@ -76,4 +76,14 @@ public class Task {
                 joinColumns = @JoinColumn(name = "task_id"),
                 inverseJoinColumns = @JoinColumn(name = "comment_id"))
     private Set<Comment> comments;
+
+    public Task(Long id, String title, String description, Profile producer, Profile responsible, TaskState taskState, Project project) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.producer = producer;
+        this.responsible = responsible;
+        this.taskState = taskState;
+        this.project = project;
+    }
 }

@@ -28,7 +28,7 @@ public class ChatControllerImpl implements ChatController {
         ChatMessageDto saved = chatMessageService.save(chatMessage);
         messagingTemplate.convertAndSendToUser(
                 chatMessage.getRecipientId().toString(), "/queue/messages",
-                new ChatNotification(saved.getId(), saved.getSenderId(), saved.getSenderName())
+                new ChatNotification(saved.getId(), saved.getChatId(), saved.getSenderId(), saved.getSenderName())
         );
     }
 

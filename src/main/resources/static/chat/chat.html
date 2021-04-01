@@ -1,0 +1,16 @@
+<div id="browser-window" ng-app ng-controller="chatController">
+    <div class="bubble-container" ng-repeat="m in messages | orderBy: 'timestamp'">
+<!--                <div class="avatar avatar"><img src="{{m.avatar}}" /></div>-->
+        <div class="bubble">{{m.timestamp}} - {{m.senderName}}: {{m.content}}</div>
+    </div>
+
+    <form class="row row-chat" ng-submit="sendMessage()">
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="messageText" placeholder="Введите сообщение" />
+
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </span>
+        </div>
+    </form>
+</div>

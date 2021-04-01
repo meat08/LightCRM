@@ -27,6 +27,14 @@
             .when('/tasks', {
                 templateUrl: 'tasks/tasks.html',
                 controller: 'taskController'
+            })
+            .when('/chats', {
+                templateUrl: 'chat/room.html',
+                controller: 'chatController'
+            })
+            .when('/chat/:recipientId', {
+                templateUrl: 'chat/chat.html',
+                controller: 'chatController'
             });
     }
 

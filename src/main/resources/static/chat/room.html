@@ -1,0 +1,5 @@
+<div id="browser-window" ng-app ng-controller="chatController">
+    <div ng-repeat="c in chats">
+        <a ng-href="#!/chat/{{c.recipientId}}" class="btn btn-success">{{c.chatId}}</a>
+    </div>
+</div>

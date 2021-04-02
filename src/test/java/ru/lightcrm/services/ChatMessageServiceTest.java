@@ -64,6 +64,6 @@ public class ChatMessageServiceTest {
     }
 
     private Optional<ChatRoom> generateMockChatRoom() {
-        return Optional.of(new ChatRoom(1L, "1_2", 1L, 2L, "Петр Петров"));
+        return Optional.of(new ChatRoom(1L, "1_2", 1L, 2L));
     }
 }

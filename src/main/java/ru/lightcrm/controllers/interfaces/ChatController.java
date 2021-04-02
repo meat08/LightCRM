@@ -42,4 +42,9 @@ public interface ChatController {
     @GetMapping(value = "/rooms/{senderId}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<?> findRooms(@ApiParam(value = "Идентификатор отправителя", required = true) @PathVariable Long senderId);
 
+    @ApiOperation(value = "Получить чат по id чата и отправителя.",
+            response = ResponseEntity.class
+    )
+    @GetMapping(value = "/room/{chatId}/{recipientId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<?> findRoomByIdAndRecipientId(@ApiParam(value = "Идентификатор чата", required = true) @PathVariable String chatId, @ApiParam(value = "Идентификатор получателя", required = true) @PathVariable Long recipientId);
 }

@@ -1,6 +1,6 @@
 <div id="browser-window" ng-app ng-controller="roomController">
     <div ng-repeat="c in chats">
-        <a ng-click="open(c.recipientId)"
+        <a ng-click="open(c.recipientId, c.chatId)"
            class="btn btn-success">{{c.recipientName}}</a></br>
     </div>
 </div>

@@ -30,15 +30,18 @@ public class ChatRoomDto {
     @JsonProperty("recipientId")
     private Long recipientId;
 
-    @ApiModelProperty(notes = "Имя получателя", example = "Петр Пертов", required = false, position = 5)
+    @ApiModelProperty(notes = "Имя получателя", example = "Петр Пертов", position = 5)
     @JsonProperty("recipientName")
     private String recipientName;
+
+    @ApiModelProperty(notes = "Последнее сообщение в чате", position = 6)
+    @JsonProperty("lastMessage")
+    private ChatMessageDto lastMessage;
 
     public ChatRoomDto(ChatRoom chatRoom) {
         this.id = chatRoom.getId();
         this.chatId = chatRoom.getChatId();
         this.senderId = chatRoom.getSenderId();
         this.recipientId = chatRoom.getRecipientId();
-        this.recipientName = chatRoom.getRecipientName();
     }
 }

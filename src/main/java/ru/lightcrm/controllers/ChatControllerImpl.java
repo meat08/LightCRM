@@ -51,4 +51,9 @@ public class ChatControllerImpl implements ChatController {
     public ResponseEntity<?> findRooms(Long senderId) {
         return ResponseEntity.ok(chatRoomService.getChatsDto(senderId));
     }
+
+    @Override
+    public ResponseEntity<?> findRoomByIdAndRecipientId(String chatId, Long recipientId) {
+        return ResponseEntity.ok(chatRoomService.getChatByIdAndRecipientId(chatId, recipientId));
+    }
 }

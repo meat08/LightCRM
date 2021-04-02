@@ -1,16 +1,101 @@
 <div ng-app ng-controller="chatController">
-    <div class="container" ng-repeat="m in messages | orderBy: 'timestamp'">
-        <!--                <div class="avatar avatar"><img src="{{m.avatar}}" /></div>-->
-        <div class="bubble">{{m.timestamp}} - {{m.senderName}}: {{m.content}}</div>
-    </div>
+    <div class="container">
+        <h3 class=" text-center">Messaging</h3>
+        <div class="messaging">
+            <div class="inbox_msg">
 
-    <form class="row row-chat" ng-submit="sendMessage()">
-        <div class="input-group">
-            <input type="text" class="form-control" ng-model="messageText" placeholder="Введите сообщение" />
+                <div class="inbox_people">
+                    <div class="headind_srch">
+                        <div class="recent_heading">
+                            <h4>Недавние чаты</h4>
+                        </div>
+                        <div class="srch_bar">
+                            <div class="stylish-input-group">
+                                <input type="text" class="search-bar"  placeholder="Поиск" >
+                                <span class="input-group-addon">
+                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                </span> </div>
+                        </div>
+                    </div>
+<!--                    TODO разобраться с активным чатом-->
+                    <div class="inbox_chat">
+                        <div class="chat_list active_chat">
+                            <div class="chat_people">
+                                <div>
+                                    <div class="chat_img">
+                                        <img src={{currentChat.recipientAvatar}}/>
+                                    </div>
+                                    <div class="chat_ib">
+                                        <h5>{{currentChat.recipientName}} <span class="chat_date">{{currentChat.lastMessage.timestamp}}</span></h5>
+                                        <p>{{currentChat.lastMessage.content}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat_list" ng-repeat="c in chats | orderBy: 'c.lastMessage.timestamp'" ng-if="c.chatId!=currentChat.chatId">
+                            <div class="chat_people">
+                                <div>
+                                    <img src={{c.recipientAvatar}}/>
+                                    <div class="chat_ib" ng-click="setActive(c.chatId, c.recipientId)">
+                                        <h5>{{c.recipientName}} <span class="chat_date">{{c.lastMessage.timestamp}}</span></h5>
+                                        <p>{{c.lastMessage.content}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!--                TODO отсюда и вниз еще ничего не менял-->
+                <div class="mesgs">
+                    <div class="msg_history">
+                        <div class="incoming_msg">
+                            <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                            <div class="received_msg">
+                                <div class="received_withd_msg">
+                                    <p>Test which is a new approach to have all
+                                        solutions</p>
+                                    <span class="time_date"> 11:01 AM    |    June 9</span></div>
+                            </div>
+                        </div>
+                        <div class="outgoing_msg">
+                            <div class="sent_msg">
+                                <p>Test which is a new approach to have all
+                                    solutions</p>
+                                <span class="time_date"> 11:01 AM    |    June 9</span> </div>
+                        </div>
+                        <div class="incoming_msg">
+                            <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                            <div class="received_msg">
+                                <div class="received_withd_msg">
+                                    <p>Test, which is a new approach to have</p>
+                                    <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
+                            </div>
+                        </div>
+                        <div class="outgoing_msg">
+                            <div class="sent_msg">
+                                <p>Apollo University, Delhi, India Test</p>
+                                <span class="time_date"> 11:01 AM    |    Today</span> </div>
+                        </div>
+                        <div class="incoming_msg">
+                            <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                            <div class="received_msg">
+                                <div class="received_withd_msg">
+                                    <p>We work directly with our designers and suppliers,
+                                        and sell direct to you, which means quality, exclusive
+                                        products, at a price anyone can afford.</p>
+                                    <span class="time_date"> 11:01 AM    |    Today</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="type_msg">
+                        <div class="input_msg_write">
+                            <input type="text" class="write_msg" placeholder="Type a message" />
+                            <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <span class="input-group-btn">
-                <button type="submit" class="btn btn-primary">Отправить</button>
-            </span>
-        </div>
-    </form>
+
+        </div></div>
 </div>

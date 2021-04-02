@@ -194,6 +194,5 @@ CREATE TABLE chat_room (
     id              BIGSERIAL PRIMARY KEY,
     chat_id         VARCHAR(50) NOT NULL,
     sender_id       BIGINT NOT NULL,
-    recipient_id    BIGINT NOT NULL,
-    recipient_name  VARCHAR(100) NOT NULL
+    recipient_id    BIGINT NOT NULL
 )

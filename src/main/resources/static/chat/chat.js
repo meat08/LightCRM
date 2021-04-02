@@ -6,7 +6,6 @@ angular.module('app').controller('chatController',
         $scope.senderId = $localStorage.currentUser.profileId;
         $scope.profile = null;
         $scope.messages = [];
-        $scope.chats = [];
         $scope.newMessage = {};
 
         $scope.subscribe = function() {
@@ -75,13 +74,22 @@ angular.module('app').controller('chatController',
                 });
         };
 
+        $scope.getChatById = function(chatID, recipientId) {
+            $http({
+                url: contextPath + '/chats/room/' + chatID + '/' + recipientId,
+                method: 'GET'
+            })
+                .then(function (response) {
+                    $scope.currentChat = response.data;
+                });
+        };
+
+        $scope.setActive = function(chatId, recipientId) {
+            $scope.getChatById(chatId, recipientId);
+         };
+
         $scope.openChat = function() {
             $scope.getMessages();
         }
-
-        $scope.subscribe();
-        $scope.getChats();
-        $scope.getProfile();
-        $scope.openChat();
 
 });

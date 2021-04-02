@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface ChatRoomService {
     Optional<String> getChatId(Long senderId, Long recipientId, boolean createIfNotExist);
     List<ChatRoomDto> getChatsDto(Long senderId);
+    ChatRoomDto getChatByIdAndRecipientId(String chatId, Long recipientId);
 }

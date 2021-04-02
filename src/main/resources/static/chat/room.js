@@ -27,8 +27,9 @@ angular.module('app').controller('roomController',
                 });
         };
 
-        $scope.open = function (recipientId) {
+        $scope.open = function (recipientId, currentChatId) {
             $scope.recipientId = recipientId;
+            $scope.getChatById(currentChatId, recipientId);
             $uibModal.open({
                 templateUrl: 'chat/chat.html',
                 controller: 'chatController',

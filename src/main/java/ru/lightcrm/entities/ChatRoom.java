@@ -27,7 +27,4 @@ public class ChatRoom {
 
     @Column(name = "recipient_id")
     private Long recipientId;
-
-    @Column(name = "recipient_name")
-    private String recipientName;
 }

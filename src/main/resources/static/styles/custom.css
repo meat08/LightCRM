@@ -1,0 +1,17 @@
+.main_container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.padding_right {
+    padding-right: 15px;
+}
+
+.active {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}

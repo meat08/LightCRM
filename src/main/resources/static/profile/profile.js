@@ -1,30 +1,20 @@
 angular.module('app').controller('profileController',
-    function ($scope, $http, $localStorage) {
+    function ($scope, $http, $localStorage, profileService) {
       const contextPath = 'http://localhost:8180/app';
 
-      $scope.getProfile = function () {
-        console.log('getProfile');
-        $http({
-          url: contextPath + '/api/v1/profiles/profile',
-          method: 'GET'
-        })
-        .then(function (response) {
-          console.log(response.data);
-          $scope.profile = response.data;
-        });
+      profileService.getProfile().then(function(response) {
+        $scope.profile = response.data;
+      });
+
+      $scope.getAllProfiles = function () {
+        console.log('getAllProfiles');
+          $http({
+            url: contextPath + '/api/v1/profiles',
+            method: 'GET'
+          }).then(function (response) {
+            $scope.allProfiles = response.data;
+          });
       };
-
-      $scope.getProfile();
-
-        $scope.getAllProfiles = function () {
-          console.log('getAllProfiles');
-            $http({
-                url: contextPath + '/api/v1/profiles',
-                method: 'GET'
-            }).then(function (response) {
-                $scope.allProfiles = response.data;
-            });
-        };
 
       $scope.submitCreateNewUser = function () {
         $http.post(contextPath + '/api/v1/profiles/register/', $scope.newUser)
@@ -65,5 +55,17 @@ angular.module('app').controller('profileController',
       $scope.getAllStaffUnitsNames();
 
       $scope.getAllProfiles();
+
+      $scope.status = {
+        isopen: false
+      };
+
+      $scope.toggleDropdown = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.status.isopen = !$scope.status.isopen;
+      };
+
+      $scope.appendToEl = angular.element(document.querySelector('#dropdown-long-content'));
 
     });

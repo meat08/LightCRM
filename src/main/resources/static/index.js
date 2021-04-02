@@ -3,7 +3,7 @@
 
     //Какие-то из модулей могут быть не нужны. Лишнее выпилим при рефакторинге
     angular
-        .module('app', ['ngRoute', 'ngStorage', 'angular-jwt', 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ngStomp'])
+        .module('app', ['ngRoute', 'ngStorage', 'angular-jwt', 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ngStomp', 'ChatService'])
         .config(config)
         .run(run);
 
@@ -39,9 +39,14 @@
     }
 
     //Функция проверяет наличие пользователя в локальном хранилище и клеит токен к заголовку
-    function run($rootScope, $http, $location, $localStorage) {
+    function run($rootScope, $http, $location, $localStorage, ChatService) {
         if ($localStorage.currentUser) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
+
+            //Подключение к вебсокету при обновлении страницы
+            ChatService.connect('/app/ws', {}, function (error) {
+                alert(error);
+            });
         }
         //Доступ без токена возможен только на страницы в массиве publicPages,
         // все остальное перенаправляется на /auth
@@ -59,6 +64,8 @@ angular.module('app').controller('indexController', function ($scope, $http, $lo
     $scope.tryToLogout = function () {
         delete $localStorage.currentUser;
         $http.defaults.headers.common.Authorization = '';
+        ChatService.unsubscribe();
+        ChatService.disconnect();
         $location.path('/auth');
     };
 

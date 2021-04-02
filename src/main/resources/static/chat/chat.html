@@ -1,6 +1,6 @@
-<div id="browser-window" ng-app ng-controller="chatController">
-    <div class="bubble-container" ng-repeat="m in messages | orderBy: 'timestamp'">
-<!--                <div class="avatar avatar"><img src="{{m.avatar}}" /></div>-->
+<div ng-app ng-controller="chatController">
+    <div class="container" ng-repeat="m in messages | orderBy: 'timestamp'">
+        <!--                <div class="avatar avatar"><img src="{{m.avatar}}" /></div>-->
         <div class="bubble">{{m.timestamp}} - {{m.senderName}}: {{m.content}}</div>
     </div>
 

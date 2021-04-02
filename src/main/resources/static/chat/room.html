@@ -1,5 +1,6 @@
-<div id="browser-window" ng-app ng-controller="chatController">
+<div id="browser-window" ng-app ng-controller="roomController">
     <div ng-repeat="c in chats">
-        <a ng-href="#!/chat/{{c.recipientId}}" class="btn btn-success">{{c.chatId}}</a>
+        <a ng-click="open(c.recipientId)"
+           class="btn btn-success">{{c.recipientName}}</a></br>
     </div>
 </div>

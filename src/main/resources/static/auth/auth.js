@@ -1,5 +1,5 @@
 angular.module('app').controller('authController',
-    function ($scope, $http, $location, $localStorage, jwtHelper) {
+    function ($scope, $http, $location, $localStorage, jwtHelper, ChatService) {
       const contextPath = 'http://localhost:8180/app';
 
       $scope.tryToAuth = function () {
@@ -19,6 +19,11 @@ angular.module('app').controller('authController',
 
             $scope.user.username = null;
             $scope.user.password = null;
+
+            //Подключение к вебсокету
+            ChatService.connect('/app/ws', {}, function (error) {
+              alert(error);
+            });
 
             $location.path('/');
             console.log($localStorage.currentUser);

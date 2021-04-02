@@ -1,5 +1,5 @@
 angular.module('app').controller('chatController',
-    function ($scope, $http, $location, $localStorage, $stomp, $filter, $routeParams) {
+    function ($scope, $http, $location, $localStorage, $filter, $routeParams, ChatService) {
 
         const contextPath = 'http://localhost:8180/app';
         //TODO переделать. Черновой вариант
@@ -9,20 +9,11 @@ angular.module('app').controller('chatController',
         $scope.chats = [];
         $scope.newMessage = {};
 
-        $scope.connectToStomp = function() {
-            //TODO отключить дебаг на проде
-            $stomp.setDebug(function (args) {
-                console.log(args + '\n');
+        $scope.subscribe = function() {
+            ChatService.unsubscribe();
+            ChatService.subscribe("/user/" + $scope.senderId + "/queue/messages", function (payload) {
+                $scope.getNotification(payload);
             });
-
-            $stomp
-                .connect('/app/ws', {})
-
-                .then(function (frame) {
-                    $scope.subscription = $stomp.subscribe("/user/" + $scope.senderId + "/queue/messages", function (payload, headers, res) {
-                        $scope.getNotification(payload);
-                    });
-                })
         };
 
         $scope.sendMessage = function() {
@@ -34,9 +25,9 @@ angular.module('app').controller('chatController',
                 content: $scope.messageText,
                 timestamp: $filter('date')(new Date(),'yyyy-MM-dd HH:mm:ss')
             };
-            $stomp.send('/app/chat', $scope.newMessage);
+            ChatService.send('/app/chat', $scope.newMessage);
             $scope.messageText = "";
-            $scope.getMessages();
+            $scope.messages.push($scope.newMessage);
         };
 
         $scope.getMessages = function() {
@@ -47,6 +38,16 @@ angular.module('app').controller('chatController',
             })
                 .then(function (response) {
                     $scope.messages = response.data;
+                });
+        };
+
+        $scope.getMessageById = function(id) {
+            $http({
+                url: contextPath + '/chats/messages/' + id,
+                method: 'GET'
+            })
+                .then(function (response) {
+                    $scope.messages.push(response.data);
                 });
         };
 
@@ -61,9 +62,7 @@ angular.module('app').controller('chatController',
         };
 
         $scope.getNotification = function(payload) {
-            $scope.getMessages();
-            console.log("Уведомление получено:");
-            console.log(payload);
+            $scope.getMessageById(payload.messageId);
         };
 
         $scope.getChats = function() {
@@ -77,11 +76,10 @@ angular.module('app').controller('chatController',
         };
 
         $scope.openChat = function() {
-            $scope.recipientId = $routeParams.recipientId;
             $scope.getMessages();
         }
 
-        $scope.connectToStomp();
+        $scope.subscribe();
         $scope.getChats();
         $scope.getProfile();
         $scope.openChat();

@@ -288,12 +288,12 @@ VALUES
 (1, 3);
 
 --Чаты
-INSERT INTO chat_room (chat_id, sender_id, recipient_id)
+INSERT INTO chat_room (chat_id, sender_id, recipient_id, recipient_name)
 VALUES
-('1_2', 1, 2),
-('1_2', 2, 1),
-('1_3', 1, 3),
-('1_3', 3, 1);
+('1_2', 1, 2, 'Виктор Викторов'),
+('1_2', 2, 1, 'Петр Петров'),
+('1_3', 1, 3, 'Анна Петрова'),
+('1_3', 3, 1, 'Петр Петров');
 
 --Сообщения
 INSERT INTO chat_message (chat_id, sender_id, recipient_id, sender_name, recipient_name, content, timestamp, message_status)

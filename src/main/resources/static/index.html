@@ -5,6 +5,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/custom.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <!--    Скрипты остались с магазина. В дальнейшем ненужное выпилим-->
@@ -19,31 +20,32 @@
 
 <body>
 
-<div class="container">
+<div class="main_container">
     <div ng-controller="indexController">
         <nav class="navbar navbar-expand-lg navbar-light bg-light" ng-if="isUserLoggedIn()">
             <div class="container-fluid" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="btn btn-outline-primary" href="#!/">Главная</a>
+                    <li class="nav-item padding_right">
+                        <a ng-class="{'active': isActive('/')}" class="btn btn-outline-primary" href="#!/">Главная</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="btn btn-outline-primary" href="#!/profiles/profile">Профиль</a>
+                    <li class="nav-item padding_right">
+                        <a ng-class="{'active': isActive('/tasks')}" class="btn btn-outline-primary" href="#!/tasks">Задачи</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="btn btn-outline-primary" href="#!/tasks">Задачи</a>
+                    <li class="nav-item padding_right">
+                        <a ng-class="{'active': isActive('/profiles')}" class="btn btn-outline-primary" href="#!/profiles">Сотрудники</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="btn btn-outline-primary" href="#!/profiles">Сотрудники</a>
-                    </li>
-
-
                 </ul>
-                <div class="d-grid gap-2 d-md-block" ng-if="isUserLoggedIn()">
-                    <button class="btn btn-outline-secondary" ng-click="tryToLogout()">Выйти</button>
-                    <span class="navbar-text">{{currentUserName}}</span>
+
+                <div class="btn-group mb-2" uib-dropdown is-open="status.isopen">
+                    <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+                        {{currentProfile.firstname + " " + currentProfile.lastname}} <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                        <a href="#!/profiles/profile" class="dropdown-item">Профиль</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" ng-click="tryToLogout()">Выйти</a>
+                    </div>
                 </div>
-                </ul>
             </div>
         </nav>
     </div>
@@ -53,6 +55,7 @@
     <script src="index.js"></script>
     <script src="auth/auth.js"></script>
     <script src="profile/profile.js"></script>
+    <script src="profile/profileService.js"></script>
     <script src="tasks/tasks.js"></script>
 </div>
 </body>

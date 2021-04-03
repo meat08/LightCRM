@@ -1,5 +1,6 @@
 package ru.lightcrm.services.interfaces;
 
+import ru.lightcrm.entities.Task;
 import ru.lightcrm.entities.dtos.TaskDto;
 
 import java.util.List;
@@ -8,6 +9,8 @@ public interface TaskService {
     List<TaskDto> findAll();
 
     TaskDto findById(Long id);
+
+    Task findEntityById(Long id);
 
     TaskDto findOneByTitle(String title);
 
@@ -20,4 +23,8 @@ public interface TaskService {
     List<TaskDto> findByResponsibleIdAndTaskStateId(Long responsibleId, Long taskStateId);
 
     List<TaskDto> findByProjectId(Long id);
+
+    TaskDto saveOrUpdate(TaskDto taskDto);
+
+    void deleteById(Long id);
 }

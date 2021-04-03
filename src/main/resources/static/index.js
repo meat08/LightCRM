@@ -20,6 +20,7 @@
                 templateUrl: 'company/companies.html',
                 controller: 'companyController'
             })
+
             .when('/profiles', {
                 templateUrl: 'profile/profiles.html',
                 controller: 'profileController'
@@ -50,3 +51,30 @@
         });
     }
 })();
+
+angular.module('app').controller('indexController', function ($scope, $http, $location, $localStorage, profileService) {
+    $scope.tryToLogout = function () {
+        delete $localStorage.currentUser;
+        $http.defaults.headers.common.Authorization = '';
+        $location.path('/auth');
+    };
+
+    if (!$scope.currentProfile) {
+        profileService.getProfile().then(function (response) {
+            $scope.currentProfile = response.data;
+        });
+    }
+
+    $scope.isActive = function (viewLocation) {
+        return viewLocation === $location.path();
+    };
+
+    $scope.isUserLoggedIn = function () {
+        if ($localStorage.currentUser) {
+            $scope.currentUserName = $localStorage.currentUser.username;
+            return true;
+        } else {
+            return false;
+        }
+    };
+});

@@ -51,6 +51,7 @@ public class ProfileServiceTest {
         Department testDepartment = new Department();
         testDepartment.setId(1L);
         testDepartment.setName("TEST_DEPARTMENT");
+        testDepartment.setLeader(testProfile);
         testProfile.setId(1L);
         testProfile.setFirstname("Тест");
         testProfile.setLastname("Тестов");
@@ -61,7 +62,7 @@ public class ProfileServiceTest {
         testProfile.setUser(testUser);
         testProfile.setStaffUnit(testStaff);
         testProfile.setCompanies(companies);
-        testProfile.setManagedDepartment(testDepartment);
+        testProfile.setManagedDepartments(Collections.singletonList(testDepartment));
         testProfile.setDepartments(Collections.singletonList(testDepartment));
         testProfileList = List.of(testProfile);
     }
@@ -92,7 +93,7 @@ public class ProfileServiceTest {
         Assertions.assertNotNull(profileFullDto);
         Assertions.assertEquals(testProfile.getUser().getLogin(), profileFullDto.getUserLogin());
         Assertions.assertEquals(testProfile.getCompanies().get(0).getName(), profileFullDto.getCompanyNames().get(0));
-        Assertions.assertEquals(testProfile.getDepartments().get(0).getName(), profileFullDto.getManagedDepartmentName());
+        Assertions.assertEquals(testProfile.getDepartments().get(0).getName(), profileFullDto.getManagedDepartments().get(0).getName());
         Mockito.verify(profileRepository, Mockito.times(1)).findById(testProfile.getId());
     }
 
@@ -124,7 +125,7 @@ public class ProfileServiceTest {
         Assertions.assertEquals(testProfileList.size(), profileFullDtos.size());
         Assertions.assertEquals(testProfileList.get(0).getUser().getLogin(), profileFullDtos.get(0).getUserLogin());
         Assertions.assertEquals(testProfileList.get(0).getCompanies().get(0).getName(), profileFullDtos.get(0).getCompanyNames().get(0));
-        Assertions.assertEquals(testProfileList.get(0).getDepartments().get(0).getName(), profileFullDtos.get(0).getManagedDepartmentName());
+        Assertions.assertEquals(testProfileList.get(0).getDepartments().get(0).getName(), profileFullDtos.get(0).getManagedDepartments().get(0).getName());
         Mockito.verify(profileRepository, Mockito.times(1)).findAll();
     }
 

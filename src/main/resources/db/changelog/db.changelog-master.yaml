@@ -7,10 +7,10 @@ databaseChangeLog:
         - sqlFile:
             path: sql/001_create_all_tables.sql
             relativeToChangelogFile: true
-#  - changeSet:
-#      id: fill_all_tables
-#      author: Alexander Bondarenko
-#      changes:
-#        - sqlFile:
-#            path: sql/002_fill_all_tables.sql
-#            relativeToChangelogFile: true
+  - changeSet:
+      id: fill_all_tables
+      author: Roman Sinitsyn
+      changes:
+        - sqlFile:
+            path: sql/002_fill_all_tables.sql
+            relativeToChangelogFile: true

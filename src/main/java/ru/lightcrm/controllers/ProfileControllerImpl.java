@@ -24,28 +24,28 @@ public class ProfileControllerImpl implements ProfileController {
 
     @Override
     public ProfileDto getById(Long id) {
-        return profileService.findById(id);
+        return profileService.findDtoById(id);
     }
 
     @Override
     public List<ProfileDto> getAll() {
-        return profileService.findAll();
+        return profileService.findDtoAll();
     }
 
     @Override
     public ProfileFullDto getProfileFullById(Long id) {
-        return profileService.findFullById(id);
+        return profileService.findFullDtoById(id);
     }
 
     @Override
     public List<ProfileFullDto> getAllProfilesFull() {
-        return profileService.findFullAll();
+        return profileService.findFullDtoAll();
     }
 
     @Override
     public ProfileFullDto getProfileFull(Principal principal) {
         UserDto user = userService.getDtoByUsername(principal.getName());
-        return profileService.findFullByUserId(user.getId());
+        return profileService.findFullDtoByUserId(user.getId());
     }
 
     @Override

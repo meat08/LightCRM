@@ -1,6 +1,7 @@
 package ru.lightcrm.exceptions;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,6 +22,13 @@ public class ExceptionControllerAdvice {
 
     @ExceptionHandler
     public ResponseEntity<?> handleValidationException(ValidationException e) {
+        log.error(e.getMessage());
+        LightCrmError err = new LightCrmError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handleSizeLimitExceededException(SizeLimitExceededException e) {
         log.error(e.getMessage());
         LightCrmError err = new LightCrmError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
         return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);

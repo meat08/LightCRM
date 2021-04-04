@@ -81,7 +81,7 @@ public class FileManagerServiceImpl implements FileManagerService {
         }
     }
 
-    public long savePreview(byte[] originalResource, String previewFileName, String suffix) throws IOException {
+    public long savePreview(byte[] originalResource, String previewFileName) throws IOException {
         Path path = Paths.get(directoryPath, previewFileName);
         try {
             Thumbnails.of(new ByteArrayInputStream(originalResource)).size(maxPreviewSize, maxPreviewSize).toFile(path.toFile());

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import ru.lightcrm.controllers.interfaces.FileController;
 import ru.lightcrm.entities.FileInfo;
+import ru.lightcrm.exceptions.LightCrmError;
 import ru.lightcrm.services.interfaces.FileService;
 
 import java.security.Principal;
@@ -46,6 +47,13 @@ public class FileControllerImpl implements FileController {
     @Override
     public ResponseEntity<?> downloadPhoto(Principal principal) {
         FileInfo foundFile = fileService.findPhotoFileInfoByUserLogin(principal.getName());
+        if (foundFile == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(new LightCrmError(
+                            HttpStatus.NOT_FOUND.value(),
+                            "Отсутствтует фото пользователя с логином: " + principal.getName()));
+        }
         Resource resource = fileService.download(foundFile.getKeyName());
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(foundFile.getType()))
@@ -56,6 +64,13 @@ public class FileControllerImpl implements FileController {
     @Override
     public ResponseEntity<?> downloadPreview(Principal principal) {
         FileInfo foundFile = fileService.findPreviewFileInfoByUserLogin(principal.getName());
+        if (foundFile == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(new LightCrmError(
+                            HttpStatus.NOT_FOUND.value(),
+                            "Отсутствтует превью пользователя с логином: " + principal.getName()));
+        }
         Resource resource = fileService.download(foundFile.getKeyName());
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(foundFile.getType()))

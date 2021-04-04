@@ -72,7 +72,7 @@ public class FileServiceImpl implements FileService {
             String suffix = getSuffixFromFileName(origPhotoData.getOriginalFilename());
             String previewName = prefix + "." + suffix;
             String previewKeyName = prefixKeyName + "." + suffix;
-            long previewSize = fileManagerService.savePreview(origPhotoData.getBytes(), previewKeyName, suffix);
+            long previewSize = fileManagerService.savePreview(origPhotoData.getBytes(), previewKeyName);
             FileInfo previewFileInfo = FileInfo.createNewFileInfo(previewName, previewKeyName, origPhotoData.getContentType(), previewSize);
             previewFileInfo = fileInfoRepository.save(previewFileInfo);
             return previewFileInfo;
@@ -95,26 +95,14 @@ public class FileServiceImpl implements FileService {
         }
     }
 
-    private String generateKeyName(String name) {
-        OffsetDateTime now = OffsetDateTime.now();
-        return DigestUtils.md5DigestAsHex((name + now).getBytes(StandardCharsets.UTF_8))
-                + "-" + now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss"));
-    }
-
-    private String getSuffixFromFileName(String fileName) {
-        return fileName.substring(fileName.lastIndexOf(".") + 1);
-    }
-
     @Override
     public FileInfo findPhotoFileInfoByUserLogin(String login) {
-        return fileInfoRepository.findPhotoFileInfoByUserLogin(login)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Фото пользователя с логином %s отсутствует", login)));
+        return fileInfoRepository.findPhotoFileInfoByUserLogin(login).orElse(null);
     }
 
     @Override
     public FileInfo findPreviewFileInfoByUserLogin(String login) {
-        return fileInfoRepository.findPreviewFileInfoByUserLogin(login)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Превью пользователя с логином %s отсутствует", login)));
+        return fileInfoRepository.findPreviewFileInfoByUserLogin(login).orElse(null);
     }
 
     @Override
@@ -123,5 +111,15 @@ public class FileServiceImpl implements FileService {
                 .map(FileInfo::getKeyName).toArray(String[]::new);
         fileInfoRepository.deleteAll(Arrays.asList(fileInfos));
         fileManagerService.deleteFiles(keyNames);
+    }
+
+    private String generateKeyName(String name) {
+        OffsetDateTime now = OffsetDateTime.now();
+        return DigestUtils.md5DigestAsHex((name + now).getBytes(StandardCharsets.UTF_8))
+                + "-" + now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss"));
+    }
+
+    private String getSuffixFromFileName(String fileName) {
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 }

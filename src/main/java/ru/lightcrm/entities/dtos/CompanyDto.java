@@ -55,6 +55,10 @@ public class CompanyDto {
     @JsonProperty("managers")
     private List<ProfileDto> managers;
 
+    @ApiModelProperty(notes = "Курирующие менеджеры компании", position = 10)
+    @JsonProperty("comments")
+    private List<CommentDto> comments;
+
     public CompanyDto(Company company) {
         this.id = company.getId();
         this.name = company.getName();
@@ -70,8 +74,8 @@ public class CompanyDto {
         this.managers = company.getManagers() != null
                 ? company.getManagers().stream().map(ProfileDto::new).collect(Collectors.toList())
                 : Collections.emptyList();
+        this.comments = company.getComments() != null
+                ? company.getComments().stream().map(CommentDto::new).collect(Collectors.toList())
+                : Collections.emptyList();
     }
-
-
-
 }

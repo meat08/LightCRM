@@ -1,5 +1,6 @@
 package ru.lightcrm.controllers.interfaces;
 
+import java.util.Arrays;
 import java.util.Collections;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -53,12 +54,12 @@ public class CompanyControllerTest {
         testCompanyDto.setPhoneNumber("+79999992324");
         testCompanyDto.setEmail("gazprom@gazprom.ru");
 
+
         Contact contact = new Contact();
         contact.setId(1L);
         contact.setName("TEST");
         Set<ContactDto> contactDtos = new HashSet<>(Collections.singletonList(new ContactDto(contact)));
         testCompanyDto.setContacts(contactDtos);
-
         testListCompanyDto = List.of(testCompanyDto);
     }
 

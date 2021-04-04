@@ -10,6 +10,7 @@ import org.springframework.validation.ObjectError;
 import ru.lightcrm.entities.*;
 import ru.lightcrm.entities.dtos.ProfileDto;
 import ru.lightcrm.entities.dtos.ProfileFullDto;
+import ru.lightcrm.entities.dtos.ProfileMiniDto;
 import ru.lightcrm.entities.dtos.SystemUserDto;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.repositories.ProfileRepository;
@@ -46,8 +47,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ProfileDto findDtoById(Long id) {
-        return new ProfileDto(profileRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Профиль с id %s отсутствует", id))));
+        return new ProfileDto(findById(id));
     }
 
     @Override
@@ -57,8 +57,19 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ProfileFullDto findFullDtoById(Long id) {
-        return new ProfileFullDto(profileRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Профиль с id %s отсутствует", id))));
+        return new ProfileFullDto(findById(id));
+    }
+
+    @Override
+    public ProfileFullDto findFullDtoByUserId(Long userId) {
+        return new ProfileFullDto(
+                profileRepository.findByUserId(userId).orElseThrow(() ->
+                        new ResourceNotFoundException(String.format("Профиль с user id %d отсутствует", userId))));
+    }
+
+    @Override
+    public ProfileFullDto findFullDtoByUserLogin(String login) {
+        return new ProfileFullDto(findByUserLogin(login));
     }
 
     @Override
@@ -67,10 +78,18 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public ProfileFullDto findFullDtoByUserId(Long userId) {
-        return new ProfileFullDto(
-                profileRepository.findByUserId(userId).orElseThrow(() ->
-                        new ResourceNotFoundException(String.format("Профиль с user id %d отсутствует", userId))));
+    public ProfileMiniDto findMiniDtoById(Long id) {
+        return new ProfileMiniDto(findById(id));
+    }
+
+    @Override
+    public ProfileMiniDto findMiniDtoByUserLogin(String login) {
+        return new ProfileMiniDto(findByUserLogin(login));
+    }
+
+    @Override
+    public List<ProfileMiniDto> findMiniDtoAll() {
+        return profileRepository.findAll().stream().map(ProfileMiniDto::new).collect(Collectors.toList());
     }
 
     @Override

@@ -4,27 +4,30 @@ import org.springframework.validation.BindingResult;
 import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.dtos.ProfileDto;
 import ru.lightcrm.entities.dtos.ProfileFullDto;
+import ru.lightcrm.entities.dtos.ProfileMiniDto;
 import ru.lightcrm.entities.dtos.SystemUserDto;
 
 import java.util.List;
 
 public interface ProfileService {
 
-    ProfileDto findDtoById(Long id);
-
     Profile findById(Long id);
-
     Profile findByUserLogin(String login);
 
+    ProfileDto findDtoById(Long id);
     List<ProfileDto> findDtoAll();
 
     ProfileFullDto findFullDtoById(Long id);
-
+    ProfileFullDto findFullDtoByUserId(Long userId);
+    ProfileFullDto findFullDtoByUserLogin(String name);
     List<ProfileFullDto> findFullDtoAll();
 
-    ProfileFullDto findFullDtoByUserId(Long userId);
+    ProfileMiniDto findMiniDtoById(Long id);
+    ProfileMiniDto findMiniDtoByUserLogin(String name);
+    List<ProfileMiniDto> findMiniDtoAll();
 
     void saveProfile(Profile profile);
 
     void saveNewUser(SystemUserDto systemUserDto, BindingResult bindingResult);
+
 }

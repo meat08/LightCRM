@@ -70,7 +70,8 @@ public class CompanyDto {
         this.managers = company.getManagers() != null
                 ? company.getManagers().stream().map(ProfileDto::new).collect(Collectors.toList())
                 : Collections.emptyList();
-
-        // TODO ожидание сущностей Менеджер и Комментарий
     }
+
+
+
 }

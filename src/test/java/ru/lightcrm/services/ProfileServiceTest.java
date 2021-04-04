@@ -73,7 +73,7 @@ public class ProfileServiceTest {
                 .when(profileRepository)
                 .findById(testProfile.getId());
 
-        ProfileDto profileDto = profileService.findById(testProfile.getId());
+        ProfileDto profileDto = profileService.findDtoById(testProfile.getId());
 
         Assertions.assertNotNull(profileDto);
         Assertions.assertEquals(testProfile.getFirstname(), profileDto.getFirstname());
@@ -88,7 +88,7 @@ public class ProfileServiceTest {
                 .when(profileRepository)
                 .findById(testProfile.getId());
 
-        ProfileFullDto profileFullDto = profileService.findFullById(testProfile.getId());
+        ProfileFullDto profileFullDto = profileService.findFullDtoById(testProfile.getId());
 
         Assertions.assertNotNull(profileFullDto);
         Assertions.assertEquals(testProfile.getUser().getLogin(), profileFullDto.getUserLogin());
@@ -103,7 +103,7 @@ public class ProfileServiceTest {
                 .when(profileRepository)
                 .findAll();
 
-        List<ProfileDto> profileDtos = profileService.findAll();
+        List<ProfileDto> profileDtos = profileService.findDtoAll();
 
         Assertions.assertNotNull(profileDtos);
         Assertions.assertEquals(testProfileList.size(), profileDtos.size());
@@ -119,7 +119,7 @@ public class ProfileServiceTest {
                 .when(profileRepository)
                 .findAll();
 
-        List<ProfileFullDto> profileFullDtos = profileService.findFullAll();
+        List<ProfileFullDto> profileFullDtos = profileService.findFullDtoAll();
 
         Assertions.assertNotNull(profileFullDtos);
         Assertions.assertEquals(testProfileList.size(), profileFullDtos.size());

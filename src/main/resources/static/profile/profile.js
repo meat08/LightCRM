@@ -18,13 +18,14 @@ angular.module('app').controller('profileController',
 
       $scope.submitCreateNewUser = function () {
         $http.post(contextPath + '/api/v1/profiles/register/', $scope.newUser)
-        .then(function (response) {
+        .then(function successCallback(response) {
+          alert('Добавлен новый сотрудник: ' + $scope.newUser.firstname + ' ' + $scope.newUser.lastname);
           $scope.newUser = null;
           $(".modal").modal("hide");
-          alert('Добавлен новый сотрудник');
           $scope.getAllProfiles();
+        }, function errorCallback(response) {
+             alert(response.data.msg);
         });
-
       };
 
       $scope.getAllDepartments = function () {
@@ -49,12 +50,45 @@ angular.module('app').controller('profileController',
         });
       };
 
+      $scope.uploadFile = function (element) {
+        if (element.files[0] != null) {
+          const payload = new FormData();
+          payload.append('attachment', element.files[0]);
+          $http({
+            url: contextPath + '/api/v1/files/photo',
+            method: 'POST',
+            data: payload,
+            headers: {
+              'Content-Type': undefined,
+            },
+            transformRequest: angular.identity
+          })
+            .then(function successCallback(response) {
+              // alert('Фото успешно загружено на сервер');
+              $scope.getPreview();
+            }, function errorCallback(response) {
+                window.alert(response.data.msg);
+            });
+        }
+      };
+
+      $scope.getPreview = function () {
+        $http.get(contextPath + '/api/v1/files/photo/preview', { responseType: "arraybuffer" }
+        )
+        .then(function (response) {
+            let contentType = response.headers("content-type");
+            let blob = new Blob([response.data], { type: contentType });
+            $scope.img = (window.URL || window.webkitURL).createObjectURL(blob);
+        });
+      };
 
       $scope.getAllDepartments();
 
       $scope.getAllStaffUnitsNames();
 
       $scope.getAllProfiles();
+
+      $scope.getPreview();
 
       $scope.status = {
         isopen: false

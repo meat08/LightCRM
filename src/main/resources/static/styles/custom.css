@@ -14,6 +14,7 @@
     border-color: #007bff;
 }
 
+
 .main_logo {
     transform: scale(1.8);
 }
@@ -32,4 +33,67 @@
 .body_container {
     padding-right: 15px;
     padding-left: 15px;
+}
+
+.preview_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar_wrapper {
+    max-width: 700px;
+    /*margin: 3rem auto;*/
+    padding: 1rem;
+}
+
+.outline {
+    stroke-width: 2;
+    stroke: rgba(0, 0, 0, 0.1);
+    fill: none;
+}
+
+.upload-file__input {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+    overflow: hidden;
+    width: 0.4px;
+    height: 0.4px;
+}
+
+.upload-file__label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 250px;
+    max-height: 35px;
+    border: 2px dashed #150B22;
+    padding: 9px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.upload-file__icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 11px;
+}
+
+.upload-file__label .upload-file__text,
+.upload-file__label .upload-file__icon path {
+    transition: .25s ease;
+}
+
+.upload-file__label:hover .upload-file__text {
+    color: #2065CB;
+}
+
+.upload-file__label:hover .upload-file__icon path {
+    fill: #2065CB;
+}
+
+.upload-file__label:hover {
+    border: 2px dashed #2065CB;
 }

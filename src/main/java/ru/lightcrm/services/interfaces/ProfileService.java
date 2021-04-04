@@ -10,17 +10,19 @@ import java.util.List;
 
 public interface ProfileService {
 
-    ProfileDto findById(Long id);
+    ProfileDto findDtoById(Long id);
 
-    Profile findEntityById(Long id);
+    Profile findById(Long id);
 
-    List<ProfileDto> findAll();
+    Profile findByUserLogin(String login);
 
-    ProfileFullDto findFullById(Long id);
+    List<ProfileDto> findDtoAll();
 
-    List<ProfileFullDto> findFullAll();
+    ProfileFullDto findFullDtoById(Long id);
 
-    ProfileFullDto findFullByUserId(Long userId);
+    List<ProfileFullDto> findFullDtoAll();
+
+    ProfileFullDto findFullDtoByUserId(Long userId);
 
     void saveProfile(Profile profile);
 

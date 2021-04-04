@@ -82,12 +82,12 @@ public class ProjectServiceImpl implements ProjectService {
         }
         project.setName(projectDto.getName());
         project.setDescription(projectDto.getDescription());
-        project.setManager(profileService.findEntityById(projectDto.getManager().getId()));
+        project.setManager(profileService.findById(projectDto.getManager().getId()));
 
         List<Profile> profiles = null;
         if (projectDto.getProfiles() != null) {
             profiles = projectDto.getProfiles().stream()
-                    .map(profileDto -> profileService.findEntityById(profileDto.getId()))
+                    .map(profileDto -> profileService.findById(profileDto.getId()))
                     .collect(Collectors.toList());
         }
         project.setProfiles(profiles);

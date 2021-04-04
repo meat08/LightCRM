@@ -103,7 +103,7 @@ public class ProfileControllerTest {
     @Test
     @WithMockUser(username = "Bob", authorities = "ADMIN")
     public void getAllProfilesDtoTest() throws Exception {
-        given(profileService.findAll()).willReturn(testProfileDtoList);
+        given(profileService.findDtoAll()).willReturn(testProfileDtoList);
 
         mvc.perform(get("/api/v1/profiles")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -118,7 +118,7 @@ public class ProfileControllerTest {
     @Test
     @WithMockUser(username = "Bob", authorities = "ADMIN")
     public void getAllProfilesFullDtoTest() throws Exception {
-        given(profileService.findFullAll()).willReturn(testProfileFullDtoList);
+        given(profileService.findFullDtoAll()).willReturn(testProfileFullDtoList);
 
         mvc.perform(get("/api/v1/profiles/full")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -133,7 +133,7 @@ public class ProfileControllerTest {
     @Test
     @WithMockUser(username = "Bob", authorities = "ADMIN")
     public void getProfileTest() throws Exception {
-        given(profileService.findById(1L)).willReturn(testProfileDto);
+        given(profileService.findDtoById(1L)).willReturn(testProfileDto);
 
         mvc.perform(get("/api/v1/profiles/1")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -146,7 +146,7 @@ public class ProfileControllerTest {
     @Test
     @WithMockUser(username = "Bob", authorities = "ADMIN")
     public void getProfileFullTest() throws Exception {
-        given(profileService.findFullById(1L)).willReturn(testProfileFullDto);
+        given(profileService.findFullDtoById(1L)).willReturn(testProfileFullDto);
 
         mvc.perform(get("/api/v1/profiles/full/1")
                 .contentType(MediaType.APPLICATION_JSON))

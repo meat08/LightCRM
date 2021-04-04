@@ -47,6 +47,18 @@ public class Profile {
     private OffsetDateTime dismissalDate;
 
     @OneToOne
+    @JoinColumn(name = "photo_id")
+    private FileInfo photo;
+
+    @OneToOne
+    @JoinColumn(name = "preview_id")
+    private FileInfo preview;
+
+    @Lob
+    @Column(name = "about")
+    private String about;
+
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 

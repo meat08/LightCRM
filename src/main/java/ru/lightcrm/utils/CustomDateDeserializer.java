@@ -27,7 +27,7 @@ public class CustomDateDeserializer extends JsonDeserializer<OffsetDateTime> {
     @Override
     public OffsetDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         String data = jsonParser.getText();
-        Matcher matcher = pattern.matcher(jsonParser.getText());
+        Matcher matcher = pattern.matcher(data);
         if (matcher.find()) {
             if (matcher.group(4) != null || matcher.group(3) != null) {
                 return OffsetDateTime.parse(data, DateTimeFormatter.ISO_DATE_TIME);

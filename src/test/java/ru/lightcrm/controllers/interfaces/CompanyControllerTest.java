@@ -1,5 +1,6 @@
 package ru.lightcrm.controllers.interfaces;
 
+import java.util.Collections;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.lightcrm.entities.Contact;
 import ru.lightcrm.entities.dtos.CompanyDto;
+import ru.lightcrm.entities.dtos.ContactDto;
 import ru.lightcrm.services.interfaces.CompanyService;
 
 import java.util.HashSet;
@@ -51,12 +53,11 @@ public class CompanyControllerTest {
         testCompanyDto.setPhoneNumber("+79999992324");
         testCompanyDto.setEmail("gazprom@gazprom.ru");
 
-        Set<Contact> contacts = new HashSet<>(1);
         Contact contact = new Contact();
         contact.setId(1L);
         contact.setName("TEST");
-        contacts.add(contact);
-        testCompanyDto.setContacts(contacts);
+        Set<ContactDto> contactDtos = new HashSet<>(Collections.singletonList(new ContactDto(contact)));
+        testCompanyDto.setContacts(contactDtos);
 
         testListCompanyDto = List.of(testCompanyDto);
     }

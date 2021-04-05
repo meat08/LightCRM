@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.Task;
 import ru.lightcrm.utils.CustomDateDeserializer;
 
@@ -90,16 +91,31 @@ public class TaskDto {
     @JsonProperty("comments")
     private Set<CommentDto> comments;
 
+    @ApiModelProperty(notes = "Постановщик задачи ФИО", required = false)
+    @JsonProperty("producer")
+    private ProfileMiniDto producer;
+
+    @ApiModelProperty(notes = "Ответственный за выполнение (исполнитель) задачи ФИО", required = false)
+    @JsonProperty("responsible")
+    private ProfileMiniDto responsible;
+
+    @ApiModelProperty(notes = "Наименование статуса задачи", required = false)
+    @JsonProperty("taskStateName")
+    private String taskStateName;
+
     public TaskDto(Task task) {
         this.id = task.getId();
         this.title = task.getTitle();
         this.description = task.getDescription();
         this.producerId = task.getProducer().getId();
+        this.producer = new ProfileMiniDto(task.getProducer());
         this.responsibleId = task.getResponsible().getId();
+        this.responsible = new ProfileMiniDto(task.getResponsible());
         this.startDate = task.getStartDate();
         this.endDate = task.getEndDate();
         this.deadline = task.getDeadline();
         this.taskStateId = task.getTaskState().getId();
+        this.taskStateName = task.getTaskState().getName();
         this.allowChangeDeadline = task.isAllowChangeDeadline();
         this.projectId = task.getProject() != null
                 ? task.getProject().getId()

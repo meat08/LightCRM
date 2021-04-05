@@ -73,13 +73,30 @@ angular.module('app').controller('profileController',
       };
 
       $scope.getPreview = function () {
-        $http.get(contextPath + '/api/v1/files/photo/preview', { responseType: "arraybuffer" }
+        $http.get(contextPath + '/api/v1/files/photo/preview', {responseType: "arraybuffer"}
         )
         .then(function (response) {
-            let contentType = response.headers("content-type");
-            let blob = new Blob([response.data], { type: contentType });
-            $scope.img = (window.URL || window.webkitURL).createObjectURL(blob);
+          let contentType = response.headers("content-type");
+          let blob = new Blob([response.data], {type: contentType});
+          $scope.img = (window.URL || window.webkitURL).createObjectURL(blob);
         });
+      };
+
+      $scope.getPhoto = function () {
+        if ($scope.img != null && $scope.photoUrl == null) {
+          $http.get(contextPath + '/api/v1/files/photo', { responseType: "arraybuffer" }
+          )
+          .then(function (response) {
+            let contentType = response.headers("content-type");
+            let blob = new Blob([response.data], {type: contentType});
+            if ($scope.photoUrl == null) {
+              $scope.photoUrl = (window.URL || window.webkitURL).createObjectURL(blob);
+            }
+            window.open($scope.photoUrl);
+         });
+        } else if ($scope.photoUrl != null) {
+          window.open($scope.photoUrl);
+        }
       };
 
       $scope.getAllDepartments();

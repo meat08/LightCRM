@@ -10,7 +10,7 @@ public interface FileManagerService {
 
     Resource download(String fileName) throws IOException;
 
-    long savePreview(byte[] bytes, String previewFileName, String suffix) throws IOException;
+    long savePreview(byte[] bytes, String previewFileName) throws IOException;
 
     void deleteFiles(String... fileNames);
 }

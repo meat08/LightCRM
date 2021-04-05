@@ -1,13 +1,15 @@
 'use strict';
 
 angular.module('ChatService', [])
-    .factory('ChatService', ['$rootScope', '$stomp', function($rootScope, $stomp) {
+    .factory('ChatService', ['$rootScope', '$stomp', '$q', function($rootScope, $stomp, $q) {
 
         var subscription;
+        var ready;
 
         return {
 
             connect: function(destination, header, errorCallback) {
+                var deferred = $q.defer();
                 $stomp.setDebug(function (args) {
                     console.log(args + '\n');
                 });
@@ -15,7 +17,12 @@ angular.module('ChatService', [])
                     $rootScope.$apply(function(){
                         errorCallback(error);
                     });
-                });
+                })
+                    .then(function () {
+                        deferred.resolve();
+                    });
+
+                return deferred.promise;
             },
 
             subscribe: function(destination, callback) {

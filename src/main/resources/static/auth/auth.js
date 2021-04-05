@@ -21,7 +21,7 @@ angular.module('app').controller('authController',
             $scope.user.password = null;
 
             //Подключение к вебсокету
-            ChatService.connect('/app/ws', {}, function (error) {
+            ChatService.ready = ChatService.connect('/app/ws', {}, function (error) {
               alert(error);
             });
 

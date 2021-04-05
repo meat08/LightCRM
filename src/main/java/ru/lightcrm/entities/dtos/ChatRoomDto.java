@@ -38,6 +38,10 @@ public class ChatRoomDto {
     @JsonProperty("lastMessage")
     private ChatMessageDto lastMessage;
 
+    @ApiModelProperty(notes = "Количество непрочитанных сообщений", position = 7)
+    @JsonProperty("unreadMessageCount")
+    private Long unreadMessageCount;
+
     public ChatRoomDto(ChatRoom chatRoom) {
         this.id = chatRoom.getId();
         this.chatId = chatRoom.getChatId();

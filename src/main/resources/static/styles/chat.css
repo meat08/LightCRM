@@ -1,4 +1,7 @@
-.container{max-width:1170px; margin:auto;}
+.chat-container{
+    max-width:1170px;
+    margin:auto;
+}
 img{ max-width:100%;}
 .inbox_people {
     background: #f8f8f8 none repeat scroll 0 0;
@@ -43,6 +46,7 @@ img{ max-width:100%;}
 .chat_img {
     float: left;
     width: 11%;
+    border-radius: 50%;
 }
 .chat_ib {
     float: left;
@@ -78,6 +82,7 @@ img{ max-width:100%;}
     margin: 0;
     padding: 5px 10px 5px 12px;
     width: 100%;
+    word-wrap: break-word;
 }
 .time_date {
     color: #747474;
@@ -99,19 +104,21 @@ img{ max-width:100%;}
     margin: 0; color:#fff;
     padding: 5px 10px 5px 12px;
     width:100%;
+    word-wrap: break-word;
 }
 .outgoing_msg{ overflow:hidden; margin:26px 0 26px;}
 .sent_msg {
     float: right;
     width: 46%;
 }
-.input_msg_write input {
+.input_msg_write textarea {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
     border: medium none;
     color: #4c4c4c;
     font-size: 15px;
     min-height: 48px;
-    width: 100%;
+    width: 90%;
+    word-wrap: break-word;
 }
 
 .type_msg {border-top: 1px solid #c4c4c4;position: relative;}
@@ -132,4 +139,24 @@ img{ max-width:100%;}
 .msg_history {
     height: 516px;
     overflow-y: auto;
+}
+.my-modal .modal-dialog {
+    width: 100% !important;
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+}
+
+.my-modal .modal-content {
+    width: 100% !important;
+    min-height: 100vh !important;
+    padding: 0px;
+    margin: 0px;
+}
+
+.my-modal .modal-footer {
+    position: absolute;
+    bottom: 0px;
+    width:100%;
+    padding:2px !important;
 }

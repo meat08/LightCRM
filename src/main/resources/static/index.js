@@ -69,7 +69,7 @@
             })
             .when('/chats', {
                 templateUrl: 'chat/room.html',
-                controller: 'chatController'
+                controller: 'roomController'
             })
             .when('/chat/:recipientId', {
                 templateUrl: 'chat/chat.html',
@@ -83,7 +83,7 @@
             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
 
             //Подключение к вебсокету при обновлении страницы
-            ChatService.connect('/app/ws', {}, function (error) {
+            ChatService.ready = ChatService.connect('/app/ws', {}, function (error) {
                 alert(error);
             });
         }

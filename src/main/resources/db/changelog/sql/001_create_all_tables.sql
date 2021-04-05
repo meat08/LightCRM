@@ -199,7 +199,7 @@ CREATE TABLE chat_message (
     recipient_name  VARCHAR(25) NOT NULL,
     content         TEXT NOT NULL,
     timestamp       TIMESTAMP NOT NULL,
-    message_status  VARCHAR(10) NOT NULL
+    message_status  INTEGER NOT NULL
 );
 
 CREATE TABLE chat_room (

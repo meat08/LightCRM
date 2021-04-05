@@ -5,17 +5,16 @@ import org.springframework.stereotype.Service;
 import ru.lightcrm.entities.ChatRoom;
 import ru.lightcrm.entities.dtos.ChatMessageDto;
 import ru.lightcrm.entities.dtos.ChatRoomDto;
-import ru.lightcrm.entities.dtos.ProfileDto;
+import ru.lightcrm.entities.dtos.ProfileMiniDto;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.repositories.ChatMessageRepository;
 import ru.lightcrm.repositories.ChatRoomRepository;
-import ru.lightcrm.services.interfaces.ChatMessageService;
 import ru.lightcrm.services.interfaces.ChatRoomService;
 import ru.lightcrm.services.interfaces.ProfileService;
+import ru.lightcrm.utils.MessageStatus;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,6 +61,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
                     .orElseThrow(() -> new ResourceNotFoundException(String.format("Сообщения в комнате с id %s не найдены", chatRoomDto.getChatId())));
             chatRoomDto.setLastMessage(chatMessageDto);
             chatRoomDto.setRecipientName(getRecipientNameFromProfileById(chatRoomDto.getRecipientId()));
+            chatRoomDto.setUnreadMessageCount(chatMessageRepository.countChatMessageBySenderIdAndRecipientIdAndMessageStatus(chatRoomDto.getSenderId(), chatRoomDto.getRecipientId(), MessageStatus.RECEIVED));
         }
         return chatRoomDtoList;
     }
@@ -78,7 +78,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
     private String getRecipientNameFromProfileById(Long id) {
-        ProfileDto profileDto = profileService.findById(id);
+        ProfileMiniDto profileDto = profileService.findMiniDtoById(id);
         return String.format("%s %s", profileDto.getFirstname(), profileDto.getLastname());
     }
 }

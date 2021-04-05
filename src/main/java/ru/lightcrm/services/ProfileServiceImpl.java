@@ -4,14 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import ru.lightcrm.entities.Department;
-import ru.lightcrm.entities.Profile;
-import ru.lightcrm.entities.StaffUnit;
-import ru.lightcrm.entities.User;
+import ru.lightcrm.entities.*;
 import ru.lightcrm.entities.dtos.ProfileDto;
 import ru.lightcrm.entities.dtos.ProfileFullDto;
+import ru.lightcrm.entities.dtos.ProfileMiniDto;
 import ru.lightcrm.entities.dtos.SystemUserDto;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.repositories.ProfileRepository;
@@ -35,38 +34,62 @@ public class ProfileServiceImpl implements ProfileService {
     private final StaffUnitService staffUnitService;
 
     @Override
-    public Profile findEntityById(Long id) {
+    public Profile findById(Long id) {
         return profileRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Профиль с id %s отсутствует", id)));
     }
 
     @Override
-    public ProfileDto findById(Long id) {
-        return new ProfileDto(profileRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Профиль с id %s отсутствует", id))));
+    public Profile findByUserLogin(String login) {
+        return profileRepository.findByLogin(login)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Профиль пользователя с логином %s отсутствует", login)));
     }
 
     @Override
-    public List<ProfileDto> findAll() {
+    public ProfileDto findDtoById(Long id) {
+        return new ProfileDto(findById(id));
+    }
+
+    @Override
+    public List<ProfileDto> findDtoAll() {
         return profileRepository.findAll().stream().map(ProfileDto::new).collect(Collectors.toList());
     }
 
     @Override
-    public ProfileFullDto findFullById(Long id) {
-        return new ProfileFullDto(profileRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Профиль с id %s отсутствует", id))));
+    public ProfileFullDto findFullDtoById(Long id) {
+        return new ProfileFullDto(findById(id));
     }
 
     @Override
-    public List<ProfileFullDto> findFullAll() {
+    public ProfileFullDto findFullDtoByUserId(Long userId) {
+        return new ProfileFullDto(
+                profileRepository.findByUserId(userId).orElseThrow(() ->
+                        new ResourceNotFoundException(String.format("Профиль с user id %d отсутствует", userId))));
+    }
+
+    @Override
+    public ProfileFullDto findFullDtoByUserLogin(String login) {
+        return new ProfileFullDto(findByUserLogin(login));
+    }
+
+    @Override
+    public List<ProfileFullDto> findFullDtoAll() {
         return profileRepository.findAll().stream().map(ProfileFullDto::new).collect(Collectors.toList());
     }
 
     @Override
-    public ProfileFullDto findFullByUserId(Long userId) {
-        return new ProfileFullDto(
-                profileRepository.findByUserId(userId).orElseThrow(() ->
-                        new ResourceNotFoundException(String.format("Профиль с user id %d отсутствует", userId))));
+    public ProfileMiniDto findMiniDtoById(Long id) {
+        return new ProfileMiniDto(findById(id));
+    }
+
+    @Override
+    public ProfileMiniDto findMiniDtoByUserLogin(String login) {
+        return new ProfileMiniDto(findByUserLogin(login));
+    }
+
+    @Override
+    public List<ProfileMiniDto> findMiniDtoAll() {
+        return profileRepository.findAll().stream().map(ProfileMiniDto::new).collect(Collectors.toList());
     }
 
     @Override
@@ -75,6 +98,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    @Transactional
     public void saveNewUser(SystemUserDto systemUserDto, BindingResult bindingResult) {
         log.info("Запрос на регистрацию нового пользователя");
 

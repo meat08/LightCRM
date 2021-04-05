@@ -1,10 +1,44 @@
 (function () {
     'use strict';
 
+    function materialTheme($mdThemingProvider) {
+        var primaryPalette = $mdThemingProvider.extendPalette('light-blue', {
+            '500': '3092ce',
+            // '900': '0277bd',
+            'contrastDefaultColor': 'light'
+        });
+
+        var backgroundPalette = $mdThemingProvider.extendPalette('grey', {
+            '300': 'fff9c4',
+            'contrastDefaultColor': 'dark'
+        });
+
+        $mdThemingProvider.definePalette('primaryPalette', primaryPalette);
+        $mdThemingProvider.definePalette('backgroundPalette', backgroundPalette);
+
+        $mdThemingProvider.theme('default')
+            .primaryPalette('primaryPalette')
+            .accentPalette('red')
+            .backgroundPalette('backgroundPalette');
+    }
+
     //Какие-то из модулей могут быть не нужны. Лишнее выпилим при рефакторинге
     angular
-        .module('app', ['ngRoute', 'ngStorage', 'angular-jwt', 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ngStomp', 'ChatService'])
+        .module('app', [
+            'ngRoute',
+            'ngMaterial',
+            'ngMessages',
+            'ngAria',
+            'ngStorage',
+            'angular-jwt',
+            'ngAnimate',
+            'ngSanitize',
+            'ui.bootstrap',
+            'ngStomp',
+            'ChatService'
+        ])
         .config(config)
+        .config(['$mdThemingProvider', materialTheme])
         .run(run);
 
     function config($routeProvider, $httpProvider) {
@@ -16,6 +50,11 @@
                 templateUrl: 'auth/auth.html',
                 controller: 'authController'
             })
+            .when('/companies', {
+                templateUrl: 'company/companies.html',
+                controller: 'companyController'
+            })
+
             .when('/profiles', {
                 templateUrl: 'profile/profiles.html',
                 controller: 'profileController'
@@ -60,7 +99,7 @@
     }
 })();
 
-angular.module('app').controller('indexController', function ($scope, $http, $location, $localStorage) {
+angular.module('app').controller('indexController', function ($scope, $http, $location, $localStorage, profileService, ChatService) {
     $scope.tryToLogout = function () {
         delete $localStorage.currentUser;
         $http.defaults.headers.common.Authorization = '';
@@ -68,6 +107,12 @@ angular.module('app').controller('indexController', function ($scope, $http, $lo
         ChatService.disconnect();
         $location.path('/auth');
     };
+
+    if (!$scope.currentProfile) {
+        profileService.getProfile().then(function (response) {
+            $scope.currentProfile = response.data;
+        });
+    }
 
     $scope.isUserLoggedIn = function () {
         if ($localStorage.currentUser) {
@@ -77,4 +122,6 @@ angular.module('app').controller('indexController', function ($scope, $http, $lo
             return false;
         }
     };
+
+    $scope.currentNavItem = $location.path();
 });

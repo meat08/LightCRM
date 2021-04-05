@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.lightcrm.entities.dtos.ProfileDto;
 import ru.lightcrm.entities.dtos.ProfileFullDto;
+import ru.lightcrm.entities.dtos.ProfileMiniDto;
 import ru.lightcrm.entities.dtos.SystemUserDto;
 
 import java.security.Principal;
@@ -37,7 +38,7 @@ public interface ProfileController {
     @GetMapping
     List<ProfileDto> getAll();
 
-    @ApiOperation(value = "Возвращает профиль с подробными характеристиками по указанному id", httpMethod = "GET", produces = "application/json", response = ProfileDto.class)
+    @ApiOperation(value = "Возвращает профиль с подробными характеристиками по указанному id", httpMethod = "GET", produces = "application/json", response = ProfileFullDto.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = ProfileFullDto.class),
             @ApiResponse(code = 400, message = "Указан некорректны id"),
@@ -48,7 +49,7 @@ public interface ProfileController {
     @GetMapping(value = "/full/{id}")
     ProfileFullDto getProfileFullById(@ApiParam(value = "Уникальный идентификатор профиля", name = "id", required = true, example = "1") @PathVariable Long id);
 
-    @ApiOperation(value = "Возвращает список всех профилей с подробными характеристиками", httpMethod = "GET", produces = "application/json", response = ProfileDto.class, responseContainer = "List")
+    @ApiOperation(value = "Возвращает список всех профилей с подробными характеристиками", httpMethod = "GET", produces = "application/json", response = ProfileFullDto.class, responseContainer = "List")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = ProfileFullDto.class, responseContainer = "List"),
             @ApiResponse(code = 401, message = "Клиент не авторизован"),
@@ -58,7 +59,7 @@ public interface ProfileController {
     @GetMapping(value = "/full")
     List<ProfileFullDto> getAllProfilesFull();
 
-    @ApiOperation(value = "Возвращает профиль по объекту Principal", httpMethod = "GET", produces = "application/json", response = ProfileFullDto.class)
+    @ApiOperation(value = "Возвращает профиль с подробными характеристиками авторизованного пользователя", httpMethod = "GET", produces = "application/json", response = ProfileFullDto.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = ProfileFullDto.class),
             @ApiResponse(code = 401, message = "Клиент не авторизован"),
@@ -67,6 +68,37 @@ public interface ProfileController {
     })
     @GetMapping("/profile")
     ProfileFullDto getProfileFull(Principal principal);
+
+    @ApiOperation(value = "Возвращает профиль с базовыми характеристиками по указанному id", httpMethod = "GET", produces = "application/json", response = ProfileMiniDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = ProfileMiniDto.class),
+            @ApiResponse(code = 400, message = "Указан некорректны id"),
+            @ApiResponse(code = 401, message = "Клиент не авторизован"),
+            @ApiResponse(code = 403, message = "Нет прав"),
+            @ApiResponse(code = 404, message = "Профиль с указанным id отсутствует")
+    })
+    @GetMapping(value = "/mini/{id}")
+    ProfileMiniDto getProfileMiniById(@ApiParam(value = "Уникальный идентификатор профиля", name = "id", required = true, example = "1") @PathVariable Long id);
+
+    @ApiOperation(value = "Возвращает список всех профилей с базовыми характеристиками", httpMethod = "GET", produces = "application/json", response = ProfileMiniDto.class, responseContainer = "List")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = ProfileMiniDto.class, responseContainer = "List"),
+            @ApiResponse(code = 401, message = "Клиент не авторизован"),
+            @ApiResponse(code = 403, message = "Нет прав"),
+            @ApiResponse(code = 404, message = "Ресурс отсутствует")
+    })
+    @GetMapping(value = "/mini")
+    List<ProfileMiniDto> getAllProfilesMini();
+
+    @ApiOperation(value = "Возвращает профиль с базовыми характеристиками авторизованного пользователя", httpMethod = "GET", produces = "application/json", response = ProfileMiniDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = ProfileMiniDto.class),
+            @ApiResponse(code = 401, message = "Клиент не авторизован"),
+            @ApiResponse(code = 403, message = "Нет прав"),
+            @ApiResponse(code = 404, message = "Пользователь userId не найден")
+    })
+    @GetMapping("/profile/mini")
+    ProfileMiniDto getProfileMini(Principal principal);
 
     @ApiOperation(value = "Регистрация нового пользователя", httpMethod = "POST", consumes = "application/json", produces = "application/json", response = ResponseEntity.class)
     @ApiResponses(value = {

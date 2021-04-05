@@ -10,6 +10,15 @@ CREATE TABLE staff_units (
     name                VARCHAR(50) NOT NULL
 );
 
+CREATE TABLE file_infos (
+    id                  BIGSERIAL PRIMARY KEY,
+    name                VARCHAR(255),
+    type                VARCHAR(50),
+    size                BIGINT,
+    key_name            VARCHAR(255),
+    upload_date         TIMESTAMP
+);
+
 CREATE TABLE profiles (
     id                  BIGSERIAL PRIMARY KEY,
     firstname           VARCHAR(50),
@@ -18,11 +27,14 @@ CREATE TABLE profiles (
     sex                 VARCHAR(50),
     phone               VARCHAR(50),
     email               VARCHAR(50),
+    about               TEXT,
     birthdate           DATE,
     employment_date     DATE,
     dismissal_date      DATE,
     user_id             BIGINT REFERENCES users(id),
-    staff_unit_id       BIGINT REFERENCES staff_units(id)
+    staff_unit_id       BIGINT REFERENCES staff_units(id),
+    photo_id            BIGINT REFERENCES file_infos(id),
+    preview_id          BIGINT REFERENCES file_infos(id)
 );
 
 CREATE TABLE departments (

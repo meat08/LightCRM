@@ -1,10 +1,11 @@
 angular.module('app').controller('roomController',
-    function ($scope, $http, $localStorage, ChatService, $uibModal, $q) {
+    function ($scope, $http, $localStorage, ChatService, $uibModal, PageService) {
 
         const contextPath = 'http://localhost:8180/app';
         $scope.senderId = $localStorage.currentUser.profileId;
         $scope.chats = [];
         $scope.activeChatWindow = false;
+        $scope.pageNotificationCount = 0;
 
         $scope.subscribe = function() {
             ChatService.ready.then(function () {
@@ -16,14 +17,23 @@ angular.module('app').controller('roomController',
         };
 
         $scope.getNotification = function(payload) {
+            $scope.playAudio();
             angular.forEach($scope.chats, function (value, key) {
                 if (value.chatId === payload.chatId) {
                     $scope.chats[key].unreadMessageCount += 1;
+                    $scope.pageNotificationCount += 1;
+                    PageService.setNotificationCount($scope.pageNotificationCount);
                 }
             });
         };
 
+        $scope.playAudio = function() {
+            var audio = new Audio('sounds/notification.mp3');
+            audio.play();
+        };
+
         $scope.getChats = function() {
+            $scope.pageNotificationCount = 0;
             $http({
                 url: contextPath + '/chats/rooms/' + $scope.senderId,
                 method: 'GET'
@@ -31,6 +41,7 @@ angular.module('app').controller('roomController',
                 .then(function (response) {
                     $scope.chats = response.data;
                     angular.forEach($scope.chats, function (value) {
+                        $scope.pageNotificationCount += value.unreadMessageCount;
                         $http.get(contextPath + '/api/v1/files/photo/preview/' + value.recipientId,
                             {responseType: "arraybuffer"}
                         )
@@ -40,6 +51,7 @@ angular.module('app').controller('roomController',
                                 value.recipientAvatar = (window.URL || window.webkitURL).createObjectURL(blob);
                             });
                     })
+                    PageService.setNotificationCount($scope.pageNotificationCount);
                 });
         };
 
@@ -47,6 +59,9 @@ angular.module('app').controller('roomController',
             angular.forEach($scope.chats, function (value) {
                 if (value.chatId === chatID) {
                     $scope.currentChat = value;
+                    $scope.pageNotificationCount -= $scope.currentChat.unreadMessageCount;
+                    $scope.currentChat.unreadMessageCount = 0;
+                    PageService.setNotificationCount($scope.pageNotificationCount);
                 }
             });
         };

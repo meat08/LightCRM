@@ -35,7 +35,8 @@
             'ngSanitize',
             'ui.bootstrap',
             'ngStomp',
-            'ChatService'
+            'ChatService',
+            'PageService'
         ])
         .config(config)
         .config(['$mdThemingProvider', materialTheme])

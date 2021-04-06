@@ -40,7 +40,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
     @Override
     public Long countNewMessages(Long senderId, Long recipientId) {
-        return chatMessageRepository.countChatMessageBySenderIdAndRecipientIdAndMessageStatus(senderId, recipientId, MessageStatus.RECEIVED);
+        return chatMessageRepository.countChatMessageBySenderIdAndRecipientIdAndMessageStatus(recipientId, senderId, MessageStatus.RECEIVED);
     }
 
     @Override
@@ -64,8 +64,8 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     @Override
     public void updateStatuses(List<ChatMessage> messages, Long senderId, Long recipientId, MessageStatus status) {
         for (ChatMessage message : messages) {
-            if (senderId.equals(message.getSenderId())
-                    && recipientId.equals(message.getRecipientId())
+            if (recipientId.equals(message.getSenderId())
+                    && senderId.equals(message.getRecipientId())
                     && message.getMessageStatus() != status) {
                 message.setMessageStatus(status);
                 chatMessageRepository.save(message);

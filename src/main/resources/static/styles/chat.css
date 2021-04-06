@@ -1,5 +1,5 @@
 .chat-container{
-    max-width:1170px;
+    max-width:2560px;
     margin:auto;
 }
 img{ max-width:100%;}
@@ -7,7 +7,7 @@ img{ max-width:100%;}
     background: #f8f8f8 none repeat scroll 0 0;
     float: left;
     overflow: hidden;
-    width: 40%; border-right:1px solid #c4c4c4;
+    width: 35%; border-right:1px solid #c4c4c4;
 }
 .inbox_msg {
     border: 1px solid #c4c4c4;
@@ -60,7 +60,10 @@ img{ max-width:100%;}
     margin: 0;
     padding: 18px 16px 10px;
 }
-.inbox_chat { height: 550px; overflow-y: scroll;}
+.inbox_chat {
+    height: 600px;
+    overflow-y: scroll;
+}
 
 .active_chat{ background:#ebebeb;}
 
@@ -94,7 +97,7 @@ img{ max-width:100%;}
 .mesgs {
     float: left;
     padding: 30px 15px 0 25px;
-    width: 60%;
+    width: 65%;
 }
 
 .sent_msg p {
@@ -137,11 +140,13 @@ img{ max-width:100%;}
 }
 .messaging { padding: 0 0 50px 0;}
 .msg_history {
-    height: 516px;
+    height: 600px;
     overflow-y: auto;
 }
 .my-modal .modal-dialog {
-    width: 100% !important;
+    width: 50% !important;
+    min-height: 500px;
+    max-width: 2560px;
     position: absolute;
     padding: 0px;
     margin: 0px;
@@ -159,4 +164,27 @@ img{ max-width:100%;}
     bottom: 0px;
     width:100%;
     padding:2px !important;
+}
+.notification:hover {
+    background: green;
+}
+
+.notification {
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+}
+
+.notification .badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+}
+
+.btn-margin {
+    margin: 5px;
 }

@@ -24,7 +24,6 @@
                                     <img class="chat_img" src={{currentChat.recipientAvatar}} alt=""/>
                                 </object>
                                 <div class="chat_ib">
-<!--                                    TODO обновление последнего сообщения при получении сообщений-->
                                     <h5>{{currentChat.recipientName}} <span class="chat_date">{{currentChat.lastMessage.timestamp}}</span></h5>
                                     <p>{{currentChat.lastMessage.content}}</p>
                                 </div>
@@ -36,7 +35,7 @@
                                     <object class="chat_img" data="https://ptetutorials.com/images/user-profile.png" type="image/png">
                                         <img class="chat_img" src={{c.recipientAvatar}} alt=""/>
                                     </object>
-                                    <div class="chat_ib" ng-click="setActive(c.chatId)">
+                                    <div class="chat_ib" ng-click="setActive(c.chatId, c.recipientId)">
                                         <h5>{{c.recipientName}} <span class="chat_date">{{c.lastMessage.timestamp}}</span></h5>
                                         <p>{{c.lastMessage.content}}</p> <p ng-if="c.unreadMessageCount>0" style="color:red;">Непрочитано ({{c.unreadMessageCount}})</p>
                                     </div>

@@ -16,9 +16,9 @@ angular.module('app').controller('roomController',
         };
 
         $scope.getNotification = function(payload) {
-            angular.forEach($scope.chats, function (value) {
+            angular.forEach($scope.chats, function (value, key) {
                 if (value.chatId === payload.chatId) {
-                    value.unreadMessageCount += 1;
+                    $scope.chats[key].unreadMessageCount += 1;
                 }
             });
         };
@@ -65,7 +65,8 @@ angular.module('app').controller('roomController',
                 .result.then(null, function () {
                     $scope.subscribe();
                     $scope.activeChatWindow = false;
-            })
+                    $scope.getChats();
+                 })
             };
 
         $scope.subscribe();

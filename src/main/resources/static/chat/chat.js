@@ -102,19 +102,34 @@ angular.module('app')
             }
         };
 
-        $scope.getChatById = function(chatID) {
-            angular.forEach($scope.chats, function (value) {
-                if (value.chatId === chatID) {
-                    $scope.currentChat = value;
+        $scope.getChatById = function(chatID, recipientId) {
+            $http({
+                url: contextPath + '/chats/room/' + chatID + '/' + recipientId,
+                method: 'GET'
+            })
+                .then(function (response) {
+                    $scope.currentChat = response.data;
+                    $scope.currentChat.unreadMessageCount = 0;
                     $scope.getMessages($scope.currentChat.senderId, $scope.currentChat.recipientId);
-                }
-            });
+                    $http.get(contextPath + '/api/v1/files/photo/preview/' + $scope.currentChat.recipientId,
+                        {responseType: "arraybuffer"}
+                    )
+                        .then(function (response) {
+                            let contentType = response.headers("content-type");
+                            let blob = new Blob([response.data], {type: contentType});
+                            $scope.currentChat.recipientAvatar = (window.URL || window.webkitURL).createObjectURL(blob);
+                        });
+                    angular.forEach($scope.chats, function (value, key) {
+                        if (value.chatId === $scope.currentChat.chatId) {
+                            $scope.chats[key] = $scope.currentChat;
+                        }
+                    });
+                });
         };
 
-        $scope.setActive = function(chatId) {
-            $scope.currentChat.unreadMessageCount = 0;
-            $scope.getChatById(chatId);
-         };
+        $scope.setActive = function(chatId, recipientId) {
+            $scope.getChatById(chatId, recipientId);
+        };
 
         $scope.getProfile();
         $scope.subscribe();

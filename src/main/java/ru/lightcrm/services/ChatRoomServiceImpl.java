@@ -58,10 +58,10 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         List<ChatRoomDto> chatRoomDtoList = chatRoomRepository.findAllBySenderId(senderId).stream().map(ChatRoomDto::new).collect(Collectors.toList());
         for (ChatRoomDto chatRoomDto : chatRoomDtoList) {
             ChatMessageDto chatMessageDto = chatMessageRepository.findByChatIdAndMaxTimestamp(chatRoomDto.getChatId()).map(ChatMessageDto::new)
-                    .orElseThrow(() -> new ResourceNotFoundException(String.format("Сообщения в комнате с id %s не найдены", chatRoomDto.getChatId())));
+                    .orElse(null);
             chatRoomDto.setLastMessage(chatMessageDto);
             chatRoomDto.setRecipientName(getRecipientNameFromProfileById(chatRoomDto.getRecipientId()));
-            chatRoomDto.setUnreadMessageCount(chatMessageRepository.countChatMessageBySenderIdAndRecipientIdAndMessageStatus(chatRoomDto.getSenderId(), chatRoomDto.getRecipientId(), MessageStatus.RECEIVED));
+            chatRoomDto.setUnreadMessageCount(chatMessageRepository.countChatMessageBySenderIdAndRecipientIdAndMessageStatus(chatRoomDto.getRecipientId(), chatRoomDto.getSenderId(), MessageStatus.RECEIVED));
         }
         return chatRoomDtoList;
     }
@@ -72,7 +72,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Комната с id %s отсутствует", chatId)));
         chatRoomDto.setRecipientName(getRecipientNameFromProfileById(recipientId));
         ChatMessageDto chatMessageDto = chatMessageRepository.findByChatIdAndMaxTimestamp(chatRoomDto.getChatId()).map(ChatMessageDto::new)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Сообщения в комнате с id %s не найдены", chatRoomDto.getChatId())));
+                .orElse(null);
         chatRoomDto.setLastMessage(chatMessageDto);
         return chatRoomDto;
     }

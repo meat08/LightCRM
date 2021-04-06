@@ -113,8 +113,8 @@ public class TaskServiceImpl implements TaskService {
         }
         task.setTitle(taskDto.getTitle());
         task.setDescription(taskDto.getDescription());
-        task.setProducer(profileService.findEntityById(taskDto.getProducerId()));
-        task.setResponsible(profileService.findEntityById(taskDto.getResponsibleId()));
+        task.setProducer(profileService.findById(taskDto.getProducerId()));
+        task.setResponsible(profileService.findById(taskDto.getResponsibleId()));
         task.setStartDate(taskDto.getStartDate());
         task.setEndDate(taskDto.getEndDate());
         task.setDeadline(taskDto.getDeadline());
@@ -131,7 +131,7 @@ public class TaskServiceImpl implements TaskService {
         Set<Profile> coExecutors = null;
         if (taskDto.getCoExecutors() != null) {
             coExecutors = taskDto.getCoExecutors().stream()
-                    .map(coEx -> profileService.findEntityById(coEx.getId()))
+                    .map(coEx -> profileService.findById(coEx.getId()))
                     .collect(Collectors.toSet());
         }
         task.setCoExecutors(coExecutors);
@@ -139,7 +139,7 @@ public class TaskServiceImpl implements TaskService {
         Set<Profile> spectators = null;
         if (taskDto.getSpectators() != null) {
             spectators = taskDto.getSpectators().stream()
-                    .map(s -> profileService.findEntityById(s.getId()))
+                    .map(s -> profileService.findById(s.getId()))
                     .collect(Collectors.toSet());
         }
         task.setSpectators(spectators);

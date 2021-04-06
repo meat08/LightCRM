@@ -19,6 +19,14 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL94Dialect
+  servlet:
+    multipart:
+      max-file-size: 4MB
+      max-request-size: 4MB
 jwt:
   secret: yW5t5wKaayfiU3J5PIkobDACPSuWiHx1MdM1g0MdFE9AcI8Hc2b5hlLCJvDiawkeYycLOCHdYUXnnnKJ
   token-lifetime: 86400000 #часы * минуты * секунды * миллисекунды
+
+filemanager:
+  files_location: files
+  max_preview_size: 300

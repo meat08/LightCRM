@@ -34,7 +34,7 @@ public class Department {
     private Department leadDepartment;
 
     @ManyToMany
-    @JoinTable(name = "profiles_projects",
+    @JoinTable(name = "departments_profiles",
             joinColumns = @JoinColumn(name = "department_id"),
             inverseJoinColumns = @JoinColumn(name = "profile_id"))
     private List<Profile> employees;

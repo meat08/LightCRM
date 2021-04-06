@@ -64,8 +64,26 @@ public class ProfileFullDto extends ProfileDto {
     @JsonProperty("managedDepartments")
     private List<DepartmentDto> managedDepartments;
 
+    // Project
+    @ApiModelProperty(notes = "Проекты, курируемые сотрудником", dataType = "List<ProjectDto>", position = 19)
+    @JsonProperty("managedProjects")
+    private List<ProjectDto> managedProjects;
+
+    @ApiModelProperty(notes = "Проекты сотрудника", dataType = "List<ProjectDto>", position = 20)
+    @JsonProperty("projects")
+    private List<ProjectDto> projects;
+
+    // Task
+    @ApiModelProperty(notes = "Задачи сотрудника", dataType = "List<TaskDto>", position = 21)
+    @JsonProperty("tasks")
+    private List<TaskDto> tasks;
+
+    @ApiModelProperty(notes = "Задачи, наблюдаемые сотрудником", dataType = "List<TaskDto>", position = 22)
+    @JsonProperty("observedTasks")
+    private List<TaskDto> observedTasks;
+
     // Comment
-    @ApiModelProperty(notes = "Комментарии, оставленные сотрудником", dataType = "List<String>", position = 19)
+    @ApiModelProperty(notes = "Комментарии, оставленные сотрудником", dataType = "List<CommentDto>", position = 23)
     @JsonProperty("comments")
     private List<CommentDto> comments;
 
@@ -89,6 +107,20 @@ public class ProfileFullDto extends ProfileDto {
         // Comment
         this.comments = profile.getComments() != null
                 ? profile.getComments().stream().map(CommentDto::new).collect(Collectors.toList())
+                : Collections.emptyList();
+        // Project
+        this.managedProjects = profile.getManagedProjects() != null
+                ? profile.getManagedProjects().stream().map(ProjectDto::new).collect(Collectors.toList())
+                : Collections.emptyList();
+        this.projects = profile.getProjects() != null
+                ? profile.getProjects().stream().map(ProjectDto::new).collect(Collectors.toList())
+                : Collections.emptyList();
+        // Task
+        this.tasks = profile.getTasks() != null
+                ? profile.getTasks().stream().map(TaskDto::new).collect(Collectors.toList())
+                : Collections.emptyList();
+        this.observedTasks = profile.getObservedTasks() != null
+                ? profile.getObservedTasks().stream().map(TaskDto::new).collect(Collectors.toList())
                 : Collections.emptyList();
     }
 }

@@ -12,6 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "companies")
 public class Company {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -29,14 +30,14 @@ public class Company {
     @Column(name = "bill_number")
     private Long billNumber;
 
-    @OneToMany(mappedBy = "company")
-    private Set<Contact> contacts;
-
     @Column(name = "phone_number")
     private String phoneNumber;
 
     @Column(name = "email")
     private String email;
+
+    @OneToMany(mappedBy = "company")
+    private Set<Contact> contacts;
 
     @ManyToMany
     @JoinTable(name = "companies_managers",
@@ -44,13 +45,13 @@ public class Company {
             inverseJoinColumns = @JoinColumn(name = "profile_id"))
     private List<Profile> managers;
 
+    @ManyToMany
+    @JoinTable(name = "companies_comments",
+            joinColumns = @JoinColumn(name = "company_id"),
+            inverseJoinColumns = @JoinColumn(name = "comment_id"))
+    private List<Comment> comments;
+
     public boolean isType() {
         return type;
     }
-
-    //TODO ожидается появление нужных сущностей
-//    private List<Comment> comments;
-
-
-
 }

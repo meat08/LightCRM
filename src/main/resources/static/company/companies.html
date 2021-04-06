@@ -1,0 +1,29 @@
+<h3>Компании</h3>
+<table class="table table-hover" cellpadding="0" cellspacing="0">
+  <thead>
+  <tr>
+    <td>ID</td>
+    <td>Наименование</td>
+    <td>Юридическое лицо</td>
+    <td>ИНН</td>
+    <td>Номер счета</td>
+    <td>Номер телефона</td>
+    <td>Электронная почта</td>
+<!--    <td>Контакты</td>-->
+<!--    <td>Менеджеры</td>-->
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="с in companies">
+    <td>{{с.id}}</td>
+    <td>{{с.name}}</td>
+    <td>{{с.type}}</td>
+    <td>{{с.inn}}</td>
+    <td>{{с.billNumber}}</td>
+    <td>{{с.phoneNumber}}</td>
+    <td>{{с.email}}</td>
+<!--    <td>{{с.contacts}}</td>-->
+<!--    <td>{{с.managers}}</td>-->
+  </tr>
+  </tbody>
+</table>

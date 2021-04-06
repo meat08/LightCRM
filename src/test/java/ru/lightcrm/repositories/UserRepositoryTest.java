@@ -3,6 +3,7 @@ package ru.lightcrm.repositories;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 import ru.lightcrm.entities.User;
 
 import java.util.Optional;
@@ -10,6 +11,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
+@ActiveProfiles("test")
 public class UserRepositoryTest {
 
   private final String TEST_LOGIN = "admin";

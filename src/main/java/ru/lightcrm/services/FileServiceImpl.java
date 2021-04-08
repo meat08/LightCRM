@@ -106,6 +106,11 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
+    public FileInfo findPreviewFileInfoByProfileId(Long id) {
+        return fileInfoRepository.findPreviewFileInfoByProfileId(id).orElse(null);
+    }
+
+    @Override
     public void deleteFiles(FileInfo... fileInfos) {
         String[] keyNames = Arrays.stream(fileInfos)
                 .map(FileInfo::getKeyName).toArray(String[]::new);

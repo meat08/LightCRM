@@ -15,4 +15,7 @@ public interface FileInfoRepository extends JpaRepository<FileInfo, Long> {
 
     @Query("SELECT p.preview FROM Profile p WHERE p.user.login = ?1")
     Optional<FileInfo> findPreviewFileInfoByUserLogin(@NotNull String login);
+
+    @Query("SELECT p.preview FROM Profile p WHERE p.id = ?1")
+    Optional<FileInfo> findPreviewFileInfoByProfileId(@NotNull Long id);
 }

@@ -31,10 +31,11 @@ public class JwtTokenUtil {
         return getClaimFromToken(token, (Function<Claims, List<String>>) claims -> claims.get("roles", List.class));
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails, Long profileId) {
         Map<String, Object> claims = new HashMap<>();
         List<String> rolesList = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
         claims.put("roles", rolesList);
+        claims.put("profileId", profileId);
         return doGenerateToken(claims, userDetails.getUsername());
     }
 

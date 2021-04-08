@@ -194,3 +194,22 @@ CREATE TABLE tags (
     id                  BIGSERIAL PRIMARY KEY,
     name                VARCHAR(200)
 );
+
+CREATE TABLE chat_message (
+    id              BIGSERIAL PRIMARY KEY,
+    chat_id         VARCHAR(50) NOT NULL,
+    sender_id       BIGINT NOT NULL,
+    recipient_id    BIGINT NOT NULL,
+    sender_name     VARCHAR(25) NOT NULL,
+    recipient_name  VARCHAR(25) NOT NULL,
+    content         TEXT NOT NULL,
+    timestamp       TIMESTAMP NOT NULL,
+    message_status  INTEGER NOT NULL
+);
+
+CREATE TABLE chat_room (
+    id              BIGSERIAL PRIMARY KEY,
+    chat_id         VARCHAR(50) NOT NULL,
+    sender_id       BIGINT NOT NULL,
+    recipient_id    BIGINT NOT NULL
+)

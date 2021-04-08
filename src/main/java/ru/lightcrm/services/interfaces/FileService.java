@@ -23,5 +23,7 @@ public interface FileService {
 
     FileInfo findPreviewFileInfoByUserLogin(String login);
 
+    FileInfo findPreviewFileInfoByProfileId(Long id);
+
     void deleteFiles(FileInfo... fileInfos);
 }

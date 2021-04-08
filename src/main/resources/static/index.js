@@ -71,10 +71,6 @@
             .when('/chats', {
                 templateUrl: 'chat/room.html',
                 controller: 'roomController'
-            })
-            .when('/chat/:recipientId', {
-                templateUrl: 'chat/chat.html',
-                controller: 'chatController'
             });
     }
 

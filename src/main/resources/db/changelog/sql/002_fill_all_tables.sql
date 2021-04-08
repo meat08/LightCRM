@@ -286,3 +286,10 @@ VALUES
 INSERT INTO companies_comments(company_id, comment_id)
 VALUES
 (1, 3);
+
+--теги
+INSERT INTO tags(name)
+VALUES
+('тег 1'),
+('тег 2'),
+('тег 3');

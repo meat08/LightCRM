@@ -189,3 +189,8 @@ CREATE TABLE staff_units_roles (
     FOREIGN KEY (staff_unit_id) REFERENCES staff_units(id),
     FOREIGN KEY (role_id) REFERENCES roles(id)
 );
+
+CREATE TABLE tags (
+    id                  BIGSERIAL PRIMARY KEY,
+    name                VARCHAR(200)
+);

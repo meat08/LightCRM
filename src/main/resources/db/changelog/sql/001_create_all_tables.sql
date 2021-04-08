@@ -190,6 +190,11 @@ CREATE TABLE staff_units_roles (
     FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
+CREATE TABLE tags (
+    id                  BIGSERIAL PRIMARY KEY,
+    name                VARCHAR(200)
+);
+
 CREATE TABLE chat_message (
     id              BIGSERIAL PRIMARY KEY,
     chat_id         VARCHAR(50) NOT NULL,

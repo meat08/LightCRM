@@ -1,0 +1,10 @@
+<div id="browser-window" ng-app ng-controller="roomController">
+    <h2>Недавние чаты</h2>
+    <div ng-repeat="c in chats">
+        <a id="{{c.chatId}}" ng-click="open(c.recipientId, c.chatId)"
+           class="btn btn-info btn-margin notification" title="{{c.recipientName}}">
+            <span>{{c.recipientName}}</span>
+            <span ng-if="c.unreadMessageCount>0" class="badge">{{c.unreadMessageCount}}</span>
+        </a>
+    </div>
+</div>

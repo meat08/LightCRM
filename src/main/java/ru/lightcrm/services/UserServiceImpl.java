@@ -2,8 +2,6 @@ package ru.lightcrm.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,7 +15,6 @@ import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.Role;
 import ru.lightcrm.entities.User;
 import ru.lightcrm.entities.dtos.UserDto;
-import ru.lightcrm.exceptions.LightCrmError;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.repositories.ProfileRepository;
 import ru.lightcrm.repositories.UserRepository;
@@ -104,7 +101,8 @@ public class UserServiceImpl implements UserService {
                 new UsernamePasswordAuthenticationToken(jwtRequest.getUsername(),
                         jwtRequest.getPassword()));
         UserDetails userDetails = loadUserByUsername(username);
-        String token = jwtTokenUtil.generateToken(userDetails);
+        Profile profile = profileRepository.findByLogin(username).orElseThrow(() -> new ResourceNotFoundException(String.format("Профиль пользователя '%s' не найден", username)));
+        String token = jwtTokenUtil.generateToken(userDetails, profile.getId());
         log.info("Successfully created token for user login {}", username);
         return new JwtResponse(token);
 

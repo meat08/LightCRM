@@ -26,6 +26,8 @@ public interface ProfileService {
     ProfileMiniDto findMiniDtoByUserLogin(String name);
     List<ProfileMiniDto> findMiniDtoAll();
 
+    ProfileDto findByLogin(String login);
+
     void saveProfile(Profile profile);
 
     void saveNewUser(SystemUserDto systemUserDto, BindingResult bindingResult);

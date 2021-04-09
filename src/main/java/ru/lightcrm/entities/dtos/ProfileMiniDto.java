@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.lightcrm.entities.Department;
@@ -22,6 +24,8 @@ import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 @ApiModel(description = "Класс, содержащий минимально необходимые данные для создания нового профиля", subTypes = {ProfileDto.class, ProfileFullDto.class, SystemUserDto.class})
 @JsonRootName("ProfileMiniDto")
 public class ProfileMiniDto {

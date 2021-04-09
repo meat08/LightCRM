@@ -13,6 +13,4 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
     Optional<Company> findOneByInn(@NotNull Long inn);
 
     Optional<Company> findOneById(@NotNull Long id);
-
-    List<Company> findAll();
 }

@@ -1,4 +1,31 @@
 <h3>Задачи</h3>
+<form class="col" novalidate ng-submit="getTasks()" >
+    <div class="row">
+      <div class="col">
+        <label for="taskStates">Статусы задач</label>
+        <select class="custom-select" multiple size="2" name="taskStates" id="taskStates" ng-model = "filter.taskStatesId">
+          <option ng-repeat="ts in allTaskStates" value="{{ts.id}}">{{ts.name}}</option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="producer">Постановщик</label>
+        <select class="custom-select" name="producer" id="producer" ng-model = "filter.producerId">
+          <option ng-repeat="p in allProfiles" value="{{p.id}}">{{p.lastname}} {{p.firstname}} {{p.middlename}}</option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="responsible">Ответственный</label>
+        <select class="custom-select" name="responsible" id="responsible" ng-model = "filter.responsibleId">
+          <option ng-repeat="p in allProfiles" value="{{p.id}}">{{p.lastname}} {{p.firstname}} {{p.middlename}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <button type="submit" class="btn btn-primary">Фильтровать</button>
+      <button class="btn btn-success" ng-click="cleanFilter()">Очистить</button>
+    </div>
+</form>
+
 <table class="table table-hover" cellpadding="0" cellspacing="0">
   <thead>
   <tr>

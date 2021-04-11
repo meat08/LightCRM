@@ -1,12 +1,15 @@
 package ru.lightcrm.services.interfaces;
 
+import org.springframework.data.jpa.domain.Specification;
 import ru.lightcrm.entities.Task;
 import ru.lightcrm.entities.dtos.TaskDto;
 
+import javax.validation.constraints.Null;
 import java.util.List;
+import java.util.Map;
 
 public interface TaskService {
-    List<TaskDto> findAll();
+    List<TaskDto> findAll(Map<String, String> params, @Null List<Long> taskStatesId);
 
     TaskDto findById(Long id);
 

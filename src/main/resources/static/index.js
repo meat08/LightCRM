@@ -71,11 +71,18 @@
             .when('/chats', {
                 templateUrl: 'chat/room.html',
                 controller: 'roomController'
-            });
+            })
+            .when('/tasks/:taskId', {
+                 templateUrl: 'tasks/task.html',
+                 controller: 'taskEditController'
+            })
+            ;
     }
 
     //Функция проверяет наличие пользователя в локальном хранилище и клеит токен к заголовку
-    function run($rootScope, $http, $location, $localStorage, ChatService) {
+    function run($rootScope, $http, $location, $localStorage
+    , ChatService
+    ) {
         if ($localStorage.currentUser) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
 
@@ -96,7 +103,9 @@
     }
 })();
 
-angular.module('app').controller('indexController', function ($scope, $http, $location, $localStorage, profileService, ChatService) {
+angular.module('app').controller('indexController', function ($scope, $http, $location, $localStorage, profileService
+, ChatService
+) {
     $scope.tryToLogout = function () {
         delete $localStorage.currentUser;
         $http.defaults.headers.common.Authorization = '';

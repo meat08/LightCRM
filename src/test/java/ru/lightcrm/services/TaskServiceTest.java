@@ -17,6 +17,7 @@ import ru.lightcrm.repositories.TaskRepository;
 import ru.lightcrm.services.interfaces.TaskService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,7 +72,7 @@ public class TaskServiceTest {
 
     @Test
     public void findAllTest() {
-        List<TaskDto> taskDTOList = taskService.findAll();
+        List<TaskDto> taskDTOList = taskService.findAll(new HashMap<String, String>(), new ArrayList<>());
         Assertions.assertNotNull(taskDTOList);
         Assertions.assertEquals(TASK_COUNT, taskDTOList.size());
         Assertions.assertEquals(TASK_NAME + " 1", taskDTOList.get(0).getTitle());
@@ -166,9 +167,9 @@ public class TaskServiceTest {
     public void deleteTest() {
         Long id = 3L;
 
-        Assertions.assertEquals(TASK_COUNT, taskService.findAll().size());
+        Assertions.assertEquals(TASK_COUNT, taskService.findAll(new HashMap<String, String>(), new ArrayList<>()).size());
         taskService.deleteById(id);
-        Assertions.assertEquals(TASK_COUNT - 1, taskService.findAll().size());
+        Assertions.assertEquals(TASK_COUNT - 1, taskService.findAll(new HashMap<String, String>(), new ArrayList<>()).size());
     }
 
     @Test

@@ -37,11 +37,11 @@ public class TaskDto {
     @JsonProperty("description")
     private String description;
 
-    @ApiModelProperty(notes = "Постановщик задачи.", required = true, position = 3)
+    @ApiModelProperty(notes = "Идентификатор постановщика задачи.", required = true, position = 3)
     @JsonProperty("producerId")
     private Long producerId;
 
-    @ApiModelProperty(notes = "Ответственный за выполнение (исполнитель) задачи.", required = true, position = 4)
+    @ApiModelProperty(notes = "Идентификатор ответственного за выполнение (исполнитель) задачи.", required = true, position = 4)
     @JsonProperty("responsibleId")
     private Long responsibleId;
 
@@ -91,11 +91,11 @@ public class TaskDto {
     @JsonProperty("comments")
     private Set<CommentDto> comments;
 
-    @ApiModelProperty(notes = "Постановщик задачи ФИО", required = false)
+    @ApiModelProperty(notes = "Постановщик задачи ", required = false)
     @JsonProperty("producer")
     private ProfileMiniDto producer;
 
-    @ApiModelProperty(notes = "Ответственный за выполнение (исполнитель) задачи ФИО", required = false)
+    @ApiModelProperty(notes = "Ответственный за выполнение (исполнитель) задачи", required = false)
     @JsonProperty("responsible")
     private ProfileMiniDto responsible;
 

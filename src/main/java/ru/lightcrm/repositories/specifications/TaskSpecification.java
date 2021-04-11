@@ -32,7 +32,7 @@ public class TaskSpecification {
     }
 
     public static Specification<Task> coExecutorsEquals(long coExecutor_id){
-        return (Specification<Task>)(root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.in(root.get("coExecutors").get("id")).value(coExecutor_id);
+        return (Specification<Task>)(root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.in(root.join("coExecutors",JoinType.LEFT).get("id")).value(coExecutor_id);
     }
 
 }

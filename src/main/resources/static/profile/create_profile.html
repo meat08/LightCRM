@@ -100,12 +100,9 @@
 
                 <md-input-container class="md-block">
                     <label>Отделы</label>
-                    <md-select required md-no-asterisk name="departmentNames" ng-model="newUser.departmentNames" multiple="multiple">
+                    <md-select name="departmentNames" ng-model="newUser.departmentNames" multiple="multiple">
                         <md-option ng-repeat="dn in departmentnames" value="{{dn}}">{{dn}}</md-option>
                     </md-select>
-                    <div ng-messages="newProfileForm.departmentNames.$error">
-                        <div ng-message="required">Обязательное поле.</div>
-                    </div>
                 </md-input-container>
             </div>
         </md-dialog-content>

@@ -1,64 +1,64 @@
 --доступы к действиям с данными
 --дополнить при добавлении новых сущностей
-INSERT INTO priorities(name)
+INSERT INTO priorities(name, visible_name)
 VALUES
-('FULL_ACCESS'),
+('FULL_ACCESS', 'Полный доступ'),
 --
-('ADD_PROFILE'),
-('READ_PROFILE'),
-('CHANGE_PROFILE'),
-('DELETE_PROFILE'),
+('ADD_PROFILE', 'Создание профиля'),
+('READ_PROFILE', 'Просмотр профиля'),
+('CHANGE_PROFILE', 'Изменение профиля'),
+('DELETE_PROFILE', 'Удаление профиля'),
 --
-('ADD_TASK'),
-('READ_TASK'),
-('CHANGE_TASK'),
-('DELETE_TASK'),
+('ADD_TASK', 'Создание задачи '),
+('READ_TASK', 'Просмотр задачи'),
+('CHANGE_TASK', 'Изменение задачи'),
+('DELETE_TASK', 'Удаление задачи'),
 --
-('ADD_PROJECT'),
-('READ_PROJECT'),
-('CHANGE_PROJECT'),
-('DELETE_PROJECT'),
+('ADD_PROJECT', 'Создание проекта'),
+('READ_PROJECT', 'Просмотр проекта'),
+('CHANGE_PROJECT', 'Изменение проекта'),
+('DELETE_PROJECT', 'Удаление проекта'),
 --
-('ADD_TASK_STATE'),
-('READ_TASK_STATE'),
-('CHANGE_TASK_STATE'),
-('DELETE_TASK_STATE'),
+('ADD_TASK_STATE', 'Создание статуса задачи'),
+('READ_TASK_STATE', 'Просмотр статуса задачи'),
+('CHANGE_TASK_STATE', 'Изменение статуса задачи'),
+('DELETE_TASK_STATE', 'Удаление статуса задачи'),
 --
-('ADD_STAFF_UNIT'),
-('READ_STAFF_UNIT'),
-('CHANGE_STAFF_UNIT'),
-('DELETE_STAFF_UNIT'),
+('ADD_STAFF_UNIT', 'Создание должности'),
+('READ_STAFF_UNIT', 'Просмотр должности'),
+('CHANGE_STAFF_UNIT', 'Изменение должности'),
+('DELETE_STAFF_UNIT', 'Удаление должности'),
 --
-('ADD_DEPARTMENT'),
-('READ_DEPARTMENT'),
-('CHANGE_DEPARTMENT'),
-('DELETE_DEPARTMENT'),
+('ADD_DEPARTMENT', 'Создание отдела'),
+('READ_DEPARTMENT', 'Просмотр отдела'),
+('CHANGE_DEPARTMENT', 'Изменение отдела'),
+('DELETE_DEPARTMENT', 'Удаление отдела'),
 --
-('ADD_CONTACT'),
-('READ_CONTACT'),
-('CHANGE_CONTACT'),
-('DELETE_CONTACT'),
+('ADD_CONTACT', 'Создание контакта'),
+('READ_CONTACT', 'Просмотр контакта'),
+('CHANGE_CONTACT', 'Изменение контакта'),
+('DELETE_CONTACT', 'Удаление контакта'),
 --
-('ADD_COMPANY'),
-('READ_COMPANY'),
-('CHANGE_COMPANY'),
-('DELETE_COMPANY'),
+('ADD_COMPANY', 'Создание организации'),
+('READ_COMPANY', 'Просмотр организации'),
+('CHANGE_COMPANY', 'Изменение организации'),
+('DELETE_COMPANY', 'Удаление организации'),
 --
-('ADD_COMMENT'),
-('READ_COMMENT'),
-('CHANGE_COMMENT'),
-('DELETE_COMMENT');
+('ADD_COMMENT', 'Создание комментария'),
+('READ_COMMENT', 'Просмотр комментария'),
+('CHANGE_COMMENT', 'Изменение комментария'),
+('DELETE_COMMENT', 'Удаление комментария');
 
 --роли
-INSERT INTO roles(name)
+INSERT INTO roles(name, visible_name)
 VALUES
-('ROLE_ADMINISTRATOR'),
-('ROLE_GUEST'),--неавторизованный пользователь
-('ROLE_ONLY_READ'),--зарегистрированный только чтение
-('ROLE_MANAGER'),
-('ROLE_PROJECT_MANAGER'),
-('ROLE_HEAD_OF_DEPARTMENT'),
-('ROLE_HEAD_OF_COMPANY');
+('ROLE_ADMINISTRATOR' , 'Администратор'),
+('ROLE_GUEST', 'Неавторизованный'),
+('ROLE_ONLY_READ', 'Только чтение'),--зарегистрированный только чтение
+('ROLE_MANAGER', 'Менеджер'),
+('ROLE_PROJECT_MANAGER', 'Менеджер проекта'),
+('ROLE_HEAD_OF_DEPARTMENT', 'Начльник отдела'),
+('ROLE_HEAD_OF_COMPANY', 'Руководитель организации');
 
 --роли и доступы
 INSERT INTO roles_priorities(role_id, priority_id)
@@ -295,7 +295,7 @@ VALUES
 ('тег 3');
 
 --Чаты
-INSERT INTO chat_room (chat_id, sender_id, recipient_id)
+INSERT INTO chat_room(chat_id, sender_id, recipient_id)
 VALUES
 ('1_2', 1, 2),
 ('1_2', 2, 1),
@@ -303,7 +303,7 @@ VALUES
 ('1_3', 3, 1);
 
 --Сообщения
-INSERT INTO chat_message (chat_id, sender_id, recipient_id, sender_name, recipient_name, content, timestamp, message_status)
+INSERT INTO chat_message(chat_id, sender_id, recipient_id, sender_name, recipient_name, content, timestamp, message_status)
 VALUES
 ('1_2', 1, 2, 'Петр Петров', 'Виктор Викторов', 'Превед, медвед!', '2021-04-01 10:00:00', 0),
 ('1_2', 2, 1, 'Виктор Викторов', 'Петр Петров', 'Превед, кросафчег!', '2021-04-01 10:02:00', 0),

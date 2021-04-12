@@ -158,12 +158,14 @@ CREATE TABLE employees_projects (
 
 CREATE TABLE roles (
     id                  BIGSERIAL PRIMARY KEY,
-    name                VARCHAR(50)
+    name                VARCHAR(50),
+    visible_name        VARCHAR(50)
 );
 
 CREATE TABLE priorities (
     id                  BIGSERIAL PRIMARY KEY,
-    name                VARCHAR(50)
+    name                VARCHAR(50),
+    visible_name        VARCHAR(50)
 );
 
 CREATE TABLE roles_priorities (

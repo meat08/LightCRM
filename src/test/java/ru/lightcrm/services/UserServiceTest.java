@@ -58,6 +58,7 @@ public class UserServiceTest {
         Priority priority = new Priority();
         priority.setId(1L);
         priority.setName("TEST");
+        priority.setVisibleName("Тест");
         priority.setRoles(null);
         Set<Priority> priorities = new HashSet<>(1);
         priorities.add(priority);
@@ -75,10 +76,12 @@ public class UserServiceTest {
         Priority priority = new Priority();
         priority.setId(1L);
         priority.setName("TEST");
+        priority.setVisibleName("Тест");
         priorities.add(priority);
         Role role = new Role();
         role.setId(1L);
         role.setName("ROLE_TEST");
+        role.setVisibleName("ТЕСТ");
         role.setPriorities(priorities);
         roles.add(role);
         StaffUnit staffUnit = new StaffUnit();

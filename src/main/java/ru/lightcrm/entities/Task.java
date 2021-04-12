@@ -77,6 +77,10 @@ public class Task {
                 inverseJoinColumns = @JoinColumn(name = "comment_id"))
     private Set<Comment> comments;
 
+    @OneToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
+
     public Task(Long id, String title, String description, Profile producer, Profile responsible, TaskState taskState, Project project) {
         this.id = id;
         this.title = title;

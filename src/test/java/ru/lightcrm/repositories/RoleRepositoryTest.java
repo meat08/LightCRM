@@ -16,6 +16,7 @@ class RoleRepositoryTest {
   private RoleRepository roleRepository;
 
   private final static String ROLE_NAME = "ROLE_MANAGER";
+  private final static String ROLE_VISIBLE_NAME = "Менеджер";
   private final static String ROLE_NAME_NOT_EXIST = "ROLE_NOT_EXIST";
 
 
@@ -24,7 +25,8 @@ class RoleRepositoryTest {
     Role roleRepo = roleRepository.findOneByName(ROLE_NAME).orElseGet(null);
     Assertions.assertAll(
         () -> Assertions.assertNotNull(roleRepo),
-        () -> Assertions.assertEquals(ROLE_NAME, roleRepo.getName())
+        () -> Assertions.assertEquals(ROLE_NAME, roleRepo.getName()),
+        () -> Assertions.assertEquals(ROLE_VISIBLE_NAME, roleRepo.getVisibleName())
     );
   }
 

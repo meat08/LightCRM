@@ -66,6 +66,10 @@
             .when('/tasks', {
                 templateUrl: 'tasks/tasks.html',
                 controller: 'taskController'
+            })
+            .when('/tasks/:taskId', {
+               templateUrl: 'tasks/task.html',
+               controller: 'taskEditController'
             });
     }
 

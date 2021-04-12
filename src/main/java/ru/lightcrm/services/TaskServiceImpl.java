@@ -2,14 +2,17 @@ package ru.lightcrm.services;
 
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.lightcrm.entities.*;
 import ru.lightcrm.entities.dtos.TaskDto;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.repositories.TaskRepository;
+import ru.lightcrm.services.filters.TaskFilter;
 import ru.lightcrm.services.interfaces.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -48,8 +51,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDto> findAll() {
-        return taskRepository.findAll().stream().map(TaskDto::new).collect(Collectors.toList());
+    public List<TaskDto> findAll(Map<String, String> params, List<Long> taskStatesId) {
+        TaskFilter taskFilter = new TaskFilter(params, taskStatesId);
+        return taskRepository.findAll(taskFilter.getSpec()).stream().map(TaskDto::new).collect(Collectors.toList());
     }
 
     @Override

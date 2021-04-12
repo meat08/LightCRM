@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('ChatService', [])
-    .factory('ChatService', ['$rootScope', '$stomp', '$q', function($rootScope, $stomp, $q) {
+angular.module('chatService', [])
+    .factory('chatService', ['$rootScope', '$stomp', '$q', function($rootScope, $stomp, $q) {
 
         var subscription;
         var ready;

@@ -107,7 +107,8 @@ public interface ProfileController {
             @ApiResponse(code = 400, message = "Некорректное тело запроса"),
             @ApiResponse(code = 401, message = "Клиент не авторизован"),
             @ApiResponse(code = 403, message = "Нет прав"),
-            @ApiResponse(code = 404, message = "Ресурс отсутствует")
+            @ApiResponse(code = 404, message = "Ресурс отсутствует"),
+            @ApiResponse(code = 415, message = "Неподдерживаемый тип данных")
     })
     @PostMapping(value = "/register", consumes = "application/json")
     ResponseEntity<?> saveNewUser(

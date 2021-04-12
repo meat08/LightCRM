@@ -1,23 +1,24 @@
-.chat-container{
-    max-width:2560px;
-    margin:auto;
+.chat-container {
+    max-width: 2560px;
+    margin: auto;
 }
-img{ max-width:100%;}
-.inbox_people {
-    background: #f8f8f8 none repeat scroll 0 0;
-    float: left;
-    overflow: hidden;
-    width: 35%; border-right:1px solid #c4c4c4;
+.recipient-name {
+    margin-left: 20px;
 }
-.inbox_msg {
-    border: 1px solid #c4c4c4;
-    clear: both;
-    overflow: hidden;
+.text-center {
+    padding-top: 10px;
 }
-.top_spac{ margin: 20px 0 0;}
+.chat-container hr {
+    margin: 8px 15px;
+}
+md-toolbar.md-hue-3:not(.md-menu-toolbar) {
+    background-color: #0277BD;
+}
 
+.top_spac {
+    margin: 20px 0 0;
+}
 
-.recent_heading {float: left; width:40%;}
 .srch_bar {
     display: inline-block;
     text-align: right;
@@ -60,30 +61,27 @@ img{ max-width:100%;}
     margin: 0;
     padding: 18px 16px 10px;
 }
-.inbox_chat {
-    height: 600px;
-    overflow-y: scroll;
+
+.incoming_msg {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
-.active_chat{ background:#ebebeb;}
-
-.incoming_msg_img {
-    display: inline-block;
-    width: 6%;
-}
 .received_msg {
-    display: inline-block;
+    flex-direction: column;
     padding: 0 0 0 10px;
-    vertical-align: top;
+    margin: 16px 0;
     width: 92%;
 }
 .received_withd_msg p {
     background: #ebebeb none repeat scroll 0 0;
     border-radius: 3px;
-    color: #646464;
+    color: #150B22;
     font-size: 14px;
+    font-weight: bold;
     margin: 0;
-    padding: 5px 10px 5px 12px;
+    padding: 5px 10px 7px 12px;
     width: 100%;
     word-wrap: break-word;
 }
@@ -91,25 +89,31 @@ img{ max-width:100%;}
     color: #747474;
     display: block;
     font-size: 12px;
-    margin: 8px 0 0;
+    margin: 3px 0 0;
 }
-.received_withd_msg { width: 57%;}
+.received_withd_msg {
+    width: 57%;
+}
 .mesgs {
     float: left;
-    padding: 30px 15px 0 25px;
-    width: 65%;
+    padding: 0 15px 0 20px;
+    width: 100%;
 }
 
 .sent_msg p {
     background: #05728f none repeat scroll 0 0;
     border-radius: 3px;
     font-size: 14px;
-    margin: 0; color:#fff;
-    padding: 5px 10px 5px 12px;
-    width:100%;
+    margin: 0;
+    color: #fff;
+    padding: 5px 10px 7px 12px;
+    width: 100%;
     word-wrap: break-word;
 }
-.outgoing_msg{ overflow:hidden; margin:26px 0 26px;}
+.outgoing_msg {
+    overflow: hidden;
+    margin: 16px 0;
+}
 .sent_msg {
     float: right;
     width: 46%;
@@ -124,7 +128,11 @@ img{ max-width:100%;}
     word-wrap: break-word;
 }
 
-.type_msg {border-top: 1px solid #c4c4c4;position: relative;}
+.type_msg {
+    margin-top: 5px;
+    border-top: 1px solid #c4c4c4;
+    position: relative;
+}
 .msg_send_btn {
     background: #05728f none repeat scroll 0 0;
     border: medium none;
@@ -138,7 +146,7 @@ img{ max-width:100%;}
     top: 11px;
     width: 33px;
 }
-.messaging { padding: 0 0 50px 0;}
+
 .msg_history {
     height: 600px;
     overflow-y: auto;
@@ -153,20 +161,18 @@ img{ max-width:100%;}
 }
 
 .my-modal .modal-content {
-    width: 100% !important;
-    min-height: 100vh !important;
+    width: 90% !important;
+    min-height: 95vh !important;
     padding: 0px;
-    margin: 0px;
+    margin: 16px 0 0 260px;
 }
 
-.my-modal .modal-footer {
-    position: absolute;
-    bottom: 0px;
-    width:100%;
-    padding:2px !important;
-}
 .notification:hover {
-    background: green;
+    background: #039BE5;
+}
+
+.notification:hover {
+    background: #039BE5;
 }
 
 .notification {
@@ -177,8 +183,8 @@ img{ max-width:100%;}
 
 .notification .badge {
     position: absolute;
-    top: -10px;
-    right: -10px;
+    top: -5px;
+    right: -5px;
     padding: 5px 10px;
     border-radius: 50%;
     background: red;

@@ -14,6 +14,7 @@ import ru.lightcrm.entities.Department;
 import ru.lightcrm.entities.Profile;
 import ru.lightcrm.utils.CustomDateDeserializer;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import java.time.OffsetDateTime;
@@ -28,6 +29,11 @@ import java.util.stream.Collectors;
 @ApiModel(description = "Класс, содержащий минимально необходимые данные для создания нового профиля", subTypes = {ProfileDto.class, ProfileFullDto.class, SystemUserDto.class})
 @JsonRootName("ProfileMiniDto")
 public class ProfileMiniDto {
+
+    @Min(1)
+    @ApiModelProperty(notes = "Уникальный идентификатор профиля", dataType = "Long", example = "1")
+    @JsonProperty("id")
+    private Long id;
 
     @Size(min = 3, max = 50, message = "Имя сотрудника должно содержать от 3 до 50 символов")
     @ApiModelProperty(notes = "Имя сотрудника", dataType = "String", example = "Иван", required = true, position = 1)
@@ -61,6 +67,7 @@ public class ProfileMiniDto {
     private List<String> departmentNames;
 
     public ProfileMiniDto(Profile profile) {
+        this.id = profile.getId();
         this.firstname = profile.getFirstname();
         this.lastname = profile.getLastname();
         this.middlename = profile.getMiddlename();

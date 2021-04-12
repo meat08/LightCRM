@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.lightcrm.entities.dtos.TaskDto;
 
 import java.util.List;
+import java.util.Map;
 
 @Api(value = "/api/v1/tasks", tags = "Контроллер для работы с задачами", produces = "application/json")
 @RequestMapping(value = "/api/v1/tasks", produces = "application/json")
@@ -25,7 +26,8 @@ public interface TaskController {
             }
     )
     @GetMapping
-    List<TaskDto> getAllTasks();
+    List<TaskDto> getAllTasks(@ApiParam(value = "Список иденктификаторов статусов", required = false) @RequestParam(name = "taskStatesId", required = false) List<Long> taskStatesId,
+            @ApiParam(value = "Map с набором параметров и значений",  required = false, example = "responsibleId: 1") @RequestParam Map<String, String> params);
 
     @ApiOperation(value = "Получить задачу по её Id",
             httpMethod = "GET",

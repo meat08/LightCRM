@@ -14,6 +14,8 @@ import ru.lightcrm.entities.dtos.TaskDto;
 import ru.lightcrm.services.interfaces.TaskService;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -86,7 +88,7 @@ public class TaskControllerTest {
     @Test
     @WithMockUser(username = "Bob", authorities = "ADMIN")
     public void getAllTasksTest() throws Exception{
-        given(taskService.findAll()).willReturn(testListTaskDto);
+        given(taskService.findAll(new HashMap<String, String>(), new ArrayList<>())).willReturn(testListTaskDto);
 
         mvc.perform(get("/api/v1/tasks")
                 .contentType(MediaType.APPLICATION_JSON))

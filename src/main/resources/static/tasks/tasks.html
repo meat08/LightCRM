@@ -1,41 +1,52 @@
 <h3>Задачи</h3>
+<form class="col" novalidate ng-submit="getTasks()" >
+    <div class="row">
+      <div class="col">
+        <label for="taskStates">Статусы задач</label>
+        <select class="custom-select" multiple size="2" name="taskStates" id="taskStates" ng-model = "filter.taskStatesId">
+          <option ng-repeat="ts in allTaskStates" value="{{ts.id}}">{{ts.name}}</option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="producer">Постановщик</label>
+        <select class="custom-select" name="producer" id="producer" ng-model = "filter.producerId">
+          <option ng-repeat="p in allProfiles" value="{{p.id}}">{{p.lastname}} {{p.firstname}} {{p.middlename}}</option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="responsible">Ответственный</label>
+        <select class="custom-select" name="responsible" id="responsible" ng-model = "filter.responsibleId">
+          <option ng-repeat="p in allProfiles" value="{{p.id}}">{{p.lastname}} {{p.firstname}} {{p.middlename}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <button type="submit" class="btn btn-primary">Фильтровать</button>
+      <button class="btn btn-success" ng-click="cleanFilter()">Очистить</button>
+    </div>
+</form>
+
 <table class="table table-hover" cellpadding="0" cellspacing="0">
   <thead>
   <tr>
-    <td>ID</td>
-    <td>Наименование задачи</td>
-    <td>Описание задачи</td>
-    <td>Постановщик задачи (id)</td>
-    <td>Ответственный (id)</td>
-    <td>Дата постановки задачи</td>
-    <td>Дата окончания задачи</td>
-    <td>Дата планируемого окончания задачи</td>
-    <td>Просрочена</td>
-    <td>Статус состояния задачи (id)</td>
-    <td>Возможен ли сдвиг дедлайна</td>
-    <td>Проект задачи (id)</td>
-    <td>Соисполнители (чел)</td>
-    <td>Наблюдатели (чел)</td>
-    <td>Комментарии (шт)</td>
+    <td>Статус</td>
+    <td>Наименование</td>
+    <td>Постановщик</td>
+    <td>Ответственный</td>
+    <td>Дата постановки</td>
+    <td>Дата окончания</td>
+    <td>Дата планируемого окончания</td>
   </tr>
   </thead>
   <tbody>
   <tr ng-repeat="t in allTasks">
-    <td>{{t.id}}</td>
-    <td>{{t.title}}</td>
-    <td>{{t.description}}</td>
-    <td>{{t.producerId}}</td>
-    <td>{{t.responsibleId}}</td>
+    <td>{{t.taskStateName}}</td>
+    <td><a href="#!/tasks/{{t.id}}">{{t.title}}</a></td>
+    <td>{{t.producer.lastname}} {{t.producer.firstname}} {{t.producer.middlename}}</td>
+    <td>{{t.responsible.lastname}} {{t.responsible.firstname}} {{t.responsible.middlename}}</td>
     <td>{{t.startDate}}</td>
     <td>{{t.endDate}}</td>
     <td>{{t.deadline}}</td>
-    <td>{{t.expired}}</td>
-    <td>{{t.taskStateId}}</td>
-    <td>{{t.allowChangeDeadline}}</td>
-    <td>{{t.projectId}}</td>
-    <td>{{t.coExecutors.length}}</td>
-    <td>{{t.spectators.length}}</td>
-    <td>{{t.comments.length}}</td>
   </tr>
   </tbody>
 </table>

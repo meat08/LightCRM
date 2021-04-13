@@ -53,11 +53,11 @@ public class CompanyDto {
 
     @ApiModelProperty(notes = "Курирующие менеджеры компании", example = "(Иванов, Петров)", required = true, position = 9)
     @JsonProperty("managers")
-    private List<ProfileDto> managers;
+    private Set<ProfileMiniDto> managers;
 
-    @ApiModelProperty(notes = "Курирующие менеджеры компании", position = 10)
+    @ApiModelProperty(notes = "Комментарии к компании", position = 10)
     @JsonProperty("comments")
-    private List<CommentDto> comments;
+    private Set<CommentDto> comments;
 
     public CompanyDto(Company company) {
         this.id = company.getId();
@@ -72,10 +72,10 @@ public class CompanyDto {
         this.email = company.getEmail();
         //TODO на обсуждении (карточка 81), может ли у компании не быть курирующего менеджера
         this.managers = company.getManagers() != null
-                ? company.getManagers().stream().map(ProfileDto::new).collect(Collectors.toList())
-                : Collections.emptyList();
+                ? company.getManagers().stream().map(ProfileMiniDto::new).collect(Collectors.toSet())
+                : Collections.emptySet();
         this.comments = company.getComments() != null
-                ? company.getComments().stream().map(CommentDto::new).collect(Collectors.toList())
-                : Collections.emptyList();
+                ? company.getComments().stream().map(CommentDto::new).collect(Collectors.toSet())
+                : Collections.emptySet();
     }
 }

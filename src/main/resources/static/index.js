@@ -55,7 +55,10 @@
                 templateUrl: 'company/companies.html',
                 controller: 'companyController'
             })
-
+            .when('/companies/company', {
+                templateUrl: 'company/company.html',
+                controller: 'companyController'
+            })
             .when('/profiles', {
                 templateUrl: 'profile/profiles.html',
                 controller: 'profileController'

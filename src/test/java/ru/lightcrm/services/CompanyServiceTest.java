@@ -1,6 +1,7 @@
 package ru.lightcrm.services;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,44 +36,50 @@ class CompanyServiceTest {
     private static final String COMPANY_EMAIL = "gazprom@gazprom.ru";
     private static final int COMPANY_COUNT = 3;
 
-    private Optional<Company> initMockCompany(Long id) {
-        Company company = new Company();
-        company.setId(id);
-        company.setName(COMPANY_NAME + " " + id);
-        company.setType(COMPANY_TYPE);
-        company.setInn(COMPANY_INN);
-        company.setBillNumber(COMPANY_BILL_NUMBER);
-        company.setPhoneNumber(COMPANY_PHONE_NUMBER);
-        company.setEmail(COMPANY_EMAIL);
+    @BeforeEach
+    private void init() {
+        List<Company> companies = new ArrayList<>();
 
-        Set<Contact> contacts = new HashSet<>(1);
-        Contact contact = new Contact();
-        contact.setId(1L);
-        contact.setName("TEST");
-        contacts.add(contact);
-        company.setContacts(contacts);
+        for (long i = 1; i <= COMPANY_COUNT; i++) {
+            Company company = new Company();
+            company.setId(i);
+            company.setName(COMPANY_NAME + " " + i);
+            company.setType(COMPANY_TYPE);
+            company.setInn(COMPANY_INN);
+            company.setBillNumber(COMPANY_BILL_NUMBER);
+            company.setPhoneNumber(COMPANY_PHONE_NUMBER);
+            company.setEmail(COMPANY_EMAIL);
 
-//        List<Profile> profiles = new ArrayList<>(1);
-//        Profile profile = new Profile();
-//        profile.setId(1L);
-//        profiles.add(profile);
-//        company.setManagers(profiles);
+            Set<Contact> contacts = new HashSet<>(1);
+            Contact contact = new Contact();
+            contact.setId(1L);
+            contact.setName("TEST");
+            contacts.add(contact);
+            company.setContacts(contacts);
 
-        return Optional.of(company);
-    }
+            Set<Profile> profiles = new HashSet<>(1);
+            Profile profile = new Profile();
+            profile.setId(1L);
+            profiles.add(profile);
+            company.setManagers(profiles);
 
-    private List<Company> initMockCompanyList(){
-        List<Company> companyList = new ArrayList<>();
-        for(int i = 0; i < COMPANY_COUNT; i++) companyList.add(initMockCompany((long)(i + 1)).orElse(null));
+            companies.add(company);
+        }
 
-        return companyList;
+        Mockito.doReturn(Optional.of(companies.get(0))).when(companyRepository).findOneByName(companies.get(0).getName());
+        Mockito.doReturn(Optional.of(companies.get(0))).when(companyRepository).findOneByInn(companies.get(0).getInn());
+        Mockito.doReturn(Optional.of(companies.get(0))).when(companyRepository).findById(companies.get(0).getId());
+        Mockito.doReturn(companies).when(companyRepository).findAll();
+        Mockito.doAnswer(invocation -> {
+            companies.remove((int)(companies.get(0).getId() - 1));
+            return null;
+        }).when(companyRepository).deleteById(companies.get(0).getId());
     }
 
     @Test
     void findByName() {
         Long id = 1L;
         final String name = COMPANY_NAME + " " + id;
-        Mockito.doReturn(initMockCompany(id)).when(companyRepository).findOneByName(name);
 
         CompanyDto companyDto = companyService.findByName(name);
         Assertions.assertNotNull(companyDto);
@@ -84,16 +91,14 @@ class CompanyServiceTest {
         Assertions.assertEquals(COMPANY_PHONE_NUMBER, companyDto.getPhoneNumber());
         Assertions.assertEquals(COMPANY_EMAIL, companyDto.getEmail());
         Assertions.assertEquals(1, companyDto.getContacts().size());
-        //Assertions.assertEquals(1, companyDto.getManagers().size());
+        Assertions.assertEquals(1, companyDto.getManagers().size());
     }
 
     @Test
     void findByInn() {
         Long id = 1L;
-        final Long inn = COMPANY_INN;
-        Mockito.doReturn(initMockCompany(id)).when(companyRepository).findOneByInn(inn);
 
-        CompanyDto companyDto = companyService.findByInn(inn);
+        CompanyDto companyDto = companyService.findByInn(COMPANY_INN);
         Assertions.assertNotNull(companyDto);
         Assertions.assertEquals(id, companyDto.getId());
         Assertions.assertEquals(COMPANY_NAME + " " + id, companyDto.getName());
@@ -103,13 +108,12 @@ class CompanyServiceTest {
         Assertions.assertEquals(COMPANY_PHONE_NUMBER, companyDto.getPhoneNumber());
         Assertions.assertEquals(COMPANY_EMAIL, companyDto.getEmail());
         Assertions.assertEquals(1, companyDto.getContacts().size());
-        //Assertions.assertEquals(1, companyDto.getManagers().size());
+        Assertions.assertEquals(1, companyDto.getManagers().size());
     }
 
     @Test
     void findById() {
         Long id = 1L;
-        Mockito.doReturn(initMockCompany(id)).when(companyRepository).findOneById(id);
 
         CompanyDto companyDto = companyService.findById(id);
         Assertions.assertNotNull(companyDto);
@@ -121,16 +125,45 @@ class CompanyServiceTest {
         Assertions.assertEquals(COMPANY_PHONE_NUMBER, companyDto.getPhoneNumber());
         Assertions.assertEquals(COMPANY_EMAIL, companyDto.getEmail());
         Assertions.assertEquals(1, companyDto.getContacts().size());
-        //Assertions.assertEquals(1, companyDto.getManagers().size());
+        Assertions.assertEquals(1, companyDto.getManagers().size());
     }
 
     @Test
     void findAllDTO() {
-        Mockito.doReturn(initMockCompanyList()).when(companyRepository).findAll();
-
         List<CompanyDto> companyDtoList = companyService.findAllDTO();
         Assertions.assertNotNull(companyDtoList);
         Assertions.assertEquals(COMPANY_COUNT, companyDtoList.size());
         Assertions.assertEquals(COMPANY_NAME + " 1", companyDtoList.get(0).getName());
+    }
+
+    @Test
+    void deleteTest() {
+        Long id = 1L;
+
+        Assertions.assertEquals(COMPANY_COUNT, companyService.findAllDTO().size());
+        companyService.deleteById(id);
+        Assertions.assertEquals(COMPANY_COUNT - 1, companyService.findAllDTO().size());
+    }
+
+    @Test
+    void saveOrUpdateTest() {
+        Company newCompany = new Company();
+        newCompany.setId(4L);
+        newCompany.setName(COMPANY_NAME + " " + 4L);
+        newCompany.setType(COMPANY_TYPE);
+        newCompany.setInn(COMPANY_INN);
+        newCompany.setBillNumber(COMPANY_BILL_NUMBER);
+        newCompany.setPhoneNumber(COMPANY_PHONE_NUMBER);
+        newCompany.setEmail(COMPANY_EMAIL);
+
+        Set<Contact> contacts = new HashSet<>(1);
+        Contact contact = new Contact();
+        contact.setId(1L);
+        contact.setName("TEST");
+        contacts.add(contact);
+        newCompany.setContacts(contacts);
+
+        companyRepository.save(newCompany);
+        Mockito.verify(companyRepository, Mockito.times(1)).save(newCompany);
     }
 }

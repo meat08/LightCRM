@@ -16,10 +16,31 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CompanyControllerImpl implements CompanyController {
 
-    private final CompanyService companiesService;
+    private final CompanyService companyService;
 
     @GetMapping
     public List<CompanyDto> getCompanyContent() {
-        return companiesService.findAllDTO();
+        return companyService.findAllDTO();
+    }
+
+    @Override
+    public CompanyDto getCompany(Long id) {
+        return companyService.findById(id);
+    }
+
+    @Override
+    public CompanyDto saveCompany(CompanyDto companyDto) {
+        companyDto.setId(null);
+        return companyService.save(companyDto);
+    }
+
+    @Override
+    public void delete(Long id) {
+        companyService.deleteById(id);
+    }
+
+    @Override
+    public CompanyDto updateCompany(CompanyDto companyDto) {
+        return companyService.update(companyDto);
     }
 }

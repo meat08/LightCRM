@@ -1,29 +1,126 @@
-<h3>Компании</h3>
-<table class="table table-hover" cellpadding="0" cellspacing="0">
-  <thead>
-  <tr>
-    <td>ID</td>
-    <td>Наименование</td>
-    <td>Юридическое лицо</td>
-    <td>ИНН</td>
-    <td>Номер счета</td>
-    <td>Номер телефона</td>
-    <td>Электронная почта</td>
-<!--    <td>Контакты</td>-->
-<!--    <td>Менеджеры</td>-->
-  </tr>
-  </thead>
-  <tbody>
-  <tr ng-repeat="company in companies">
-    <td>{{company.id}}</td>
-    <td>{{company.name}}</td>
-    <td>{{company.type}}</td>
-    <td>{{company.inn}}</td>
-    <td>{{company.billNumber}}</td>
-    <td>{{company.phoneNumber}}</td>
-    <td>{{company.email}}</td>
-<!--    <td>{{company.contacts}}</td>-->
-<!--    <td>{{company.managers}}</td>-->
-  </tr>
-  </tbody>
-</table>
+<div class="all-companies" ng-show="showAllCompaniesInfo">
+  <h3>Компании</h3>
+  <button class="btn btn-success" ng-click="showNewCompanyForm()">Добавить</button>
+  <br/><br/>
+  <table class="table table-hover" cellpadding="0" cellspacing="0">
+    <thead>
+    <tr>
+      <td>ID</td>
+      <td>Наименование</td>
+      <td>Юридическое лицо</td>
+      <td>ИНН</td>
+      <td>Номер счета</td>
+      <td>Номер телефона</td>
+      <td>Электронная почта</td>
+      <td>Действия</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="company in companies">
+      <td>{{company.id}}</td>
+      <td>{{company.name}}</td>
+      <td>{{company.type}}</td>
+      <td>{{company.inn}}</td>
+      <td>{{company.billNumber}}</td>
+      <td>{{company.phoneNumber}}</td>
+      <td>{{company.email}}</td>
+      <td>
+        <button class="btn btn-primary" ng-click="showCompany(company.id)">Инфо</button>
+        <button class="btn btn-danger" ng-click="deleteCompany(company.id)">Удалить</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="one-company" ng-show="showCompanyInfo">
+  <div class="d-flex flex-row">
+    <div class="container">
+      <h3>Информация о компании: {{companyInfo.name}}</h3>
+      <button class="btn btn-primary" ng-click="showAllCompanies()">К списку компаний</button>
+      <br/><br/>
+      <div class="row">
+        <div class="col">
+          <table class="table table-hover w-auto" cellpadding="0" cellspacing="0">
+            <thead>
+              <th>Поле</th>
+              <th>Значение</th>
+            </thead>
+            <tbody>
+            <tr>
+              <td>Наименование</td><td>{{companyInfo.name}}</td>
+            </tr>
+            <tr>
+              <td>Является юрлицом</td><td>{{companyInfo.type}}</td>
+            </tr>
+            <tr>
+              <td>ИНН</td><td>{{companyInfo.inn}}</td>
+            </tr>
+            <tr>
+              <td>Номер счета</td><td>{{companyInfo.billNumber}}</td>
+            </tr>
+            <tr>
+              <td>Список контактов</td>
+              <td>
+                <div class="list-group" ng-repeat="contact in companyInfo.contacts">
+                  <button type="button" class="list-group-item list-group-item-action" ng-click="showContact(contact)">{{contact.name}}</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Номер телефона</td><td>{{companyInfo.phoneNumber}}</td>
+            </tr>
+            <tr>
+              <td>Email</td><td>{{companyInfo.email}}</td>
+            </tr>
+            <tr>
+              <td>Курирующие менеджеры</td>
+              <td>
+                <ul class="list-group" ng-repeat="manager in companyInfo.managers">
+                  <li class="list-group-item">{{manager.firstname + " " + manager.lastname}}</li>
+                </ul>
+            </td>
+              </td>
+            </tr>
+            <tr>
+              <td>Комментарии</td>
+              <td>
+                <ul class="list-group" ng-repeat="comment in companyInfo.comments">
+                  <li class="list-group-item">{{comment.text}}</li>
+                </ul>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col">
+          <div class="company-contact" ng-show="showCompanyContact">
+            <table class="table table-hover w-auto" cellpadding="0" cellspacing="0">
+              <thead>
+              <th>Поле</th>
+              <th>Значение</th>
+              </thead>
+              <tbody>
+              <tr>
+                <td>ФИО</td><td>{{contactInfo.name}}</td>
+              </tr>
+              <tr>
+                <td>Адрес</td><td>{{contactInfo.post}}</td>
+              </tr>
+              <tr>
+                <td>Телефон</td><td>{{contactInfo.phone}}</td>
+              </tr>
+              <tr>
+                <td>Email</td><td>{{contactInfo.email}}</td>
+              </tr>
+              <tr>
+                <td>Описание</td><td>{{contactInfo.description}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

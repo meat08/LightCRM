@@ -25,6 +25,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -82,5 +83,18 @@ public class CompanyControllerTest {
                 .andExpect(jsonPath("$[0].email", is(testCompanyDto.getEmail())))
         ;
 
+    }
+
+    @Test
+    @WithMockUser(username = "Bob", authorities = "ADMIN")
+    public void deleteTest() throws Exception {
+        mvc.perform(delete("/api/v1/companies/" + testCompanyDto.getId()))
+                .andExpect(status().isOk());
+
+        mvc.perform(get("/api/v1/companies")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$", hasSize(0)));
     }
 }

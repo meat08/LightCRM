@@ -34,9 +34,8 @@ angular.module('app').controller('profilesController', function ($scope, $rootSc
     }
 
     $scope.showAdvanced = function (ev) {
-        console.log("PRESSED");
         $mdDialog.show({
-            templateUrl: 'profile/create_profile.html',
+            templateUrl: 'profile/createProfile.html',
             controller: dialogController,
             parent: angular.element(document.body),
             targetEvent: ev,

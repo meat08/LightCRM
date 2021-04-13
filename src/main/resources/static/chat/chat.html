@@ -1,22 +1,20 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
 <div ng-app>
     <div class="chat-container">
         <h3 class="text-center">Сообщения</h3>
-        <div class="recipient-name">
-            <span>{{currentChat.recipientName}}</span>
+        <div class="chat_header">
+            <div class="recipient-name">
+                <span>{{currentChat.recipientName}}</span>
+            </div>
+            <div class="chat_search">
+                <input type="text" placeholder="Поиск..." ng-model="searchText">
+            </div>
         </div>
-        <hr>
+
         <div class="messaging">
-<!--            TODO напилить поиск по чатам-->
-<!--            <div class="srch_bar">-->
-<!--                <div class="stylish-input-group">-->
-<!--                    <input type="text" class="search-bar" placeholder="Поиск">-->
-<!--                    <span class="input-group-addon">-->
-<!--                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>-->
-<!--                </span></div>-->
-<!--            </div>-->
             <div class="mesgs">
                 <div class="msg_history" scroll="messages">
-                    <div ng-repeat="m in messages | orderBy: 'timestamp'">
+                    <div ng-repeat="m in messages | orderBy: 'timestamp' | filter:searchText"r>
                         <div class="incoming_msg" ng-if="currentChat.senderId!=m.senderId">
                             <div class="incoming_msg_img">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"

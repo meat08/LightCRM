@@ -113,7 +113,9 @@ CREATE TABLE tasks (
     task_state_id           BIGINT REFERENCES task_states(id),
     allow_change_deadline   BOOLEAN,
     project_id              BIGINT REFERENCES projects(id),
-    expired                 BOOLEAN DEFAULT FALSE
+    expired                 BOOLEAN DEFAULT FALSE,
+    company_id              BIGINT REFERENCES companies(id),
+    FOREIGN KEY (company_id) REFERENCES companies(id)
 );
 
 CREATE TABLE tasks_coexecutors (
@@ -158,12 +160,14 @@ CREATE TABLE employees_projects (
 
 CREATE TABLE roles (
     id                  BIGSERIAL PRIMARY KEY,
-    name                VARCHAR(50)
+    name                VARCHAR(50),
+    visible_name        VARCHAR(50)
 );
 
 CREATE TABLE priorities (
     id                  BIGSERIAL PRIMARY KEY,
-    name                VARCHAR(50)
+    name                VARCHAR(50),
+    visible_name        VARCHAR(50)
 );
 
 CREATE TABLE roles_priorities (
@@ -189,3 +193,27 @@ CREATE TABLE staff_units_roles (
     FOREIGN KEY (staff_unit_id) REFERENCES staff_units(id),
     FOREIGN KEY (role_id) REFERENCES roles(id)
 );
+
+CREATE TABLE tags (
+    id                  BIGSERIAL PRIMARY KEY,
+    name                VARCHAR(200)
+);
+
+CREATE TABLE chat_message (
+    id              BIGSERIAL PRIMARY KEY,
+    chat_id         VARCHAR(50) NOT NULL,
+    sender_id       BIGINT NOT NULL,
+    recipient_id    BIGINT NOT NULL,
+    sender_name     VARCHAR(25) NOT NULL,
+    recipient_name  VARCHAR(25) NOT NULL,
+    content         TEXT NOT NULL,
+    timestamp       TIMESTAMP NOT NULL,
+    message_status  INTEGER NOT NULL
+);
+
+CREATE TABLE chat_room (
+    id              BIGSERIAL PRIMARY KEY,
+    chat_id         VARCHAR(50) NOT NULL,
+    sender_id       BIGINT NOT NULL,
+    recipient_id    BIGINT NOT NULL
+)

@@ -77,4 +77,21 @@ public class FileControllerImpl implements FileController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline")
                 .body(resource);
     }
+
+    @Override
+    public ResponseEntity<?> downloadPreviewByProfileId(Long id) {
+        FileInfo foundFile = fileService.findPreviewFileInfoByProfileId(id);
+        if (foundFile == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(new LightCrmError(
+                            HttpStatus.NOT_FOUND.value(),
+                            "Отсутствтует превью профиля с id: " + id));
+        }
+        Resource resource = fileService.download(foundFile.getKeyName());
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(foundFile.getType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline")
+                .body(resource);
+    }
 }

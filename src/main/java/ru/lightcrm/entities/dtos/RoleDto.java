@@ -20,17 +20,22 @@ public class RoleDto {
     @JsonProperty("id")
     private Long id;
 
-    @ApiModelProperty(notes = "Наименование роли", example = "Менеджер", required = true, position = 2)
+    @ApiModelProperty(notes = "Наименование роли", example = "ROLE_ADMIN", required = true, position = 2)
     @JsonProperty("name")
     private String name;
 
-    @ApiModelProperty(notes = "Права, принадлежащие данной роли", example = "(Изменение задач, Удаление задач)", required = true, position = 3)
+    @ApiModelProperty(notes = "Наименование роли для отображения", example = "Администратор", required = true, position = 3)
+    @JsonProperty("visibleName")
+    private String visibleName;
+
+    @ApiModelProperty(notes = "Права, принадлежащие данной роли", example = "(Изменение задач, Удаление задач)", required = true, position = 4)
     @JsonProperty("priorities")
     private Set<PriorityDto> priorities;
 
     public RoleDto(Role role) {
         this.id = role.getId();
         this.name = role.getName();
+        this.visibleName = role.getVisibleName();
         this.priorities = role.getPriorities() != null
                 ? role.getPriorities().stream().map(PriorityDto::new).collect(Collectors.toSet())
                 : Collections.emptySet();

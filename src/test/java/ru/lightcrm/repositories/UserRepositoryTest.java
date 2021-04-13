@@ -24,7 +24,7 @@ public class UserRepositoryTest {
   public void findByLoginTest() {
     Optional<User> user = userRepository.findByLogin(TEST_LOGIN);
 
-    assertNotNull(user.get());
+    assertNotNull(user.orElse(null));
     assertTrue(user.get().getId() > 0);
     assertEquals(TEST_LOGIN, user.get().getLogin().toLowerCase());
   }

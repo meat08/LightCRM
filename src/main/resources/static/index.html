@@ -5,6 +5,8 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/chat.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.2.1/angular-material.min.css">
     <link rel="stylesheet" href="styles/custom.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -20,10 +22,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
     <script src="https://cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.2.1/angular-material.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ng-stomp@0.5.0/dist/ng-stomp.standalone.min.js"></script>
 </head>
-
+<title>Light CRM</title>
 <body>
-
 <div class="nav_container">
     <div ng-controller="indexController">
         <div ng-if="isUserLoggedIn()">
@@ -57,6 +59,8 @@
                     <md-nav-item md-nav-href="#!/" name="/">Главная</md-nav-item>
                     <md-nav-item md-nav-href="#!/tasks" name="/tasks">Задачи</md-nav-item>
                     <md-nav-item md-nav-href="#!/profiles" name="/profiles">Сотрудники</md-nav-item>
+                    <md-nav-item md-nav-href="#!/companies" name="/companies">Компании</md-nav-item>
+                    <md-nav-item md-nav-href="#!/chats" name="/chats">Чат</md-nav-item>
                 </md-nav-bar>
 
             </md-content>
@@ -73,6 +77,12 @@
     <script src="profile/profile.js"></script>
     <script src="profile/profileService.js"></script>
     <script src="tasks/tasks.js"></script>
+    <script src="tasks/task.js"></script>
+    <script src="company/companies.js"></script>
+    <script src="chat/chatService.js"></script>
+    <script src="chat/pageService.js"></script>
+    <script src="chat/chat.js"></script>
+    <script src="chat/room.js"></script>
 </div>
 </body>
 </html>

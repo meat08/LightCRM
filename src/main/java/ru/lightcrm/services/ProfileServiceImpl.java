@@ -137,4 +137,9 @@ public class ProfileServiceImpl implements ProfileService {
 
         log.info("Пользователь с логином: {} успешно зарегистрирован", systemUserDto.getLogin());
     }
+
+    @Override
+    public ProfileDto findByLogin(String login) {
+        return new ProfileDto(profileRepository.findByLogin(login).orElseThrow(() -> new ResourceNotFoundException(String.format("Профиль с логином %s отсутствует", login))));
+    }
 }

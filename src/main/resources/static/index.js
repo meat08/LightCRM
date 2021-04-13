@@ -33,7 +33,10 @@
             'angular-jwt',
             'ngAnimate',
             'ngSanitize',
-            'ui.bootstrap'
+            'ui.bootstrap',
+            'ngStomp',
+            'ChatService',
+            'PageService'
         ])
         .config(config)
         .config(['$mdThemingProvider', materialTheme])
@@ -64,13 +67,29 @@
             .when('/tasks', {
                 templateUrl: 'tasks/tasks.html',
                 controller: 'taskController'
-            });
+            })
+            .when('/chats', {
+                templateUrl: 'chat/room.html',
+                controller: 'roomController'
+            })
+            .when('/tasks/:taskId', {
+                 templateUrl: 'tasks/task.html',
+                 controller: 'taskEditController'
+            })
+            ;
     }
 
     //Функция проверяет наличие пользователя в локальном хранилище и клеит токен к заголовку
-    function run($rootScope, $http, $location, $localStorage) {
+    function run($rootScope, $http, $location, $localStorage
+    , ChatService
+    ) {
         if ($localStorage.currentUser) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
+
+            //Подключение к вебсокету при обновлении страницы
+            ChatService.ready = ChatService.connect('/app/ws', {}, function (error) {
+                alert(error);
+            });
         }
         //Доступ без токена возможен только на страницы в массиве publicPages,
         // все остальное перенаправляется на /auth
@@ -84,10 +103,14 @@
     }
 })();
 
-angular.module('app').controller('indexController', function ($scope, $http, $location, $localStorage, profileService) {
+angular.module('app').controller('indexController', function ($scope, $http, $location, $localStorage, profileService
+, ChatService
+) {
     $scope.tryToLogout = function () {
         delete $localStorage.currentUser;
         $http.defaults.headers.common.Authorization = '';
+        ChatService.unsubscribe();
+        ChatService.disconnect();
         $location.path('/auth');
     };
 

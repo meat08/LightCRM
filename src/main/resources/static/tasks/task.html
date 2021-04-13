@@ -1,0 +1,85 @@
+<div class="mb-3 text-left">
+
+  <form ng-submit="submitAddEditTask()">
+
+    <div class="task-top form-group row">
+      <div class="form-group" ng-if="task.id>0">
+        <label for="id" class="col-sm-3 col-form-label col-form-label-lg">Id</label>
+        <div class="col-sm-5">
+          <input type="text" readonly class="form-control form-control-lg" id="id" ng-model="task.id" name="id">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="taskStateName" class="col-sm-3 col-form-label col-form-label-lg">Статус задачи</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control form-control-lg" id="taskStateName" ng-model="task.taskStateName" name="taskStateName">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="startDate" class="col-sm-3 col-form-label col-form-label-lg">Дата создания</label>
+        <div class="col-sm-5">
+          <input type="date" class="form-control form-control-lg" id="startDate" ng-model="task.startDate" name="startDate">
+        </div>
+      </div>
+    </div>
+
+    <div class="task-title form-group row">
+      <label for="title" class="col-sm-3 col-form-label col-form-label-lg">Наименование</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control form-control-lg" id="title" ng-model="task.title" name="title">
+      </div>
+    </div>
+
+    <div class="task-main">
+      <div class="task-description form-group row">
+        <label for="description" class="col-sm-3 col-form-label col-form-label-lg">Описание</label>
+        <div class="col-sm-5">
+          <textarea class="form-control form-control-lg" id="description" ng-model="task.description" name="description">
+            {{task.description}}
+          </textarea>
+        </div>
+      </div>
+
+      <div class="task-info form-group row">
+
+        <div class="form-group row">
+          <label for="producer" class="col-sm-3 col-form-label col-form-label-lg">Автор</label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control form-control-lg" id="producer" value="{{task.producer.lastname}} {{task.producer.firstname}}">
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </form>
+</div>
+<hr/>
+
+<div>
+  <h6>Комментарии</h6>
+  <span class="col-sm-3 col-form-label col-form-label-lg" ng-if="task.comments.length == 0">Комментарии отсутствуют</span>
+  <table class="table table-hover" ng-if="task.comments.length > 0" cellpadding="0" cellspacing="0">
+    <thead class="thead-light">
+    <tr align="center">
+      <th>Автор</th>
+      <th>Email автора</th>
+      <th>Дата</th>
+      <th>Содержание</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr align="center" ng-repeat="com in task.comments">
+      <td> {{com.authorLastName}} {{com.authorFirstName}}</td>
+      <td>{{com.authorEmail}}</td>
+      <td>
+      <time>{{com.createdDate}}</time>
+      </td>
+      <td>{{com.text}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</div>

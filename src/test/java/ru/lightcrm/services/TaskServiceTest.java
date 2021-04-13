@@ -14,6 +14,7 @@ import ru.lightcrm.entities.Task;
 import ru.lightcrm.entities.TaskState;
 import ru.lightcrm.entities.dtos.TaskDto;
 import ru.lightcrm.repositories.TaskRepository;
+import ru.lightcrm.services.filters.TaskFilter;
 import ru.lightcrm.services.interfaces.TaskService;
 
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class TaskServiceTest {
         tasks.add(t2);
         tasks.add(t3);
 
-        Mockito.doReturn(tasks).when(taskRepository).findAll();
+        Mockito.doReturn(tasks).when(taskRepository).findAll(new TaskFilter(null, null).getSpec());
         Mockito.doReturn(Optional.of(t1)).when(taskRepository).findById(t1.getId());
         Mockito.doReturn(Optional.of(t1)).when(taskRepository).findOneByTitle(t1.getTitle());
         Mockito.doReturn(tasks).when(taskRepository).findByProducerId(producer.getId());
@@ -72,7 +73,7 @@ public class TaskServiceTest {
 
     @Test
     public void findAllTest() {
-        List<TaskDto> taskDTOList = taskService.findAll(new HashMap<String, String>(), new ArrayList<>());
+        List<TaskDto> taskDTOList = taskService.findAll(new HashMap<>(), new ArrayList<>());
         Assertions.assertNotNull(taskDTOList);
         Assertions.assertEquals(TASK_COUNT, taskDTOList.size());
         Assertions.assertEquals(TASK_NAME + " 1", taskDTOList.get(0).getTitle());
@@ -167,9 +168,9 @@ public class TaskServiceTest {
     public void deleteTest() {
         Long id = 3L;
 
-        Assertions.assertEquals(TASK_COUNT, taskService.findAll(new HashMap<String, String>(), new ArrayList<>()).size());
+        Assertions.assertEquals(TASK_COUNT, taskService.findAll(new HashMap<>(), new ArrayList<>()).size());
         taskService.deleteById(id);
-        Assertions.assertEquals(TASK_COUNT - 1, taskService.findAll(new HashMap<String, String>(), new ArrayList<>()).size());
+        Assertions.assertEquals(TASK_COUNT - 1, taskService.findAll(new HashMap<>(), new ArrayList<>()).size());
     }
 
     @Test

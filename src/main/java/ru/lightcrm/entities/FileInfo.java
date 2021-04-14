@@ -37,12 +37,12 @@ public class FileInfo {
     @Column(name = "upload_date")
     private OffsetDateTime uploadDate;
 
-    public static FileInfo createNewFileInfo(String fileName, String KeyName, String fileType, long fileSSize) {
+    public static FileInfo createNewFileInfo(String fileName, String KeyName, String fileType, long fileSize) {
         FileInfo newFileInfo = new FileInfo();
         newFileInfo.setName(fileName);
         newFileInfo.setType(fileType);
         newFileInfo.setKeyName(KeyName);
-        newFileInfo.setSize(fileSSize);
+        newFileInfo.setSize(fileSize);
         newFileInfo.setUploadDate(OffsetDateTime.now());
 
         return newFileInfo;

@@ -29,17 +29,20 @@ class RoleServiceTest {
     @MockBean
     private RoleRepository rolesRepository;
 
-    private static final String ROLE_NAME = "Администратор";
+    private static final String ROLE_NAME = "ROLE";
+    private static final String ROLE_VISIBLE_NAME = "Роль";
 
     private Optional<Role> initMockRole(Long id) {
         Role role = new Role();
         role.setId(id);
         role.setName(ROLE_NAME);
+        role.setVisibleName(ROLE_VISIBLE_NAME);
 
         Set<Priority> priorities = new HashSet<>(1);
         Priority priority = new Priority();
         priority.setId(1L);
         priority.setName("TEST");
+        priority.setVisibleName("Тест");
         priorities.add(priority);
         role.setPriorities(priorities);
 
@@ -56,6 +59,7 @@ class RoleServiceTest {
         Assertions.assertNotNull(roleDto);
         Assertions.assertEquals(id, roleDto.getId());
         Assertions.assertEquals(ROLE_NAME, roleDto.getName());
+        Assertions.assertEquals(ROLE_VISIBLE_NAME, roleDto.getVisibleName());
         Assertions.assertEquals(1L,  roleDto.getPriorities().size());
     }
 }

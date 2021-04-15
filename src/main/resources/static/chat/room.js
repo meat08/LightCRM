@@ -1,5 +1,5 @@
 angular.module('app').controller('roomController',
-    function ($scope, $http, $localStorage, ChatService, $uibModal, PageService) {
+    function ($scope, $rootScope, $http, $localStorage, chatService, $uibModal, pageService) {
 
         const contextPath = 'http://localhost:8180/app';
         $scope.senderId = $localStorage.currentUser.profileId;
@@ -8,9 +8,9 @@ angular.module('app').controller('roomController',
         $scope.pageNotificationCount = 0;
 
         $scope.subscribe = function() {
-            ChatService.ready.then(function () {
-                ChatService.unsubscribe();
-                ChatService.subscribe("/user/" + $scope.senderId + "/queue/messages", function (payload) {
+            chatService.ready.then(function () {
+                chatService.unsubscribe();
+                chatService.subscribe("/user/" + $scope.senderId + "/queue/messages", function (payload) {
                     $scope.getNotification(payload);
                 });
             });
@@ -22,7 +22,7 @@ angular.module('app').controller('roomController',
                 if (value.chatId === payload.chatId) {
                     $scope.chats[key].unreadMessageCount += 1;
                     $scope.pageNotificationCount += 1;
-                    PageService.setNotificationCount($scope.pageNotificationCount);
+                    pageService.setNotificationCount($scope.pageNotificationCount);
                 }
             });
         };
@@ -51,7 +51,7 @@ angular.module('app').controller('roomController',
                                 value.recipientAvatar = (window.URL || window.webkitURL).createObjectURL(blob);
                             });
                     })
-                    PageService.setNotificationCount($scope.pageNotificationCount);
+                    pageService.setNotificationCount($scope.pageNotificationCount);
                 });
         };
 
@@ -61,7 +61,7 @@ angular.module('app').controller('roomController',
                     $scope.currentChat = value;
                     $scope.pageNotificationCount -= $scope.currentChat.unreadMessageCount;
                     $scope.currentChat.unreadMessageCount = 0;
-                    PageService.setNotificationCount($scope.pageNotificationCount);
+                    pageService.setNotificationCount($scope.pageNotificationCount);
                 }
             });
         };

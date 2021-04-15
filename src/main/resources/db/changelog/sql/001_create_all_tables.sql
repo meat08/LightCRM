@@ -113,7 +113,9 @@ CREATE TABLE tasks (
     task_state_id           BIGINT REFERENCES task_states(id),
     allow_change_deadline   BOOLEAN,
     project_id              BIGINT REFERENCES projects(id),
-    expired                 BOOLEAN DEFAULT FALSE
+    expired                 BOOLEAN DEFAULT FALSE,
+    company_id              BIGINT REFERENCES companies(id),
+    FOREIGN KEY (company_id) REFERENCES companies(id)
 );
 
 CREATE TABLE tasks_coexecutors (
@@ -158,12 +160,14 @@ CREATE TABLE employees_projects (
 
 CREATE TABLE roles (
     id                  BIGSERIAL PRIMARY KEY,
-    name                VARCHAR(50)
+    name                VARCHAR(50),
+    visible_name        VARCHAR(50)
 );
 
 CREATE TABLE priorities (
     id                  BIGSERIAL PRIMARY KEY,
-    name                VARCHAR(50)
+    name                VARCHAR(50),
+    visible_name        VARCHAR(50)
 );
 
 CREATE TABLE roles_priorities (

@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.Task;
 import ru.lightcrm.utils.CustomDateDeserializer;
 
@@ -36,11 +37,11 @@ public class TaskDto {
     @JsonProperty("description")
     private String description;
 
-    @ApiModelProperty(notes = "Постановщик задачи.", required = true, position = 3)
+    @ApiModelProperty(notes = "Идентификатор постановщика задачи.", required = true, position = 3)
     @JsonProperty("producerId")
     private Long producerId;
 
-    @ApiModelProperty(notes = "Ответственный за выполнение (исполнитель) задачи.", required = true, position = 4)
+    @ApiModelProperty(notes = "Идентификатор ответственного за выполнение (исполнитель) задачи.", required = true, position = 4)
     @JsonProperty("responsibleId")
     private Long responsibleId;
 
@@ -90,16 +91,39 @@ public class TaskDto {
     @JsonProperty("comments")
     private Set<CommentDto> comments;
 
+    @ApiModelProperty(notes = "Постановщик задачи ", required = false)
+    @JsonProperty("producer")
+    private ProfileMiniDto producer;
+
+    @ApiModelProperty(notes = "Ответственный за выполнение (исполнитель) задачи", required = false)
+    @JsonProperty("responsible")
+    private ProfileMiniDto responsible;
+
+    @ApiModelProperty(notes = "Наименование статуса задачи", required = false)
+    @JsonProperty("taskStateName")
+    private String taskStateName;
+
+    @ApiModelProperty(notes = "Идентификатор связанной с задачей компании.", required = false)
+    @JsonProperty("companyId")
+    private Long companyId;
+
+    @ApiModelProperty(notes = "Наименование (имя) связанной с задачей компании.", required = false)
+    @JsonProperty("companyName")
+    private String companyName;
+
     public TaskDto(Task task) {
         this.id = task.getId();
         this.title = task.getTitle();
         this.description = task.getDescription();
         this.producerId = task.getProducer().getId();
+        this.producer = new ProfileMiniDto(task.getProducer());
         this.responsibleId = task.getResponsible().getId();
+        this.responsible = new ProfileMiniDto(task.getResponsible());
         this.startDate = task.getStartDate();
         this.endDate = task.getEndDate();
         this.deadline = task.getDeadline();
         this.taskStateId = task.getTaskState().getId();
+        this.taskStateName = task.getTaskState().getName();
         this.allowChangeDeadline = task.isAllowChangeDeadline();
         this.projectId = task.getProject() != null
                 ? task.getProject().getId()
@@ -114,5 +138,7 @@ public class TaskDto {
         this.comments = task.getComments() != null
                 ? task.getComments().stream().map(CommentDto::new).collect(Collectors.toSet())
                 : Collections.emptySet();
+        this.companyId = task.getCompany() != null ? task.getCompany().getId() : null;
+        this.companyName = task.getCompany() != null ? task.getCompany().getName() : null;
     }
 }

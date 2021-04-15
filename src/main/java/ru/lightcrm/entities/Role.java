@@ -17,6 +17,9 @@ public class Role {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "visible_name")
+    private String visibleName;
+
     @ManyToMany
     @JoinTable(name = "roles_priorities",
             joinColumns = @JoinColumn(name = "role_id"),

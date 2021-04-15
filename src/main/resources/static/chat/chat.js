@@ -27,19 +27,18 @@ angular.module('app')
         };
     })
     .controller('chatController',
-    function ($scope, $http, $location, $localStorage, $filter, $routeParams, ChatService, PageService) {
+    function ($scope, $rootScope, $http, $location, $localStorage, $filter, $routeParams, chatService, pageService) {
 
         const contextPath = 'http://localhost:8180/app';
         $scope.senderId = $localStorage.currentUser.profileId;
-        $scope.profile = null;
         $scope.messages = [];
         $scope.newMessage = {};
         $scope.messageText = "";
 
         $scope.subscribe = function() {
-            ChatService.ready.then(function () {
-                ChatService.unsubscribe();
-                ChatService.subscribe("/user/" + $scope.senderId + "/queue/messages", function (payload) {
+            chatService.ready.then(function () {
+                chatService.unsubscribe();
+                chatService.subscribe("/user/" + $scope.senderId + "/queue/messages", function (payload) {
                     $scope.getNotification(payload);
                 });
             });
@@ -50,12 +49,12 @@ angular.module('app')
                 $scope.newMessage = {
                     senderId: $scope.senderId,
                     recipientId: $scope.currentChat.recipientId,
-                    senderName: $scope.profile.firstname + " " + $scope.profile.lastname,
+                    senderName: $rootScope.currentProfile.firstname + " " + $rootScope.currentProfile.lastname,
                     recipientName: $scope.currentChat.recipientName,
                     content: $scope.messageText,
                     timestamp: $filter('date')(new Date(),'yyyy-MM-dd HH:mm:ss')
                 };
-                ChatService.send('/app/chat', $scope.newMessage);
+                chatService.send('/app/chat', $scope.newMessage);
                 $scope.messageText = "";
                 $scope.messages.push($scope.newMessage);
             }
@@ -81,16 +80,6 @@ angular.module('app')
                 });
         };
 
-        $scope.getProfile = function() {
-            $http({
-                url: contextPath + '/api/v1/profiles/' + $scope.senderId,
-                method: 'GET'
-            })
-                .then(function (response) {
-                    $scope.profile = response.data;
-                });
-        };
-
         $scope.getNotification = function(payload) {
             if ($scope.activeChatWindow) {
                 if (payload.chatId === $scope.currentChat.chatId) {
@@ -101,7 +90,7 @@ angular.module('app')
                             $scope.playAudio();
                             value.unreadMessageCount += 1;
                             $scope.pageNotificationCount += 1;
-                            PageService.setNotificationCount($scope.pageNotificationCount);
+                            pageService.setNotificationCount($scope.pageNotificationCount);
                         }
                     });
                 }
@@ -114,7 +103,7 @@ angular.module('app')
                     $scope.pageNotificationCount -= value.unreadMessageCount;
                 }
             });
-            PageService.setNotificationCount($scope.pageNotificationCount);
+            pageService.setNotificationCount($scope.pageNotificationCount);
             $http({
                 url: contextPath + '/chats/room/' + chatId + '/' + recipientId,
                 method: 'GET'
@@ -143,7 +132,7 @@ angular.module('app')
             $scope.getChatById(chatId, recipientId);
         };
 
-        $scope.getProfile();
+        // $scope.getProfile();
         $scope.subscribe();
         $scope.getMessages($scope.currentChat.senderId, $scope.currentChat.recipientId);
 });

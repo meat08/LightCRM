@@ -1,5 +1,5 @@
-angular.module('PageService', [])
-    .factory('PageService', function($window) {
+angular.module('pageService', [])
+    .factory('pageService', function($window) {
         var defaultTitle = 'Light CRM';
 
         return {

@@ -111,6 +111,23 @@ angular.module('app').controller('indexController', function ($scope, $rootScope
                     .then(function (response) {
                         $rootScope.currentProfile = response.data;
                     });
+
+                let sec = 1800; // токен устаревает и разлогинивает пользователя через 30 минут (1800 сек)
+                let counter = setInterval(function timer() {
+                    sec = sec - 1;
+                    if (sec <= 0) {
+                        clearInterval(counter);
+                        delete $localStorage.currentUser;
+                        $rootScope.currentProfile = null;
+                        isProfilePresent = false;
+                        $http.defaults.headers.common.Authorization = '';
+                        chatService.unsubscribe();
+                        chatService.disconnect();
+                        $location.path('/auth');
+                        return;
+                    }
+                }, 1000);
+
             }
             return true;
         }

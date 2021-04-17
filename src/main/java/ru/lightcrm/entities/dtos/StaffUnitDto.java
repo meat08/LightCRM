@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.lightcrm.entities.StaffUnit;
 
 import java.util.Collections;
@@ -13,6 +15,7 @@ import java.util.stream.Collectors;
 
 @ApiModel(description = "Штатная единица DTO")
 @Data
+@NoArgsConstructor
 @JsonRootName("StaffUnitDto")
 public class StaffUnitDto {
 

@@ -13,8 +13,10 @@ import ru.lightcrm.services.interfaces.RoleService;
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository rolesRepository;
 
+    public Role findRoleByName(String name) {
+        return rolesRepository.findOneByName(name).orElseThrow(() -> new ResourceNotFoundException(String.format("Роль '%s' не найдена", name)));
+    }
     public RoleDto findByName(String name) {
-        Role role = rolesRepository.findOneByName(name).orElseThrow(() -> new ResourceNotFoundException(String.format("Роль '%s' не найдена", name)));
-        return new RoleDto(role);
+        return new RoleDto(findRoleByName(name));
     }
 }

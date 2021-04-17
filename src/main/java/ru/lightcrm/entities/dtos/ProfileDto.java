@@ -24,11 +24,6 @@ import java.util.stream.Collectors;
 @JsonRootName("ProfileDto")
 public class ProfileDto extends ProfileMiniDto {
 
-    @Min(1)
-    @ApiModelProperty(notes = "Уникальный идентификатор профиля", dataType = "Long", example = "1", required = true)
-    @JsonProperty("id")
-    private Long id;
-
     // User
     @Min(1)
     @ApiModelProperty(notes = "Уникальный идентификатор данных авторизации сотрудника", dataType = "Long", example = "1", required = true, position = 7)
@@ -56,7 +51,6 @@ public class ProfileDto extends ProfileMiniDto {
 
     public ProfileDto(Profile profile) {
         super(profile);
-        this.id = profile.getId();
         // User
         this.userId = profile.getUser().getId();
         this.userLogin = profile.getUser().getLogin();

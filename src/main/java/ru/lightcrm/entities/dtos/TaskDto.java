@@ -103,6 +103,14 @@ public class TaskDto {
     @JsonProperty("taskStateName")
     private String taskStateName;
 
+    @ApiModelProperty(notes = "Идентификатор связанной с задачей компании.", required = false)
+    @JsonProperty("companyId")
+    private Long companyId;
+
+    @ApiModelProperty(notes = "Наименование (имя) связанной с задачей компании.", required = false)
+    @JsonProperty("companyName")
+    private String companyName;
+
     public TaskDto(Task task) {
         this.id = task.getId();
         this.title = task.getTitle();
@@ -130,5 +138,7 @@ public class TaskDto {
         this.comments = task.getComments() != null
                 ? task.getComments().stream().map(CommentDto::new).collect(Collectors.toSet())
                 : Collections.emptySet();
+        this.companyId = task.getCompany() != null ? task.getCompany().getId() : null;
+        this.companyName = task.getCompany() != null ? task.getCompany().getName() : null;
     }
 }

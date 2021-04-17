@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/chat.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css"
+          rel="stylesheet"/>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.2.1/angular-material.min.css">
     <link rel="stylesheet" href="styles/custom.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -26,8 +27,8 @@
 </head>
 <title>Light CRM</title>
 <body>
-<div class="nav_container">
-    <div ng-controller="indexController">
+<div class="nav_container" ng-controller="indexController">
+    <div>
         <div ng-if="isUserLoggedIn()">
             <md-toolbar class="md-hue-2">
                 <div class="md-toolbar-tools">
@@ -37,12 +38,18 @@
 
                     <h2 class="main_title" flex md-truncate>Light CRM</h2>
 
+                    <div class="main_search">
+                        <input type="text" placeholder="Поиск..." ng-click="search()">
+                    </div>
+
                     <div class="btn-group" uib-dropdown is-open="status.isopen">
-                        <md-button id="single-button" type="button" class="md-primary md-raised" uib-dropdown-toggle ng-disabled="disabled">
+                        <md-button id="single-button" type="button" class="md-primary md-raised" uib-dropdown-toggle
+                                   ng-disabled="disabled">
                             {{currentProfile.firstname + " " + currentProfile.lastname}}
                             <md-icon class="person_logo" md-svg-icon="img/person.svg"></md-icon>
                         </md-button>
-                        <div class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                        <div class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu"
+                             aria-labelledby="single-button">
                             <a href="#!/profiles/profile" class="dropdown-item">Профиль</a>
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item" ng-click="tryToLogout()">Выйти</a>
@@ -60,22 +67,25 @@
                     <md-nav-item md-nav-href="#!/tasks" name="/tasks">Задачи</md-nav-item>
                     <md-nav-item md-nav-href="#!/profiles" name="/profiles">Сотрудники</md-nav-item>
                     <md-nav-item md-nav-href="#!/companies" name="/companies">Компании</md-nav-item>
-                    <md-nav-item md-nav-href="#!/chats" name="/chats">Чат</md-nav-item>
                 </md-nav-bar>
 
             </md-content>
         </div>
-
     </div>
-
     <div class="body_container">
-        <ng-view></ng-view>
+        <div>
+            <ng-include src="'chat/chatPanel.html'" flex ng-if="isUserLoggedIn()"
+                        ng-controller="roomController"></ng-include>
+        </div>
+        <div class="content_container">
+            <ng-view></ng-view>
+        </div>
     </div>
 
     <script src="index.js"></script>
     <script src="auth/auth.js"></script>
     <script src="profile/profile.js"></script>
-    <script src="profile/profileService.js"></script>
+    <script src="profile/profiles.js"></script>
     <script src="tasks/tasks.js"></script>
     <script src="tasks/task.js"></script>
     <script src="company/companies.js"></script>

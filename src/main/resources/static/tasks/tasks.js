@@ -8,6 +8,7 @@ angular.module('app').controller('taskController', function ($scope, $http, $loc
             url: contextPath + '/api/v1/tasks',
             method: 'GET',
             params: {
+                title           : $scope.filter ? $scope.filter.title : null,
                 producerId      : $scope.filter ? $scope.filter.producerId : null,
                 responsibleId   : $scope.filter ? $scope.filter.responsibleId : null,
                 taskStateId     : $scope.filter ? $scope.filter.taskStateId : null,
@@ -24,6 +25,10 @@ angular.module('app').controller('taskController', function ($scope, $http, $loc
     $scope.cleanFilter = function() {
         $scope.filter = null;
         $scope.allTasks();
+    }
+
+    $scope.createNew = function(){
+        alert('В разработке');
     }
 
     $scope.getProfiles = function(){

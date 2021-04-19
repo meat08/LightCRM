@@ -2,6 +2,7 @@ package ru.lightcrm.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
@@ -36,6 +37,7 @@ public class Company {
     @Column(name = "email")
     private String email;
 
+    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     @OneToMany(mappedBy = "company")
     private Set<Contact> contacts;
 
@@ -43,15 +45,11 @@ public class Company {
     @JoinTable(name = "companies_managers",
             joinColumns = @JoinColumn(name = "company_id"),
             inverseJoinColumns = @JoinColumn(name = "profile_id"))
-    private List<Profile> managers;
+    private Set<Profile> managers;
 
     @ManyToMany
     @JoinTable(name = "companies_comments",
             joinColumns = @JoinColumn(name = "company_id"),
             inverseJoinColumns = @JoinColumn(name = "comment_id"))
-    private List<Comment> comments;
-
-    public boolean isType() {
-        return type;
-    }
+    private Set<Comment> comments;
 }

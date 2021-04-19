@@ -17,6 +17,7 @@ import ru.lightcrm.services.filters.ProjectFilter;
 import ru.lightcrm.services.interfaces.ProjectService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,7 +50,7 @@ public class ProjectServiceTest {
         projects.add(p2);
         projects.add(p3);
 
-        Mockito.doReturn(projects).when(projectRepository).findAll();
+        Mockito.doReturn(projects).when(projectRepository).findAll(new ProjectFilter(null).getSpecification());
         Mockito.doReturn(Optional.of(projects.get(0))).when(projectRepository).findById(p1.getId());
         Mockito.doReturn(Optional.of(projects.get(1))).when(projectRepository).findById(p2.getId());
         Mockito.doReturn(Optional.of(projects.get(2))).when(projectRepository).findById(p3.getId());
@@ -64,7 +65,7 @@ public class ProjectServiceTest {
 
     @Test
     public void findAll() {
-        List<ProjectDto> projectDTOList = projectService.findAll(null);
+        List<ProjectDto> projectDTOList = projectService.findAll(new HashMap<>());
         Assertions.assertNotNull(projectDTOList);
         Assertions.assertEquals(PROJECT_COUNT, projectDTOList.size());
         Assertions.assertEquals(PROJECT_NAME + " 1", projectDTOList.get(0).getName());
@@ -108,7 +109,7 @@ public class ProjectServiceTest {
     public void deleteByIdTest() {
         Long id = 3L;
 
-        Assertions.assertEquals(PROJECT_COUNT, projectService.findAll(null).size());
+        Assertions.assertEquals(PROJECT_COUNT, projectService.findAll(new HashMap<>()).size());
         projectService.deleteById(id);
         Assertions.assertEquals(PROJECT_COUNT - 1, projectService.findAll(null).size());
     }

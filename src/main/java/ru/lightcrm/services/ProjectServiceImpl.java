@@ -9,11 +9,13 @@ import ru.lightcrm.entities.Task;
 import ru.lightcrm.entities.dtos.ProjectDto;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.repositories.ProjectRepository;
+import ru.lightcrm.services.filters.ProjectFilter;
 import ru.lightcrm.services.interfaces.ProfileService;
 import ru.lightcrm.services.interfaces.ProjectService;
 import ru.lightcrm.services.interfaces.TaskService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,8 +41,9 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectDto> findAll() {
-        return projectRepository.findAll().stream().map(ProjectDto::new).collect(Collectors.toList());
+    public List<ProjectDto> findAll(Map<String, String> params) {
+        ProjectFilter projectFilter = new ProjectFilter(params);
+        return projectRepository.findAll(projectFilter.getSpecification()).stream().map(ProjectDto::new).collect(Collectors.toList());
     }
 
     @Override

@@ -14,6 +14,7 @@ import ru.lightcrm.entities.dtos.ProfileDto;
 import ru.lightcrm.entities.dtos.ProjectDto;
 import ru.lightcrm.services.interfaces.ProjectService;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -83,7 +84,7 @@ public class ProjectControllerTest {
     @Test
     @WithMockUser(username = "Bob", authorities = "ADMIN")
     public void getAllProjectsTest() throws Exception{
-        given(projectService.findAll()).willReturn(testListProjectDto);
+        given(projectService.findAll(new HashMap<>())).willReturn(testListProjectDto);
 
         mvc.perform(get("/api/v1/projects")
                 .contentType(MediaType.APPLICATION_JSON))

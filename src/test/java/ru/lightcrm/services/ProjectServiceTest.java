@@ -13,6 +13,7 @@ import ru.lightcrm.entities.Project;
 import ru.lightcrm.entities.User;
 import ru.lightcrm.entities.dtos.ProjectDto;
 import ru.lightcrm.repositories.ProjectRepository;
+import ru.lightcrm.services.filters.ProjectFilter;
 import ru.lightcrm.services.interfaces.ProjectService;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class ProjectServiceTest {
 
     @Test
     public void findAll() {
-        List<ProjectDto> projectDTOList = projectService.findAll();
+        List<ProjectDto> projectDTOList = projectService.findAll(null);
         Assertions.assertNotNull(projectDTOList);
         Assertions.assertEquals(PROJECT_COUNT, projectDTOList.size());
         Assertions.assertEquals(PROJECT_NAME + " 1", projectDTOList.get(0).getName());
@@ -107,9 +108,9 @@ public class ProjectServiceTest {
     public void deleteByIdTest() {
         Long id = 3L;
 
-        Assertions.assertEquals(PROJECT_COUNT, projectService.findAll().size());
+        Assertions.assertEquals(PROJECT_COUNT, projectService.findAll(null).size());
         projectService.deleteById(id);
-        Assertions.assertEquals(PROJECT_COUNT - 1, projectService.findAll().size());
+        Assertions.assertEquals(PROJECT_COUNT - 1, projectService.findAll(null).size());
     }
 
     @Test

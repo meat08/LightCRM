@@ -1,24 +1,23 @@
 package ru.lightcrm.entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
+import ru.lightcrm.annotations.SearchableField;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @NoArgsConstructor
 @Table(name = "companies")
-public class Company {
+public class Company extends SearchableEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-
+    @SearchableField
     @Column(name = "name")
     private String name;
 

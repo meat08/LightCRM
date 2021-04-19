@@ -1,30 +1,31 @@
 package ru.lightcrm.entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import ru.lightcrm.entities.dtos.SystemUserDto;
+import ru.lightcrm.annotations.SearchableField;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "profiles")
 @Data
 @NoArgsConstructor
-public class Profile {
+public class Profile extends SearchableEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-
+    @SearchableField(position = 1)
     @Column(name = "firstname")
     private String firstname;
 
+    @SearchableField()
     @Column(name = "lastname")
     private String lastname;
 
+    @SearchableField(position = 2)
     @Column(name = "middlename")
     private String middlename;
 

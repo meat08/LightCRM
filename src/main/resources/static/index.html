@@ -39,7 +39,13 @@
                     <h2 class="main_title" flex md-truncate>Light CRM</h2>
 
                     <div class="main_search">
-                        <input type="text" placeholder="Поиск..." ng-click="search()">
+                        <input type="text" placeholder="Поиск..." ng-model="$parent.searchText" ng-enter="search()">
+                        <md-tooltip md-delay=500 style="font-size: 14px" md-direction="bottom">
+                            Для поиска введите текст и нажмите Enter
+                        </md-tooltip>
+<!--                        <md-tooltip md-visible="showNeedText == true" style="font-size: 14px; color: red" md-direction="left">-->
+<!--                            Введите текст-->
+<!--                        </md-tooltip>-->
                     </div>
 
                     <div class="btn-group" uib-dropdown is-open="status.isopen">

@@ -3,6 +3,7 @@ package ru.lightcrm.entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.lightcrm.annotations.SearchableField;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -13,13 +14,9 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Contact {
+public class Contact extends SearchableEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-
+    @SearchableField
     @Column(name = "name")
     private String name;
 

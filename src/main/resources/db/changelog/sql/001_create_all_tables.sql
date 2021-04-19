@@ -27,6 +27,7 @@ CREATE TABLE profiles (
     sex                 VARCHAR(50),
     phone               VARCHAR(50),
     email               VARCHAR(50),
+    search_index        TEXT,
     about               TEXT,
     birthdate           DATE,
     employment_date     DATE,
@@ -60,7 +61,8 @@ CREATE TABLE companies (
     inn                 BIGINT,
     bill_number         BIGINT,
     phone_number        VARCHAR(50),
-    email               VARCHAR(50)
+    email               VARCHAR(50),
+    search_index            TEXT
 );
 
 CREATE TABLE companies_managers (
@@ -78,6 +80,7 @@ CREATE TABLE contacts (
     phone               VARCHAR(50),
     email               VARCHAR(50),
     description         VARCHAR(255),
+    search_index        TEXT,
     company_id          BIGINT REFERENCES companies(id)
 );
 
@@ -107,6 +110,7 @@ CREATE TABLE tasks (
     description             VARCHAR(255),
     producer_id             BIGINT REFERENCES profiles(id),
     responsible_id          BIGINT REFERENCES profiles(id),
+    search_index            TEXT,
     start_date              TIMESTAMP,
     end_date                TIMESTAMP,
     deadline                TIMESTAMP,

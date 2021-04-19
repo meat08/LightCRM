@@ -5,25 +5,33 @@
 .text-center {
     padding-top: 10px;
 }
-img{ max-width:100%;}
+
 .inbox_people {
-    background: #f8f8f8 none repeat scroll 0 0;
+    /*background: #f8f8f8 none repeat scroll 0 0;*/
     float: left;
-    overflow: hidden;
+    /*overflow: hidden;*/
+    height: 83vh;
     width: 25%;
-    border-right:1px solid #c4c4c4;
+    border-right: 2px solid #c4c4c4;
 }
+.inbox_chat md-list-item .md-list-item-inner .md-avatar {
+    margin-top: 0px;
+    margin-right: 10px;
+}
+
 .inbox_msg {
+    height: 100%;
+    width: 100%;
+    display: flex;
     border: 1px solid #c4c4c4;
     clear: both;
     overflow: hidden;
 }
-.top_spac{ margin: 20px 0 0;}
+
 .chat_header {
     display: flex;
-    height: 5vh;
     justify-content: space-between;
-    margin: 0 15px 5px 20px;
+    margin: 0 15px 5px 25px;
 }
 .chat_search {
     width: 40%;
@@ -34,7 +42,6 @@ img{ max-width:100%;}
     background: #fff;
     transition: all 0.3s ease;
     background: none;
-    color: #5a6674;
     padding: 2px 10px;
     appearance: none;
     outline: none;
@@ -45,16 +52,21 @@ img{ max-width:100%;}
     float: left;
     padding: 0 15px 0 20px;
     width: 100%;
+    height: 100%;
 }
 .mesgs {
     float: left;
     width: 75%;
-    border-top: 1px solid #c4c4c4;
+    /*border-top: 1px solid #c4c4c4;*/
 }
 .msg_history {
     margin-top: 5px;
-    height: 80vh;
+    height: 70vh;
     overflow-y: auto;
+}
+.inbox_people md-toolbar.md-hue-3 {
+    min-height: 40px;
+    height: 40px;
 }
 .incoming_msg {
     display: flex;
@@ -77,7 +89,6 @@ img{ max-width:100%;}
     border-radius: 0 15px 15px 15px;
     color: #150B22;
     font-size: 14px;
-    font-weight: bold;
     margin: 0;
     padding: 5px 10px 7px 12px;
     width: 100%;
@@ -98,6 +109,7 @@ img{ max-width:100%;}
     float: right;
     width: 46%;
 }
+
 .sent_msg p {
     background: #0277BD none repeat scroll 0 0;
     box-shadow: 8px 6px 8px rgba(0, 0, 0, 0.15);
@@ -144,61 +156,61 @@ md-toolbar.md-hue-3:not(.md-menu-toolbar) {
     background-color: #0277BD;
 }
 
-.top_spac {
-    margin: 20px 0 0;
-}
-
-.srch_bar {
-    display: inline-block;
-    text-align: right;
-    width: 60%;
-}
-.headind_srch{ padding:10px 29px 10px 20px; overflow:hidden; border-bottom:1px solid #c4c4c4;}
-
 .recent_heading h4 {
     color: #05728f;
     font-size: 21px;
     margin: auto;
 }
-.srch_bar input{ border:1px solid #cdcdcd; border-width:0 0 1px 0; width:80%; padding:2px 0 4px 6px; background:none;}
-.srch_bar .input-group-addon button {
-    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-    border: medium none;
-    padding: 0;
-    color: #707070;
-    font-size: 18px;
-}
-.srch_bar .input-group-addon { margin: 0 0 0 -27px;}
 
-.chat_ib h5{ font-size:15px; color:#464646; margin:0 0 8px 0;}
-.chat_ib h5 span{ font-size:13px; float:right;}
-.chat_ib p{ font-size:14px; color:#989898; margin:auto}
-.chat_img {
-    float: left;
-    width: 11%;
-    border-radius: 50%;
+.chat_ib h5 {
+    font-size: 15px;
+    color: #464646;
+    margin: 0 0 8px 0;
 }
+.chat_ib span {
+    font-size: 13px;
+    float: right;
+}
+.chat_ib p {
+    font-size:14px;
+    color:#989898;
+    margin:auto
+}
+
 .chat_ib {
     float: left;
     padding: 0 0 0 15px;
-    width: 88%;
+    /*width: 88%;*/
 }
 
 .chat_people{ overflow:hidden; clear:both;}
-.chat_list {
-    border-bottom: 1px solid #c4c4c4;
-    margin: 0;
-    padding: 18px 16px 10px;
+
+.active_chat {
+    background: #BEBEBE;
 }
 .inbox_chat {
-    height: 85vh;
-    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
+    /*overflow-y: scroll;*/
 }
-.active_chat{ background:#ebebeb;}
+
+.item {
+    display: flex;
+    margin: 5px 0;
+    /*width: ;*/
+}
+.contact_list {
+    align-items: center;
+}
+
+.inbox_chat md-list md-list-item.md-3-line .md-list-item-text p {
+    font-weight: 300;
+    line-height: 1.2em;
+}
 
 .my-modal .modal-dialog {
-    width: 60% !important;
-    min-height: 100vh;
+    width: 80% !important;
+    min-height: 500px;
     max-width: 2560px;
     position: absolute;
     padding: 0px;
@@ -206,8 +218,10 @@ md-toolbar.md-hue-3:not(.md-menu-toolbar) {
 }
 
 .my-modal .modal-content {
-    width: 100% !important;
-    min-height: 100vh !important;
+    width: 90% !important;
+    min-height: 95vh !important;
+    padding: 0px;
+    margin: 16px 0 0 30px;
 }
 
 .notification {

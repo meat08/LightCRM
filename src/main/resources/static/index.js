@@ -76,8 +76,12 @@
                 controller: 'roomController'
             })
             .when('/tasks/:taskId', {
-               templateUrl: 'tasks/task.html',
-               controller: 'taskEditController'
+                templateUrl: 'tasks/task.html',
+                controller: 'taskEditController'
+            })
+            .when('/search', {
+                templateUrl: 'search/search.html',
+                controller: 'indexController'
             });
     }
 
@@ -108,6 +112,7 @@ angular.module('app').controller('indexController', function ($scope, $rootScope
     const contextPath = 'http://localhost:8180/app';
     let isProfilePresent = false;
     $scope.currentNavItem = $location.path();
+    $scope.searchText = '';
 
     $scope.isUserLoggedIn = function () {
         if ($localStorage.currentUser == null) {
@@ -135,23 +140,34 @@ angular.module('app').controller('indexController', function ($scope, $rootScope
     };
 
     $scope.search = function () {
-        $mdDialog.show(
-            $mdDialog.alert()
-                .parent(angular.element(document.querySelector('#popupContainer')))
-                .clickOutsideToClose(true)
-                .title('Поиск')
-                .textContent("Появится в этом апреле...")
-                .ok('ОК')
-        );
-    }
-
-    $scope.isUserLoggedIn = function () {
-        if ($localStorage.currentUser) {
-            $scope.currentUserName = $localStorage.currentUser.username;
-            return true;
-        } else {
-            return false;
+        if ($scope.searchText === "" && $scope.searchText.trim() === "") {
+            return;
         }
+        $scope.searchResults = null;
+        $http({
+            url: contextPath + '/api/v1/search',
+            method: 'GET',
+            params: {
+                q: $scope.searchText
+            }
+        })
+            .then(function successCallback(response) {
+                $scope.searchResults = response.data;
+                $location.path('/search');
+            }, function errorCallback(response) {
+                $scope.searchResults = null;
+                $location.path('/search');
+            });
+    };
+
+    $scope.open = function (url) {
+        if (url == null) {
+            return;
+        }
+        $http({
+            url: contextPath + url,
+            method: 'GET'
+        });
     };
 
     $scope.currentNavItem = $location.path();

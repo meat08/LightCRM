@@ -1,18 +1,16 @@
 package ru.lightcrm.entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @Table(name = "roles")
-public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class Role extends BaseEntity {
 
     @Column(name = "name")
     private String name;

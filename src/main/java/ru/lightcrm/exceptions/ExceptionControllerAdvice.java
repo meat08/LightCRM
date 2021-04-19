@@ -5,6 +5,7 @@ import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -49,14 +50,21 @@ public class ExceptionControllerAdvice {
         return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler
+    public ResponseEntity<?> handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
+        log.error(e.getMessage());
+        LightCrmError err = new LightCrmError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
+
     private String getLimitFileSizeMessage(String errorMessage) {
         ArrayList<String> list = new ArrayList<>();
         Matcher matcher = fileSizeFromErrMsgPattern.matcher(errorMessage);
         while (matcher.find()) {
             list.add(matcher.group(1));
         }
-        int fileSize = Integer.parseInt(list.get(0)) / (1024);
-        int limitSize = Integer.parseInt(list.get(1)) / (1024);
+        long fileSize = Long.parseLong(list.get(0)) / (1024);
+        long limitSize = Long.parseLong(list.get(1)) / (1024);
         return String.format(fileSizeLimitMessage, fileSize, limitSize);
     }
 }

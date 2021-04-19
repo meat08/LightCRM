@@ -1,15 +1,15 @@
 package ru.lightcrm.controllers.interfaces;
 
 import io.swagger.annotations.*;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
+import ru.lightcrm.annotations.SearchableController;
+import ru.lightcrm.entities.Task;
 import ru.lightcrm.entities.dtos.TaskDto;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+@SearchableController(url = "/api/v1/tasks", entityClass = Task.class)
 @Api(value = "/api/v1/tasks", tags = "Контроллер для работы с задачами", produces = "application/json")
 @RequestMapping(value = "/api/v1/tasks", produces = "application/json")
 public interface TaskController {

@@ -2,6 +2,7 @@ package ru.lightcrm.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,17 +10,13 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "file_infos")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FileInfo {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class FileInfo extends BaseEntity {
 
     @Column(name = "name")
     private String name;

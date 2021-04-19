@@ -2,22 +2,19 @@ package ru.lightcrm.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "departments")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Department {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class Department extends BaseEntity {
 
     @Column(name = "name")
     private String name;

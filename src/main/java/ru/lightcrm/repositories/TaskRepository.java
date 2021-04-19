@@ -1,6 +1,5 @@
 package ru.lightcrm.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import ru.lightcrm.entities.Task;
@@ -9,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
-public interface TaskRepository extends JpaRepository<Task, Long>, JpaSpecificationExecutor<Task> {
+public interface TaskRepository extends SearchableEntityRepository<Task, Long>, JpaSpecificationExecutor<Task> {
     Optional<Task> findOneByTitle(@NotNull String title);
 
     @Query("SELECT t FROM Task t WHERE t.producer.id = ?1")

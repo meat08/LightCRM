@@ -1,26 +1,18 @@
 package ru.lightcrm.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.lightcrm.utils.MessageStatus;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @Table(name = "chat_message")
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class ChatMessage {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class ChatMessage extends BaseEntity {
 
     @Column(name = "chat_id")
     private String chatId;
@@ -45,4 +37,17 @@ public class ChatMessage {
 
     @Column(name = "message_status")
     private MessageStatus messageStatus;
+
+    @Builder
+    public ChatMessage(Long id, String chatId, Long senderId, Long recipientId, String senderName, String recipientName, String content, OffsetDateTime timestamp, MessageStatus messageStatus) {
+        super(id);
+        this.chatId = chatId;
+        this.senderId = senderId;
+        this.recipientId = recipientId;
+        this.senderName = senderName;
+        this.recipientName = recipientName;
+        this.content = content;
+        this.timestamp = timestamp;
+        this.messageStatus = messageStatus;
+    }
 }

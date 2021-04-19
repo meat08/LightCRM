@@ -38,7 +38,7 @@ public class ContactDto {
     @JsonProperty("description")
     private String description;
 
-    @ApiModelProperty(notes = "Id компании", example = "ООО \"Рога и копыта\"", required = true, position = 7)
+    @ApiModelProperty(notes = "Id компании", example = "1", required = true, position = 7)
     @JsonProperty("companyId")
     private Long companyId;
 

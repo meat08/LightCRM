@@ -7,6 +7,7 @@ import ru.lightcrm.entities.dtos.ProjectDto;
 import ru.lightcrm.services.interfaces.ProjectService;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -16,8 +17,8 @@ public class ProjectControllerImpl implements ProjectController {
     private final ProjectService projectService;
 
     @Override
-    public List<ProjectDto> getAllProjects() {
-        return projectService.findAll();
+    public List<ProjectDto> getAllProjects(Map<String, String> params) {
+        return projectService.findAll(params);
     }
 
     @Override

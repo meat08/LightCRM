@@ -67,6 +67,10 @@
                 templateUrl: 'profile/profile.html',
                 controller: 'profileController'
             })
+            .when('/projects', {
+                templateUrl: 'projects/projects.html',
+                controller: 'projectController'
+            })
             .when('/tasks', {
                 templateUrl: 'tasks/tasks.html',
                 controller: 'taskController'

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.lightcrm.entities.dtos.ProjectDto;
 
 import java.util.List;
+import java.util.Map;
 
 @Api(value = "/api/v1/projects", tags = "Контроллер для работы с проектами", produces = "application/json")
 @RequestMapping(value = "/api/v1/projects", produces = "application/json")
@@ -25,7 +26,7 @@ public interface ProjectController {
             }
     )
     @GetMapping
-    List<ProjectDto> getAllProjects();
+    List<ProjectDto> getAllProjects(@ApiParam(value = "Map с набором параметров и значений",  required = false, example = "responsibleId: 1") @RequestParam Map<String, String> params);
 
     @ApiOperation(value = "Получить проект по его Id",
             httpMethod = "GET",

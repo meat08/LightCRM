@@ -1,6 +1,8 @@
 <div class="all-companies" ng-show="showAllCompaniesInfo">
   <h3>Компании</h3>
-  <button class="btn btn-success" ng-click="showNewCompanyForm()">Добавить</button>
+  <md-button class="md-raised md-success" ng-click="showNewCompanyForm($event, null)" md-colors="{background: 'green'}">
+    Добавить
+  </md-button>
   <br/><br/>
   <table class="table table-hover" cellpadding="0" cellspacing="0">
     <thead>
@@ -8,25 +10,21 @@
       <td>ID</td>
       <td>Наименование</td>
       <td>Юридическое лицо</td>
-      <td>ИНН</td>
-      <td>Номер счета</td>
       <td>Номер телефона</td>
       <td>Электронная почта</td>
       <td>Действия</td>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="company in companies">
+    <tr ng-repeat="company in companies | orderBy:'-id'">
       <td>{{company.id}}</td>
       <td>{{company.name}}</td>
-      <td>{{company.type}}</td>
-      <td>{{company.inn}}</td>
-      <td>{{company.billNumber}}</td>
+      <td>{{company.type ? 'да' : 'нет'}}</td>
       <td>{{company.phoneNumber}}</td>
       <td>{{company.email}}</td>
       <td>
         <button class="btn btn-primary" ng-click="showCompany(company.id)">Инфо</button>
-        <button class="btn btn-danger" ng-click="deleteCompany(company.id)">Удалить</button>
+        <button class="btn btn-danger" ng-click="tryToDeleteCompany(company)">Удалить</button>
       </td>
     </tr>
     </tbody>
@@ -34,92 +32,176 @@
 </div>
 
 <div class="one-company" ng-show="showCompanyInfo">
-  <div class="d-flex flex-row">
-    <div class="container">
-      <h3>Информация о компании: {{companyInfo.name}}</h3>
-      <button class="btn btn-primary" ng-click="showAllCompanies()">К списку компаний</button>
-      <br/><br/>
-      <div class="row">
-        <div class="col">
-          <table class="table table-hover w-auto" cellpadding="0" cellspacing="0">
-            <thead>
-              <th>Поле</th>
-              <th>Значение</th>
-            </thead>
-            <tbody>
-            <tr>
-              <td>Наименование</td><td>{{companyInfo.name}}</td>
-            </tr>
-            <tr>
-              <td>Является юрлицом</td><td>{{companyInfo.type}}</td>
-            </tr>
-            <tr>
-              <td>ИНН</td><td>{{companyInfo.inn}}</td>
-            </tr>
-            <tr>
-              <td>Номер счета</td><td>{{companyInfo.billNumber}}</td>
-            </tr>
-            <tr>
-              <td>Список контактов</td>
-              <td>
-                <div class="list-group" ng-repeat="contact in companyInfo.contacts">
-                  <button type="button" class="list-group-item list-group-item-action" ng-click="showContact(contact)">{{contact.name}}</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Номер телефона</td><td>{{companyInfo.phoneNumber}}</td>
-            </tr>
-            <tr>
-              <td>Email</td><td>{{companyInfo.email}}</td>
-            </tr>
-            <tr>
-              <td>Курирующие менеджеры</td>
-              <td>
-                <ul class="list-group" ng-repeat="manager in companyInfo.managers">
-                  <li class="list-group-item">{{manager.firstname + " " + manager.lastname}}</li>
-                </ul>
+  <h3>Информация о компании: {{companyInfo.name}}</h3>
+  <button class="btn btn-primary" ng-click="showAllCompanies()">К списку компаний</button>
+  <br/><br/>
+  <table class="table w-75" cellpadding="0" cellspacing="0">
+    <thead>
+    <th>Поле</th>
+    <th>Значение</th>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Наименование</td><td>{{companyInfo.name}}</td>
+    </tr>
+    <tr>
+      <td>Является юрлицом</td><td>{{companyInfo.type ? 'да' : 'нет'}}</td>
+    </tr>
+    <tr>
+      <td>ИНН</td><td>{{companyInfo.inn}}</td>
+    </tr>
+    <tr>
+      <td>Номер счета</td><td>{{companyInfo.billNumber}}</td>
+    </tr>
+    <tr>
+      <td>Номер телефона</td><td>{{companyInfo.phoneNumber}}</td>
+    </tr>
+    <tr>
+      <td>Email</td><td>{{companyInfo.email}}</td>
+    </tr>
+    <tr>
+      <td>
+        Контакты
+        </br></br>
+        <button class="btn btn-success" ng-click="showContact(null)">Добавить</button>
+      </td>
+      <td>
+        <table class="table" cellpadding="0" cellspacing="0">
+          <thead>
+          <th>Имя</th>
+          <th>Действия</th>
+          </thead>
+          <tbody>
+          <tr ng-repeat="contact in companyInfo.contacts | orderBy:'-id'">
+            <td>{{contact.name}}</td>
+            <td>
+              <button class="btn btn-primary" ng-click="showContact(contact)">Инфо</button>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#deleteContactModal" ng-click="markContactToDelete(contact.id)">X</button>
             </td>
-              </td>
-            </tr>
-            <tr>
-              <td>Комментарии</td>
-              <td>
-                <ul class="list-group" ng-repeat="comment in companyInfo.comments">
-                  <li class="list-group-item">{{comment.text}}</li>
-                </ul>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="col">
-          <div class="company-contact" ng-show="showCompanyContact">
-            <table class="table table-hover w-auto" cellpadding="0" cellspacing="0">
-              <thead>
-              <th>Поле</th>
-              <th>Значение</th>
-              </thead>
-              <tbody>
-              <tr>
-                <td>ФИО</td><td>{{contactInfo.name}}</td>
-              </tr>
-              <tr>
-                <td>Адрес</td><td>{{contactInfo.post}}</td>
-              </tr>
-              <tr>
-                <td>Телефон</td><td>{{contactInfo.phone}}</td>
-              </tr>
-              <tr>
-                <td>Email</td><td>{{contactInfo.email}}</td>
-              </tr>
-              <tr>
-                <td>Описание</td><td>{{contactInfo.description}}</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Курирующие менеджеры
+      </td>
+      <td>
+        <ul class="list-group" ng-repeat="manager in companyInfo.managers">
+          <li class="list-group-item">{{manager.firstname + " " + manager.lastname}}</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Комментарии</td>
+      <td>
+        <ul class="list-group" ng-repeat="comment in companyInfo.comments">
+          <li class="list-group-item">{{comment.text}}</li>
+        </ul>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="company-add-contact w-75" ng-show="showCompanyContact">
+  <h3>Контакт для компании {{companyInfo.name}}</h3>
+  <br/><br/>
+  <form>
+    <div>
+      <input type="text" ng-model="contactInfo.id" hidden/>
+      <input type="text" ng-model="contactInfo.companyId" hidden/>
+    </div>
+    <div class="form-group row">
+      <label for="contactName" class="col-sm-2 col-form-label">Имя</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="contactInfo.name" id="contactName" placeholder="Введите имя">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="contactAddress" class="col-sm-2 col-form-label">Адрес</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="contactInfo.post" id="contactAddress" placeholder="Введите адрес">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="contactPhone" class="col-sm-2 col-form-label">Телефон</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="contactInfo.phone" id="contactPhone" placeholder="Введите телефон">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="contactEmail" class="col-sm-2 col-form-label">Email</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="contactInfo.email" id="contactEmail" placeholder="Введите email">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="contactDescription" class="col-sm-2 col-form-label">Описание</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="contactInfo.description" id="contactDescription" placeholder="Введите описание">
+      </div>
+    </div>
+    <button class="btn btn-primary" ng-click="showCompany(companyInfo.id)">Отмена</button>
+    <button class="btn btn-success" ng-click="updateContact()">Сохранить</button>
+  </form>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="deleteCompanyModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Удаление компании</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Вы уверены?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" ng-click="deleteCompany(companyIdToDelete)">Удалить</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="deleteContactModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Удаление контакта</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Вы уверены?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" ng-click="deleteContact(contactIdToDelete)">Удалить</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="unableToDeleteModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ошибка!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Нельзя удалить компанию, к которой привязаны задачи!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">ОК</button>
       </div>
     </div>
   </div>

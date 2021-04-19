@@ -1,46 +1,30 @@
 package ru.lightcrm.services;
 
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.lightcrm.entities.Company;
 import ru.lightcrm.entities.Contact;
 import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.dtos.CompanyDto;
 import ru.lightcrm.entities.dtos.ContactDto;
-import ru.lightcrm.entities.dtos.ProfileMiniDto;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.repositories.CompanyRepository;
+import ru.lightcrm.repositories.ContactRepository;
 import ru.lightcrm.services.interfaces.CompanyService;
-import ru.lightcrm.services.interfaces.ContactService;
 import ru.lightcrm.services.interfaces.ProfileService;
+import ru.lightcrm.services.interfaces.TaskService;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
-    private CompanyRepository companiesRepository;
-    private ContactService contactService;
-    private ProfileService profileService;
-
-    @Autowired
-    public void setCompaniesRepository(CompanyRepository companiesRepository) {
-        this.companiesRepository = companiesRepository;
-    }
-
-    @Autowired
-    public void setContactService(ContactService contactService) {
-        this.contactService = contactService;
-    }
-
-    @Autowired
-    public void setProfileService(ProfileService profileService) {
-        this.profileService = profileService;
-    }
+    private final CompanyRepository companiesRepository;
+    private final ContactRepository contactRepository;
+    private final ProfileService profileService;
+    private final TaskService taskService;
 
     public CompanyDto findByName(String name) {
         return new CompanyDto(companiesRepository.findOneByName(name)
@@ -64,47 +48,26 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     public List<CompanyDto> findAllDTO() {
-        return companiesRepository.findAll().stream().map(CompanyDto::new).collect(Collectors.toList());
+        return companiesRepository.findAll().stream().map(c -> {
+            CompanyDto companyDto = new CompanyDto(c);
+            companyDto.setTasksCount(taskService.countByCompanyId(c.getId()));
+            return companyDto;
+        }).collect(Collectors.toList());
     }
 
     @Override
-    public CompanyDto save(CompanyDto companyDto) {
-        Company company = new Company();
-        company.setName(companyDto.getName());
-        company.setType(company.isType());
-        company.setInn(companyDto.getInn());
-        company.setBillNumber(companyDto.getBillNumber());
-        company.setPhoneNumber(companyDto.getPhoneNumber());
-        company.setEmail(companyDto.getEmail());
-
-        Set<Contact> contacts = new HashSet<>();
-        for (ContactDto contactDto : companyDto.getContacts()) {
-            Contact contact = new Contact();
-            contact.setName(contactDto.getName());
-            contact.setPost(contactDto.getPost());
-            contact.setPhone(contactDto.getPhone());
-            contact.setEmail(contactDto.getEmail());
-            contact.setDescription(contactDto.getDescription());
-            contact.setCompany(company);
-            contacts.add(contact);
+    public CompanyDto saveOrUpdate(CompanyDto companyDto) {
+        Company company;
+        if (companyDto.getId() == null) {
+            company = new Company();
+            company.setContacts(null);
+            company.setComments(null);
+        } else {
+            company = companiesRepository.findById(companyDto.getId())
+                    .orElseThrow(() -> new ResourceNotFoundException(String.format("Компания с id '%s' не найдена", companyDto.getId())));
         }
-        company.setContacts(contacts);
-
-        Set<Profile> managers = companyDto.getManagers().stream()
-                .map(m -> profileService.findById(m.getId())).collect(Collectors.toSet());
-        company.setManagers(managers);
-
-        company.setComments(null);
-
-        return new CompanyDto(companiesRepository.save(company));
-    }
-
-    @Override
-    public CompanyDto update(CompanyDto companyDto) {
-        Company company = companiesRepository.findById(companyDto.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Компания с id '%s' не найдена", companyDto.getId())));
         company.setName(companyDto.getName());
-        company.setType(company.isType());
+        company.setType(companyDto.isType());
         company.setInn(companyDto.getInn());
         company.setBillNumber(companyDto.getBillNumber());
         company.setPhoneNumber(companyDto.getPhoneNumber());
@@ -113,9 +76,6 @@ public class CompanyServiceImpl implements CompanyService {
         Set<Profile> managers = companyDto.getManagers().stream()
                 .map(m -> profileService.findById(m.getId())).collect(Collectors.toSet());
         company.setManagers(managers);
-
-        // TODO обновление существующих контактов и удаление ненужных
-        // company.setContacts(null);
 
         return new CompanyDto(companiesRepository.save(company));
     }
@@ -123,5 +83,29 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void deleteById(Long id) {
         companiesRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteContactById(Long id) {
+        contactRepository.deleteById(id);
+    }
+
+    @Override
+    public ContactDto saveOrUpdateContact(ContactDto contactDto) {
+        Contact contact;
+        if (contactDto.getId() == null) {
+            contact = new Contact();
+        } else {
+            contact = contactRepository.findById(contactDto.getId())
+                    .orElseThrow(() -> new ResourceNotFoundException(String.format("Контакт с Id %s не найден.", contactDto.getId())));
+        }
+        contact.setName(contactDto.getName());
+        contact.setDescription(contactDto.getDescription());
+        contact.setEmail(contactDto.getEmail());
+        contact.setPost(contactDto.getPost());
+        contact.setPhone(contactDto.getPhone());
+        contact.setCompany(findEntityById(contactDto.getCompanyId()));
+
+        return new ContactDto(contactRepository.save(contact));
     }
 }

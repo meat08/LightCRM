@@ -3,6 +3,7 @@ package ru.lightcrm.controllers.interfaces;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 import ru.lightcrm.entities.dtos.CompanyDto;
+import ru.lightcrm.entities.dtos.ContactDto;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public interface CompanyController {
             httpMethod = "GET"
     )
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = CompanyDto.class, responseContainer = "List"),
+            @ApiResponse(code = 200, message = "OK", response = CompanyDto.class),
             @ApiResponse(code = 401, message = "Клиент не авторизован"),
             @ApiResponse(code = 403, message = "Нет прав"),
             @ApiResponse(code = 404, message = "Ресурс не найден")
@@ -40,7 +41,7 @@ public interface CompanyController {
             httpMethod = "POST"
     )
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = CompanyDto.class, responseContainer = "List"),
+            @ApiResponse(code = 200, message = "OK", response = CompanyDto.class),
             @ApiResponse(code = 401, message = "Клиент не авторизован"),
             @ApiResponse(code = 403, message = "Нет прав"),
             @ApiResponse(code = 404, message = "Ресурс не найден")
@@ -53,7 +54,7 @@ public interface CompanyController {
             httpMethod = "DELETE"
     )
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = CompanyDto.class, responseContainer = "List"),
+            @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 401, message = "Клиент не авторизован"),
             @ApiResponse(code = 403, message = "Нет прав"),
             @ApiResponse(code = 404, message = "Ресурс не найден")
@@ -66,10 +67,49 @@ public interface CompanyController {
             httpMethod = "PUT"
     )
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = CompanyDto.class, responseContainer = "List"),
+            @ApiResponse(code = 200, message = "OK", response = CompanyDto.class),
             @ApiResponse(code = 401, message = "Клиент не авторизован"),
             @ApiResponse(code = 403, message = "Нет прав"),
             @ApiResponse(code = 404, message = "Ресурс не найден")
     })
     CompanyDto updateCompany(@RequestBody CompanyDto companyDto);
+
+    @DeleteMapping(value = "/contact/{id}")
+    @ApiOperation(value = "Возращает статус-код операции",
+            notes = "Удаление контакта",
+            httpMethod = "DELETE"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 401, message = "Клиент не авторизован"),
+            @ApiResponse(code = 403, message = "Нет прав"),
+            @ApiResponse(code = 404, message = "Ресурс не найден")
+    })
+    void deleteContact(@PathVariable Long id);
+
+    @PutMapping("/contact")
+    @ApiOperation(value = "Возвращает DTO измененной компании",
+            notes = "Изменение существуюшей компании",
+            httpMethod = "PUT"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = ContactDto.class),
+            @ApiResponse(code = 401, message = "Клиент не авторизован"),
+            @ApiResponse(code = 403, message = "Нет прав"),
+            @ApiResponse(code = 404, message = "Ресурс не найден")
+    })
+    ContactDto updateContact(@RequestBody ContactDto contactDto);
+
+    @PostMapping("/contact")
+    @ApiOperation(value = "Возвращает DTO измененной компании",
+            notes = "Изменение существуюшей компании",
+            httpMethod = "POST"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = ContactDto.class),
+            @ApiResponse(code = 401, message = "Клиент не авторизован"),
+            @ApiResponse(code = 403, message = "Нет прав"),
+            @ApiResponse(code = 404, message = "Ресурс не найден")
+    })
+    ContactDto saveContact(@RequestBody ContactDto contactDto);
 }

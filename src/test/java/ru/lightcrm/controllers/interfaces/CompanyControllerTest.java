@@ -1,6 +1,5 @@
 package ru.lightcrm.controllers.interfaces;
 
-import java.util.Arrays;
 import java.util.Collections;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -12,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.lightcrm.entities.Company;
 import ru.lightcrm.entities.Contact;
 import ru.lightcrm.entities.dtos.CompanyDto;
 import ru.lightcrm.entities.dtos.ContactDto;
@@ -23,7 +23,6 @@ import java.util.Set;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -45,7 +44,7 @@ public class CompanyControllerTest {
     private static CompanyDto testCompanyDto;
 
     @BeforeAll
-    public static void init(){
+    public static void init() {
         testCompanyDto = new CompanyDto();
         testCompanyDto.setId(1L);
         testCompanyDto.setName("Газпром");
@@ -55,10 +54,14 @@ public class CompanyControllerTest {
         testCompanyDto.setPhoneNumber("+79999992324");
         testCompanyDto.setEmail("gazprom@gazprom.ru");
 
+        Company company = new Company();
+        company.setId(1L);
 
         Contact contact = new Contact();
         contact.setId(1L);
         contact.setName("TEST");
+        contact.setCompany(company);
+
         Set<ContactDto> contactDtos = new HashSet<>(Collections.singletonList(new ContactDto(contact)));
         testCompanyDto.setContacts(contactDtos);
         testListCompanyDto = List.of(testCompanyDto);
@@ -80,9 +83,7 @@ public class CompanyControllerTest {
                 .andExpect(jsonPath("$[0].inn", is(testCompanyDto.getInn())))
                 .andExpect(jsonPath("$[0].billNumber", is(testCompanyDto.getBillNumber())))
                 .andExpect(jsonPath("$[0].phoneNumber", is(testCompanyDto.getPhoneNumber())))
-                .andExpect(jsonPath("$[0].email", is(testCompanyDto.getEmail())))
-        ;
-
+                .andExpect(jsonPath("$[0].email", is(testCompanyDto.getEmail())));
     }
 
     @Test

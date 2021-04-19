@@ -2,6 +2,7 @@ package ru.lightcrm.services.interfaces;
 
 import ru.lightcrm.entities.Company;
 import ru.lightcrm.entities.dtos.CompanyDto;
+import ru.lightcrm.entities.dtos.ContactDto;
 
 import java.util.List;
 
@@ -11,7 +12,8 @@ public interface CompanyService {
     CompanyDto findById(Long id);
     Company findEntityById(Long id);
     List<CompanyDto> findAllDTO();
-    CompanyDto save(CompanyDto companyDto);
-    CompanyDto update(CompanyDto companyDto);
+    CompanyDto saveOrUpdate(CompanyDto companyDto);
     void deleteById(Long id);
+    void deleteContactById(Long id);
+    ContactDto saveOrUpdateContact(ContactDto contactDto);
 }

@@ -13,6 +13,7 @@ import ru.lightcrm.entities.Contact;
 import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.dtos.CompanyDto;
 import ru.lightcrm.repositories.CompanyRepository;
+import ru.lightcrm.repositories.ContactRepository;
 import ru.lightcrm.services.interfaces.CompanyService;
 
 import java.util.*;
@@ -28,6 +29,9 @@ class CompanyServiceTest {
     @MockBean
     private CompanyRepository companyRepository;
 
+    @MockBean
+    private ContactRepository contactRepository;
+
     private static final String COMPANY_NAME = "Газпром";
     private static final boolean COMPANY_TYPE = true;
     private static final Long COMPANY_INN = 50282517112359L;
@@ -39,6 +43,7 @@ class CompanyServiceTest {
     @BeforeEach
     private void init() {
         List<Company> companies = new ArrayList<>();
+        List<Contact> contacts = new ArrayList<>();
 
         for (long i = 1; i <= COMPANY_COUNT; i++) {
             Company company = new Company();
@@ -50,12 +55,14 @@ class CompanyServiceTest {
             company.setPhoneNumber(COMPANY_PHONE_NUMBER);
             company.setEmail(COMPANY_EMAIL);
 
-            Set<Contact> contacts = new HashSet<>(1);
+            Set<Contact> contactSet = new HashSet<>(1);
             Contact contact = new Contact();
             contact.setId(1L);
             contact.setName("TEST");
+            contact.setCompany(new Company());
+            contactSet.add(contact);
             contacts.add(contact);
-            company.setContacts(contacts);
+            company.setContacts(contactSet);
 
             Set<Profile> profiles = new HashSet<>(1);
             Profile profile = new Profile();
@@ -74,6 +81,13 @@ class CompanyServiceTest {
             companies.remove((int)(companies.get(0).getId() - 1));
             return null;
         }).when(companyRepository).deleteById(companies.get(0).getId());
+
+        // Contacts
+        Mockito.doReturn(contacts).when(contactRepository).findAll();
+        Mockito.doAnswer(invocation -> {
+            contacts.remove((int)(contacts.get(0).getId() - 1));
+            return null;
+        }).when(contactRepository).deleteById(contacts.get(0).getId());
     }
 
     @Test
@@ -165,5 +179,25 @@ class CompanyServiceTest {
 
         companyRepository.save(newCompany);
         Mockito.verify(companyRepository, Mockito.times(1)).save(newCompany);
+    }
+
+    @Test
+    void deleteContactTest() {
+        Long id = 1L;
+
+        Assertions.assertEquals(COMPANY_COUNT, contactRepository.findAll().size());
+        contactRepository.deleteById(id);
+        Assertions.assertEquals(COMPANY_COUNT - 1, contactRepository.findAll().size());
+    }
+
+    @Test
+    void saveOrUpdateContactTest() {
+        Contact newContact = new Contact();
+        newContact.setId(1L);
+        newContact.setName("TEST");
+        newContact.setCompany(new Company());
+
+        contactRepository.save(newContact);
+        Mockito.verify(contactRepository, Mockito.times(1)).save(newContact);
     }
 }

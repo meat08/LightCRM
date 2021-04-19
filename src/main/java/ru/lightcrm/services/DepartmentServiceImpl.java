@@ -1,23 +1,27 @@
 package ru.lightcrm.services;
 
+import ch.qos.logback.core.joran.conditional.IfAction;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 import ru.lightcrm.entities.Department;
 import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.dtos.DepartmentDto;
 import ru.lightcrm.exceptions.ResourceNotFoundException;
 import ru.lightcrm.repositories.DepartmentRepository;
+import ru.lightcrm.repositories.ProfileRepository;
 import ru.lightcrm.services.interfaces.DepartmentService;
 import ru.lightcrm.services.interfaces.ProfileService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
     private final DepartmentRepository departmentRepository;
-    private final ProfileService profileService;
+    private final ProfileRepository profileRepository;
 
     @Override
     public List<DepartmentDto> findAll() {
@@ -59,7 +63,13 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public void deleteById(Long id) {
-        departmentRepository.deleteById(id);
+        Department department = departmentRepository.findOneById(id).orElseThrow(() -> new ResourceNotFoundException(String.format("Не найден отдел с (id = %d)", id)));
+        if (department.getEmployees() == null){
+            departmentRepository.deleteById(id);
+        }
+        else {
+            throw new ResourceNotFoundException(String.format("К данному отделу привязаны сотрудники. Переведите сотрудников прежде чем удалять отдел!"));
+        }
     }
 
     @Override
@@ -73,7 +83,8 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
         department.setName(departmentDto.getName());
         department.setDescription(departmentDto.getDescription());
-        department.setLeader(profileService.findById(departmentDto.getLeaderId()));
+        department.setLeader(profileRepository.findById(departmentDto.getLeaderId())
+                        .orElseThrow(() -> new ResourceNotFoundException(String.format("Не найден руководитель отдела с (id = %d)", departmentDto.getLeaderId()))));
         department.setLeadDepartment(findById(departmentDto.getLeadDepartmentId()));
 
         return new DepartmentDto(departmentRepository.save(department));

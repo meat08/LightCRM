@@ -10,6 +10,8 @@ public interface DepartmentService {
 
     DepartmentDto findDtoById(Long id);
 
+    Department findById(Long id);
+
     DepartmentDto findOneDtoByName(String name);
 
     Department findOneByName(String name);
@@ -17,4 +19,8 @@ public interface DepartmentService {
     DepartmentDto findOneByLeaderId(Long id);
 
     List<String> getAllDepartmentNames();
+
+    void deleteById(Long id);
+
+    DepartmentDto saveOrUpdate(DepartmentDto departmentDto);
 }

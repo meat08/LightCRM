@@ -7,7 +7,6 @@ import ru.lightcrm.repositories.SearchableEntityRepository;
 import ru.lightcrm.utils.SearchUtil;
 
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 
 /**
  * Класс для обработки аннотации SearchableController, применяемой для контролеров поисковых сущностей
@@ -27,12 +26,16 @@ public class SearchableRepositoriesRefreshContextListener implements Application
             String entityName = ((Class<?>) ((ParameterizedType) ((Class<?>) bean.getClass().getGenericInterfaces()[0]).getGenericInterfaces()[0]).getActualTypeArguments()[0]).getSimpleName();
             SearchUtil.getRepByEntityNameMap().put(entityName, bean);
         }
-        for (String beanName : contextStartedEvent.getApplicationContext().getBeanNamesForAnnotation(SearchableController.class)) {
+        for (String beanName : contextStartedEvent.getApplicationContext().getBeanNamesForAnnotation(SearchableEntitiesController.class)) {
             Object bean = contextStartedEvent.getApplicationContext().getBean(beanName);
-            for (Type type : bean.getClass().getGenericInterfaces()) {
-
+            SearchableEntitiesController annotation = ((Class<?>) bean.getClass().getGenericInterfaces()[0]).getAnnotation(SearchableEntitiesController.class);
+            for (SearchableEntityController value : annotation.value()) {
+                SearchUtil.getUriByEntityClassMap().put(value.entityClass().getSimpleName(), SearchUtil.formatUrl(value.url()));
             }
-            SearchableController annotation = ((Class<?>) bean.getClass().getGenericInterfaces()[0]).getAnnotation(SearchableController.class);
+        }
+        for (String beanName : contextStartedEvent.getApplicationContext().getBeanNamesForAnnotation(SearchableEntityController.class)) {
+            Object bean = contextStartedEvent.getApplicationContext().getBean(beanName);
+            SearchableEntityController annotation = ((Class<?>) bean.getClass().getGenericInterfaces()[0]).getAnnotation(SearchableEntityController.class);
             SearchUtil.getUriByEntityClassMap().put(annotation.entityClass().getSimpleName(), SearchUtil.formatUrl(annotation.url()));
         }
     }

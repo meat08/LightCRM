@@ -141,6 +141,7 @@ angular.module('app').controller('indexController', function ($scope, $rootScope
 
     $scope.search = function () {
         if ($scope.searchText === "" && $scope.searchText.trim() === "") {
+            $scope.searchResults = null;
             return;
         }
         $scope.searchResults = null;

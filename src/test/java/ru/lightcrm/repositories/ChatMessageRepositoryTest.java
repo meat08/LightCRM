@@ -9,6 +9,7 @@ import ru.lightcrm.entities.ChatMessage;
 import ru.lightcrm.utils.MessageStatus;
 
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 @ActiveProfiles("test")
@@ -38,9 +39,14 @@ public class ChatMessageRepositoryTest {
 
     @Test
     public void findByChatIdAndMaxTimestampTest() {
-        ChatMessage chatMessage = chatMessageRepository.findByChatIdAndMaxTimestamp(CHAT_ID).orElse(null);
+        ChatMessage chatMessage = getLatestChatMessage(CHAT_ID).orElse(null);
 
         Assertions.assertNotNull(chatMessage);
         Assertions.assertEquals(RECIPIENT_ID, chatMessage.getSenderId());
+    }
+
+    private Optional<ChatMessage> getLatestChatMessage(String chatId) {
+        List<ChatMessage> foundMessage = chatMessageRepository.findByChatIdAndMaxTimestamp(chatId);
+        return foundMessage.isEmpty() ? Optional.empty() : Optional.of(foundMessage.get(foundMessage.size() - 1));
     }
 }

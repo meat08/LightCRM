@@ -6,14 +6,19 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import ru.lightcrm.annotations.SearchableController;
+import ru.lightcrm.annotations.SearchableEntitiesController;
+import ru.lightcrm.annotations.SearchableEntityController;
 import ru.lightcrm.entities.Company;
+import ru.lightcrm.entities.Contact;
 import ru.lightcrm.entities.dtos.CompanyDto;
 import ru.lightcrm.entities.dtos.ContactDto;
 
 import java.util.List;
 
-@SearchableController(url = "/api/v1/companies", entityClass = Company.class)
+@SearchableEntitiesController(value = {
+        @SearchableEntityController(url = "/api/v1/companies", entityClass = Company.class),
+        @SearchableEntityController(url = "", entityClass = Contact.class)
+})
 @Api(value = "/api/v1/companies", tags = "Контроллер для работы с компаниями", produces = "application/json")
 @RequestMapping(value = "/api/v1/companies", produces = MediaType.APPLICATION_JSON_VALUE)
 public interface CompanyController {

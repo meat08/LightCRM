@@ -3,6 +3,7 @@ package ru.lightcrm.services;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import ru.lightcrm.entities.*;
 import ru.lightcrm.entities.dtos.TaskDto;
@@ -51,7 +52,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDto> findAll(Map<String, String> params, List<Long> taskStatesId) {
+    public List<TaskDto> findAll(Map<String, String> params, @Nullable List<Long> taskStatesId) {
         TaskFilter taskFilter = new TaskFilter(params, taskStatesId);
         return taskRepository.findAll(taskFilter.getSpec()).stream().map(TaskDto::new).collect(Collectors.toList());
     }

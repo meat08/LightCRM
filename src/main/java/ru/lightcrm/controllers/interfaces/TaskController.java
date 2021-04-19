@@ -1,9 +1,12 @@
 package ru.lightcrm.controllers.interfaces;
 
 import io.swagger.annotations.*;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import ru.lightcrm.entities.dtos.TaskDto;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -26,8 +29,8 @@ public interface TaskController {
             }
     )
     @GetMapping
-    List<TaskDto> getAllTasks(@ApiParam(value = "Список иденктификаторов статусов", required = false) @RequestParam(name = "taskStatesId", required = false) List<Long> taskStatesId,
-            @ApiParam(value = "Map с набором параметров и значений",  required = false, example = "responsibleId: 1") @RequestParam Map<String, String> params);
+    List<TaskDto> getAllTasks(@ApiParam(value = "Список иденктификаторов статусов", required = false) @RequestParam(required = false) List<Long> taskStatesId,
+            @ApiParam(value = "Map с набором параметров и значений",  required = false, example = "responsibleId: 1") @RequestParam(required = false) Map<String, String> params);
 
     @ApiOperation(value = "Получить задачу по её Id",
             httpMethod = "GET",

@@ -35,4 +35,8 @@ public class TaskSpecification {
         return (Specification<Task>)(root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.in(root.join("coExecutors",JoinType.LEFT).get("id")).value(coExecutor_id);
     }
 
+    public static Specification<Task> titleLike(String title){
+        return (Specification<Task>)(root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("title"), title);
+    }
+
 }

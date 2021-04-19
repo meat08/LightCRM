@@ -27,6 +27,10 @@ angular.module('app').controller('taskController', function ($scope, $http, $loc
         $scope.allTasks();
     }
 
+    $scope.createNew = function(){
+        alert('В разработке');
+    }
+
     $scope.getProfiles = function(){
         $http({
             url: contextPath + '/api/v1/profiles/mini',

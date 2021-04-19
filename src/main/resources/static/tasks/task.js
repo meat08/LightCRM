@@ -14,21 +14,36 @@ angular.module('app').controller('taskEditController',
                 })
                 .then(function (response) {
                     $scope.task = response.data;
-                    $scope.task.startDate = parsDate(scope.task.startDate);
+                    $scope.getProject($scope.task.projectId);
                 });
 
             }
 
             $scope.getTaskStates = function(){
-                        $http({
-                            url: contextPath + '/api/v1/taskstates',
-                            method: 'GET'
-                        }).then(function (response) {
-                            $scope.allTaskStates = response.data
-                        });
-                    }
+                $http({
+                     url: contextPath + '/api/v1/taskstates',
+                     method: 'GET'
+                }).then(function (response) {
+                    $scope.allTaskStates = response.data
+                });
+            }
 
+            $scope.getProject = function(projectId){
+                if(projectId>0){
+                     $http({
+                           url: contextPath + '/api/v1/projects/'+projectId,
+                           method: 'GET'
+                     }).then(function (response) {
+                        $scope.project = response.data
+                     });
+                }else{
+                    $scope.project = null;
+                }
+            }
 
+            $scope.submitAddEditTask = function(){
+                  alert('В разработке');
+            }
 
             $scope.getTaskStates();
             $scope.fillTask();

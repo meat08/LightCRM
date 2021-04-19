@@ -103,6 +103,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public Integer countByCompanyId(Long id) {
+        return taskRepository.countAllByCompanyId(id);
+    }
+
+    @Override
     public void deleteById(Long id) {
         taskRepository.deleteById(id);
     }

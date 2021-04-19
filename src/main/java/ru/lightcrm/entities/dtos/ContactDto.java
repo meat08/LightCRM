@@ -38,6 +38,10 @@ public class ContactDto {
     @JsonProperty("description")
     private String description;
 
+    @ApiModelProperty(notes = "Id компании", example = "1", required = true, position = 7)
+    @JsonProperty("companyId")
+    private Long companyId;
+
     public ContactDto(Contact contact) {
         this.id = contact.getId();
         this.name = contact.getName();
@@ -45,5 +49,6 @@ public class ContactDto {
         this.phone = contact.getPhone();
         this.email = contact.getEmail();
         this.description = contact.getDescription();
+        this.companyId = contact.getCompany().getId();
     }
 }

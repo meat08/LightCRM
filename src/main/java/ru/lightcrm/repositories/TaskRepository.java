@@ -26,4 +26,6 @@ public interface TaskRepository extends JpaRepository<Task, Long>, JpaSpecificat
 
     @Query("SELECT t FROM Task t WHERE t.project.id = ?1")
     List<Task> findByProjectId(@NotNull Long id);
+
+    Integer countAllByCompanyId(@NotNull Long id);
 }

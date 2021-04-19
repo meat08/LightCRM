@@ -55,6 +55,10 @@
                 templateUrl: 'company/companies.html',
                 controller: 'companyController'
             })
+            .when('/companies/company', {
+                templateUrl: 'company/company.html',
+                controller: 'companyController'
+            })
             .when('/profiles', {
                 templateUrl: 'profile/profiles.html',
                 controller: 'profilesController'
@@ -66,6 +70,10 @@
             .when('/tasks', {
                 templateUrl: 'tasks/tasks.html',
                 controller: 'taskController'
+            })
+            .when('/chats', {
+                templateUrl: 'chat/room.html',
+                controller: 'roomController'
             })
             .when('/tasks/:taskId', {
                templateUrl: 'tasks/task.html',
@@ -136,4 +144,15 @@ angular.module('app').controller('indexController', function ($scope, $rootScope
                 .ok('ОК')
         );
     }
+
+    $scope.isUserLoggedIn = function () {
+        if ($localStorage.currentUser) {
+            $scope.currentUserName = $localStorage.currentUser.username;
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    $scope.currentNavItem = $location.path();
 });

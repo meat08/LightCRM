@@ -26,6 +26,8 @@ public interface TaskService {
 
     List<TaskDto> findByProjectId(Long id);
 
+    Integer countByCompanyId(Long id);
+
     TaskDto saveOrUpdate(TaskDto taskDto);
 
     void deleteById(Long id);

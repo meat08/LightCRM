@@ -17,7 +17,7 @@ public class TaskControllerImpl implements TaskController {
     private final TaskService taskService;
 
     @Override
-    public List<TaskDto> getAllTasks(@Null List<Long> taskStatesId, Map<String, String> params) {
+    public List<TaskDto> getAllTasks(List<Long> taskStatesId, Map<String, String> params) {
         return taskService.findAll(params, taskStatesId);
     }
 

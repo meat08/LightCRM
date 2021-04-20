@@ -47,43 +47,47 @@ public class ProfileFullDto extends ProfileDto {
     @JsonProperty("birthdate")
     private OffsetDateTime birthdate;
 
+    @ApiModelProperty(notes = "Собственная характеристика сотрудника", dataType = "String", position = 16)
+    @JsonProperty("about")
+    private String about;
+
     @PastOrPresent(message = "Дата увольнения должна быть не позже настоящего времени")
-    @ApiModelProperty(notes = "Дата увольнения сотрудника", dataType = "OffsetDateTime", example = "2000-12-25", position = 16)
+    @ApiModelProperty(notes = "Дата увольнения сотрудника", dataType = "OffsetDateTime", example = "2000-12-25", position = 17)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @JsonDeserialize(using = CustomDateDeserializer.class)
     @JsonProperty("dismissalDate")
     private OffsetDateTime dismissalDate;
 
     // Company
-    @ApiModelProperty(notes = "Компании, курируемые сотрудником", dataType = "List<CompanyDto>", position = 17)
+    @ApiModelProperty(notes = "Компании, курируемые сотрудником", dataType = "List<CompanyDto>", position = 18)
     @JsonProperty("companyNames")
     private List<String> companyNames;
 
     // Department
-    @ApiModelProperty(notes = "Список отделов, возглавляемых сотрудником", dataType = "List<DepartmentDto>", position = 18)
+    @ApiModelProperty(notes = "Список отделов, возглавляемых сотрудником", dataType = "List<DepartmentDto>", position = 19)
     @JsonProperty("managedDepartments")
     private List<DepartmentDto> managedDepartments;
 
     // Project
-    @ApiModelProperty(notes = "Проекты, курируемые сотрудником", dataType = "List<ProjectDto>", position = 19)
+    @ApiModelProperty(notes = "Проекты, курируемые сотрудником", dataType = "List<ProjectDto>", position = 20)
     @JsonProperty("managedProjects")
     private List<ProjectDto> managedProjects;
 
-    @ApiModelProperty(notes = "Проекты сотрудника", dataType = "List<ProjectDto>", position = 20)
+    @ApiModelProperty(notes = "Проекты сотрудника", dataType = "List<ProjectDto>", position = 21)
     @JsonProperty("projects")
     private List<ProjectDto> projects;
 
     // Task
-    @ApiModelProperty(notes = "Задачи сотрудника", dataType = "List<TaskDto>", position = 21)
+    @ApiModelProperty(notes = "Задачи сотрудника", dataType = "List<TaskDto>", position = 22)
     @JsonProperty("tasks")
     private List<TaskDto> tasks;
 
-    @ApiModelProperty(notes = "Задачи, наблюдаемые сотрудником", dataType = "List<TaskDto>", position = 22)
+    @ApiModelProperty(notes = "Задачи, наблюдаемые сотрудником", dataType = "List<TaskDto>", position = 23)
     @JsonProperty("observedTasks")
     private List<TaskDto> observedTasks;
 
     // Comment
-    @ApiModelProperty(notes = "Комментарии, оставленные сотрудником", dataType = "List<CommentDto>", position = 23)
+    @ApiModelProperty(notes = "Комментарии, оставленные сотрудником", dataType = "List<CommentDto>", position = 24)
     @JsonProperty("comments")
     private List<CommentDto> comments;
 
@@ -93,6 +97,7 @@ public class ProfileFullDto extends ProfileDto {
         this.phone = profile.getPhone();
         this.email = profile.getEmail();
         this.birthdate = profile.getBirthdate();
+        this.about = profile.getAbout();
         this.dismissalDate = profile.getDismissalDate();
         // Company
         //todo мини Dto для компании - companyId + companyName (иначе циклическая ссылка)

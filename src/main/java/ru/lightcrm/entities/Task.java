@@ -2,28 +2,28 @@ package ru.lightcrm.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import ru.lightcrm.annotations.SearchableField;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "tasks")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Task {
+public class Task extends SearchableEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-
+    @SearchableField
     @Column(name = "title")
     private String title;
 
+    @SearchableField(position = 1)
     @Column(name = "description")
     private String description;
 
@@ -82,7 +82,7 @@ public class Task {
     private Company company;
 
     public Task(Long id, String title, String description, Profile producer, Profile responsible, TaskState taskState, Project project) {
-        this.id = id;
+        super(id);
         this.title = title;
         this.description = description;
         this.producer = producer;

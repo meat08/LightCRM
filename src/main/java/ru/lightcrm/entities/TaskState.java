@@ -2,21 +2,18 @@ package ru.lightcrm.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "task_states")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskState {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class TaskState extends BaseEntity {
 
     @Column(name = "name")
     private String name;

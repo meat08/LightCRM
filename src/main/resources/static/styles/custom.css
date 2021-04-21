@@ -66,6 +66,27 @@ md-input-container .md-input {
     font-size: 15px;
 }
 
+.main_search input[type=text]:focus {
+    width: 90vh;
+}
+
+.searched_element {
+    width: 100%;
+    display: flex;
+}
+
+.searched_element_name {
+    width: 20%;
+}
+
+.searched_element_content {
+    width: 80%;
+}
+
+.highlight {
+    background-color: yellow;
+}
+
 @media screen and (max-width: 600px) {
     .main_search input[type=text] {
         float: none;

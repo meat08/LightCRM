@@ -198,12 +198,12 @@ VALUES
 
 --профили
 INSERT INTO
-profiles(firstname, lastname, middlename, sex, phone, email, birthdate, employment_date, user_id, staff_unit_id)
+profiles(firstname, lastname, middlename, sex, phone, email, birthdate, employment_date, user_id, staff_unit_id, search_index)
 VALUES
-('Петр', 'Петров','Петрович', 'мужской', '79009009090', 'petr@comp.com', '1990-01-01', '2010-10-01', 1, 6),
-('Виктор', 'Викторов','Викторович', 'мужской', '78008008080', 'dir@comp.com', '1980-09-01', '2010-10-01', 2, 1),
-('Анна', 'Петрова','Петровна', 'женский', '77007008080', 'manager1@comp.com', '2000-05-01', '2010-10-01', 3, 9),
-('Василий', 'Сидоров','Федорович', 'мужской', '79007008080', 'manager2@comp.com', '2001-05-01', '2010-10-01', 4, 10);
+('Петр', 'Петров','Петрович', 'мужской', '79009009090', 'petr@comp.com', '1990-01-01', '2010-10-01', 1, 6, 'Петров Петр Петрович'),
+('Виктор', 'Викторов','Викторович', 'мужской', '78008008080', 'dir@comp.com', '1980-09-01', '2010-10-01', 2, 1, 'Викторов Виктор Викторович'),
+('Анна', 'Петрова','Петровна', 'женский', '77007008080', 'manager1@comp.com', '2000-05-01', '2010-10-01', 3, 9, 'Петрова Анна Петровна'),
+('Василий', 'Сидоров','Федорович', 'мужской', '79007008080', 'manager2@comp.com', '2001-05-01', '2010-10-01', 4, 10, 'Сидоров Василий Федорович');
 
 --департаменты
 INSERT INTO departments(name, description, leader_id)
@@ -219,18 +219,18 @@ VALUES
 (4, 2);
 
 --компании и клиенты
-INSERT INTO companies(name, type, inn, bill_number, phone_number, email)
+INSERT INTO companies(name, type, inn, bill_number, phone_number, email, search_index)
 VALUES
-('ООО Вектор', true, 58758758964, 89544852485548, '79185185618', 'sales@vector.su'),
-('ИП Федоров Виктор Акакиевич', true, 456789123123, 88445662211333, '79185185000', 'akaki@gmail.com'),
-('Василий Ермак', false, 0, 0, '79185186006', 'ermak@gmail.com');
+('ООО Вектор', true, 58758758964, 89544852485548, '79185185618', 'sales@vector.su', 'ООО Вектор'),
+('ИП Федоров Виктор Акакиевич', true, 456789123123, 88445662211333, '79185185000', 'akaki@gmail.com', 'ИП Федоров Виктор Акакиевич'),
+('Василий Ермак', false, 0, 0, '79185186006', 'ermak@gmail.com', 'Василий Ермак');
 
 --контактные лица
-INSERT INTO contacts(name, post, phone, email, description, company_id)
+INSERT INTO contacts(name, post, phone, email, description, company_id, search_index)
 VALUES
-('Васечкин Петр', 'Москва, ул. Панфиловцев, 111', '89457894512', 'was@vector.su', 'будни с 10 до 18', 1),
-('Федоров Виктор', 'Москва, ул. Где то, 122', '79185185000', 'akaki@gmail.com', 'будни с 10 до 19', 2),
-('Василий Ермак', 'Москва, ул. Там то, 123', '79185186006', 'ermak@gmail.com', 'будни с 10 до 19', 3);
+('Васечкин Петр', 'Москва, ул. Панфиловцев, 111', '89457894512', 'was@vector.su', 'будни с 10 до 18', 1, 'Васечкин Петр'),
+('Федоров Виктор', 'Москва, ул. Где то, 122', '79185185000', 'akaki@gmail.com', 'будни с 10 до 19', 2, 'Федоров Виктор'),
+('Василий Ермак', 'Москва, ул. Там то, 123', '79185186006', 'ermak@gmail.com', 'будни с 10 до 19', 3, 'Василий Ермак');
 
 --менеджеры компаний
 INSERT INTO companies_managers(profile_id, company_id)
@@ -251,11 +251,11 @@ VALUES
 (4,1);
 
 --задачи
-INSERT INTO tasks(title, description, producer_id, responsible_id, start_date, task_state_id, allow_change_deadline, project_id, company_id)
+INSERT INTO tasks(title, description, producer_id, responsible_id, start_date, task_state_id, allow_change_deadline, project_id, company_id, search_index)
 VALUES
-('Задача 1', 'Написать письмо клиенту', 2, 3, '2021-02-10', 1, false, null, null),
-('Задача 2', 'Провести анализ по проекту', 2, 4, '2021-03-10', 1, true, 1, 1),
-('Задача 3', 'Посчитать затраты', 2, 4, '2021-03-10', 1, true, 1, null);
+('Задача 1', 'Написать письмо клиенту', 2, 3, '2021-02-10', 1, false, null, null, 'Задача 1 Написать письмо клиенту'),
+('Задача 2', 'Провести анализ по проекту', 2, 4, '2021-03-10', 1, true, 1, 1, 'Задача 2 Провести анализ по проекту'),
+('Задача 3', 'Посчитать затраты', 2, 4, '2021-03-10', 1, true, 1, null, 'Задача 3 Посчитать затраты');
 
 --соисполнители
 INSERT INTO tasks_coexecutors(task_id, profile_id)

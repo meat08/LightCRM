@@ -1,0 +1,24 @@
+<h3>Результаты поиска</h3>
+
+<p ng-if="searchResults.length > 0">Найдено элементов: {{searchResults.length}}</p>
+<p ng-if="searchResults == null">Ничего не найдено</p>
+
+<div class="mb-3 text-left">
+
+    <md-content>
+        <md-list class="md-dense" flex>
+            <md-list-item ng-repeat="s in searchResults" ng-click="open(s.url)">
+                <div class="searched_element">
+                    <div class="searched_element_name">
+                        <h4>{{s.entityName}}</h4>
+                    </div>
+                    <div search-result="{{s.indexData}}" class="searched_element_content">
+                        <h4>{{s.indexData}}</h4>
+                    </div>
+                </div>
+                <md-divider ng-if="!$last"></md-divider>
+            </md-list-item>
+            <md-divider></md-divider>
+        </md-list>
+    </md-content>
+</div>

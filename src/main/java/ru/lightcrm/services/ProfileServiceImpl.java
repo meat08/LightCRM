@@ -126,9 +126,11 @@ public class ProfileServiceImpl implements ProfileService {
 
         StaffUnit staffUnit = staffUnitService.findByName(systemUserDto.getStaffUnitName());
 
-        List<Department> departments = systemUserDto.getDepartmentNames().stream()
+        List<Department> departments = systemUserDto.getDepartmentNames() != null
+                ? systemUserDto.getDepartmentNames().stream()
                 .map(departmentService::findOneByName)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList())
+                : null;
 
         Profile newProfile = Profile.createNewProfileForUserRegistration(systemUserDto, newUser, staffUnit, departments);
 

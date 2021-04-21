@@ -8,12 +8,12 @@ angular.module('app').controller('profilesController', function ($scope, $rootSc
         $scope.submitCreateNewUser = function () {
             $http.post(contextPath + '/api/v1/profiles/register/', $scope.newUser)
                 .then(function successCallback(response) {
-                    alert('Добавлен новый сотрудник: ' + $scope.newUser.firstname + ' ' + $scope.newUser.lastname);
+                    alert('Добавлен новый сотрудник: ' + $scope.newUser.lastname + ' ' + $scope.newUser.firstname + ' ' + $scope.newUser.middlename);
                     $scope.newUser = null;
                     $rootScope.getAllProfiles();
                     $mdDialog.cancel();
                 }, function errorCallback(response) {
-                    $scope.showAlert(response.data.msg);
+                    alert(response.data.msg);
                 });
         };
 

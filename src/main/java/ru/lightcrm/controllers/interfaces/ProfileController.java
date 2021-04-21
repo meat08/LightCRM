@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.lightcrm.annotations.SearchableEntityController;
+import ru.lightcrm.entities.Profile;
 import ru.lightcrm.entities.dtos.ProfileDto;
 import ru.lightcrm.entities.dtos.ProfileFullDto;
 import ru.lightcrm.entities.dtos.ProfileMiniDto;
@@ -13,6 +15,7 @@ import ru.lightcrm.entities.dtos.SystemUserDto;
 import java.security.Principal;
 import java.util.List;
 
+@SearchableEntityController(url = "/api/v1/profiles", entityClass = Profile.class)
 @Api(value = "/api/v1/profiles", tags = "Контроллер для работы с профилями", produces = "application/json")
 @RequestMapping(value = "/api/v1/profiles", produces = "application/json")
 public interface ProfileController {

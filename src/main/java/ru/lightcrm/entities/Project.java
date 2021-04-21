@@ -1,21 +1,18 @@
 package ru.lightcrm.entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "projects")
 @Data
 @NoArgsConstructor
-public class Project {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class Project extends BaseEntity {
 
     @Column(name = "name")
     private String name;
@@ -41,7 +38,7 @@ public class Project {
     private List<Task> tasks;
 
     public Project(Long id, String name, String description, Profile manager) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.description = description;
         this.manager = manager;

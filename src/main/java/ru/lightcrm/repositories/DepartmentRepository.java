@@ -10,6 +10,8 @@ import java.util.Optional;
 public interface DepartmentRepository extends JpaRepository<Department, Long> {
     Optional<Department> findOneByName(@NotNull String name);
 
+    Optional<Department> findOneById(@NotNull Long id);
+
     @Query("SELECT d FROM Department d WHERE d.leader.id = ?1")
     Optional<Department> findOneByLeaderId(@NotNull Long id);
 }

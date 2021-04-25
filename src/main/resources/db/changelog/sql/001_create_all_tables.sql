@@ -220,4 +220,12 @@ CREATE TABLE chat_room (
     chat_id         VARCHAR(50) NOT NULL,
     sender_id       BIGINT NOT NULL,
     recipient_id    BIGINT NOT NULL
-)
+);
+
+CREATE TABLE working_days (
+    id                  BIGSERIAL PRIMARY KEY,
+    start_timestamp     TIMESTAMP,
+    end_timestamp       TIMESTAMP,
+    report              VARCHAR(255),
+    profile_id          BIGINT REFERENCES profiles(id)
+);

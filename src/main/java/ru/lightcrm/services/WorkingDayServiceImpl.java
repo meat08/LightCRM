@@ -29,7 +29,7 @@ public class WorkingDayServiceImpl implements WorkingDayService {
     @Override
     public WorkingDay findById(Long id) {
         return workingDayRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Отсутствует рабочий с id: %d", id)));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Отсутствует рабочий день с id: %d", id)));
     }
 
     @Override
@@ -40,14 +40,14 @@ public class WorkingDayServiceImpl implements WorkingDayService {
     @Override
     public WorkingDayDto findByUserLoginAndDate(String login, String date) {
         WorkingDay workingDay = workingDayRepository.findByUserLoginAndDate(login, date)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Отсутствует рабочий за дату: %s для пользователя с логином: %s", date, login)));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Отсутствует рабочий день за дату: %s для пользователя с логином: %s", date, login)));
         return new WorkingDayDto(workingDay);
     }
 
     @Override
     public WorkingDayDto findByProfileIdAndDate(Long profileId, String date) {
         WorkingDay workingDay = workingDayRepository.findByProfileIdAndDate(profileId, date)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Отсутствует рабочий за дату: %s для пользователя с id: %s", date, profileId)));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Отсутствует рабочий день за дату: %s для пользователя с id: %s", date, profileId)));
         return new WorkingDayDto(workingDay);
     }
 
@@ -66,7 +66,7 @@ public class WorkingDayServiceImpl implements WorkingDayService {
             wdFromDb.setEndTimeStamp(workingDayCreationDto.getStartTimeStamp());
             workingDayRepository.save(wdFromDb);
         } else {
-            throw new ValidationException(String.format("Рабочий с датой: %s уже начат для сотрудника с id: %d", workingDayStartDate, workingDayCreationDto.getProfileId()));
+            throw new ValidationException(String.format("Рабочий с датой: %s уже начат для пользователя с id: %d. Нет прав на редактирование", workingDayStartDate, workingDayCreationDto.getProfileId()));
         }
     }
 
@@ -77,10 +77,12 @@ public class WorkingDayServiceImpl implements WorkingDayService {
         String workingDayStartDate = workingDayDto.getStartTimeStamp().format(DateTimeFormatter.ISO_LOCAL_DATE);
         Optional<WorkingDay> wdFromDbOptional = workingDayRepository.findByProfileIdAndDate(workingDayDto.getProfileId(), workingDayStartDate);
         if (wdFromDbOptional.isEmpty()) {
-            throw new ValidationException(String.format("Отсутствует рабочий с датой: %s для сотрудника с id: %d", workingDayStartDate, workingDayDto.getProfileId()));
+            throw new ValidationException(String.format("Отсутствует рабочий с датой: %s для пользователя с id: %d", workingDayStartDate, workingDayDto.getProfileId()));
         } else {
             WorkingDay workingDayFromDb = wdFromDbOptional.get();
-            if (!needExistCheck) {
+            if (needExistCheck && workingDayFromDb.getEndTimeStamp() != null) {
+                throw new ValidationException(String.format("Рабочий день с датой: %s для пользователя с id: %d уже завершен. Нет прав на редактирование", workingDayStartDate, workingDayDto.getProfileId()));
+            } else if (!needExistCheck) {
                 workingDayFromDb.setStartTimeStamp(workingDayDto.getStartTimeStamp());
             }
             workingDayFromDb.setEndTimeStamp(workingDayDto.getEndTimeStamp());
